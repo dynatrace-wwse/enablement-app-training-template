@@ -1,16 +1,16 @@
 INHERIT: mkdocs-base.yaml
 
-site_name: "Dynatrace Enablement Lab: Codespaces template"
+site_name: "Dynatrace Enablement App Training Template"
 repo_name: "View Code on GitHub"
-repo_url: "https://github.com/dynatrace-wwse/enablement-codespaces-template"
+repo_url: "https://github.com/dynatrace-wwse/enablement-app-training-template"
 nav:
-  - "1. About": index.md
-  - "2. Getting started": 2-getting-started.md
-  - "3. Codespaces": 3-codespaces.md
-  - "4. Content": 4-content.md
-  - "5. Cleanup": cleanup.md
-  - "6. Resources": resources.md
-  - "7. What's next?": whats-next.md
+  - "Welcome": index.md
+  - "00. Getting Started for Trainers": 00-getting-started.md
+  - "01. Lesson Anatomy": 01-lesson-anatomy.md
+  - "02. Interactive Building Blocks": 02-interactive-blocks.md
+  - "03. Example Lesson": 03-example-lesson.md
+  - "04. Publishing & Validation": 04-publishing-validation.md
+  - "Resources": resources.md
 
 extra:
   rum_snippet: "https://js-cdn.dynatrace.com/jstag/1612cf70810/bf81393wlb/7c50bce5c0cc890f_complete.js"

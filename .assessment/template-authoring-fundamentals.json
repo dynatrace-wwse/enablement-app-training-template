@@ -1,0 +1,242 @@
+{
+  "templateVersion": "1.0.0",
+  "id": "template-authoring-fundamentals",
+  "category": "CO",
+  "title": "Enablement Authoring — Fundamentals",
+  "description": "Validate your understanding of the enablement authoring model: how lessons are structured, how interactive blocks work, and how Orbital connects to the Dynatrace app.",
+  "difficulty": "beginner",
+  "estimatedTime": 6,
+  "imagine": "You have just finished the template walk-through and have a working lesson running on Orbital, rendered inside the Dynatrace app. You want to confirm you understood the authoring model before building your first real training.",
+  "yourGoal": "Answer five questions about enablement anatomy, interactive block types, and the Orbital + Dynatrace app runtime.",
+  "tools": [
+    {
+      "label": "GitHub Codespaces"
+    },
+    {
+      "label": "MkDocs Material"
+    },
+    {
+      "label": "Orbital Operations Server"
+    },
+    {
+      "label": "Dynatrace App"
+    }
+  ],
+  "story": {
+    "introduction": "The enablement authoring framework lets Solutions Engineers build interactive, scored trainings that run inside the Dynatrace product. Understanding the authoring model prevents guesswork when creating real content.",
+    "context": "All answers can be found in the template lessons you just completed."
+  },
+  "questions": [
+    {
+      "id": "q1-block-comment",
+      "type": "multiple-choice",
+      "title": "How are interactive blocks added to a lesson page?",
+      "content": "A trainer wants to add a shell-verification check to a lesson. Where does the block definition go?",
+      "options": [
+        {
+          "id": "a",
+          "text": "As an HTML comment `<!-- LAB_QUESTION ... -->` directly inside the lesson markdown file",
+          "isCorrect": true,
+          "explanation": "Correct! All interactive blocks (shell-verification, multiple-choice, dql-verification, STEP_SETUP) are HTML comments embedded in the markdown. The Dynatrace app parser reads them and renders the interactive element."
+        },
+        {
+          "id": "b",
+          "text": "As a separate YAML file referenced by name from the markdown",
+          "isCorrect": false,
+          "explanation": "Only assessment scenarios live in separate files (.assessment/*.json). Inline blocks (shell-verification, multiple-choice, dql-verification) are HTML comments in the markdown."
+        },
+        {
+          "id": "c",
+          "text": "In a JavaScript file loaded by docs/overrides/main.html",
+          "isCorrect": false,
+          "explanation": "main.html loads the RUM snippet — not interactive block definitions."
+        },
+        {
+          "id": "d",
+          "text": "As a custom MkDocs plugin configured in mkdocs.yaml",
+          "isCorrect": false,
+          "explanation": "MkDocs renders the static site. The interactive blocks are parsed by the Dynatrace app at runtime, not by MkDocs."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Interactive blocks are HTML comments in the markdown. MkDocs passes them through as raw HTML; the Dynatrace app parses the YAML inside each comment and renders the interactive element.",
+      "points": 800,
+      "hints": [
+        "Look at the `<!-- LAB_QUESTION ... -->` pattern in any lesson page.",
+        "HTML comments are invisible to MkDocs rendering but readable by the app parser."
+      ]
+    },
+    {
+      "id": "q2-shell-vs-dql",
+      "type": "multiple-choice",
+      "title": "shell-verification vs dql-verification",
+      "content": "A trainer wants to confirm that a Kubernetes pod is running AND that Dynatrace has discovered it. Which block types should they use?",
+      "options": [
+        {
+          "id": "a",
+          "text": "shell-verification for the pod check; dql-verification for the Dynatrace entity check",
+          "isCorrect": true,
+          "explanation": "Correct! shell-verification runs a command in the Orbital container (kubectl, bash, etc.). dql-verification runs a DQL query against the learner's Dynatrace tenant."
+        },
+        {
+          "id": "b",
+          "text": "Two shell-verification blocks — kubectl for the pod, DQL embedded inside the command string",
+          "isCorrect": false,
+          "explanation": "DQL cannot run reliably inside a shell command in the Orbital container. Use dql-verification for tenant-side checks."
+        },
+        {
+          "id": "c",
+          "text": "Two dql-verification blocks — Dynatrace can introspect the container state via entity data",
+          "isCorrect": false,
+          "explanation": "DQL queries Dynatrace observability data, not the container file system. Use shell-verification to verify local cluster state."
+        },
+        {
+          "id": "d",
+          "text": "A boundScenarioId block that combines both checks in one assessment",
+          "isCorrect": false,
+          "explanation": "boundScenarioId binds a full assessment scenario (.assessment/*.json), not individual validation checks. Use inline blocks for step-by-step gates."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "The two verification types target different systems. shell-verification executes in the Orbital container (local cluster state). dql-verification queries the learner's Dynatrace tenant (observability data). Use both to create a complete observability feedback loop.",
+      "points": 1000,
+      "hints": [
+        "Think about where each check runs: inside the container, or in the Dynatrace backend?",
+        "kubectl commands need the container; DQL needs the tenant."
+      ]
+    },
+    {
+      "id": "q3-step-setup",
+      "type": "multiple-choice",
+      "title": "When does STEP_SETUP run?",
+      "content": "A lesson page has a `<!-- STEP_SETUP commands: - generateDynakube -->` block. When does `generateDynakube` execute?",
+      "options": [
+        {
+          "id": "a",
+          "text": "When the learner clicks a button on the page",
+          "isCorrect": false,
+          "explanation": "STEP_SETUP has no visible button. It runs automatically, not on demand."
+        },
+        {
+          "id": "b",
+          "text": "Before the lesson page renders — automatically when the learner navigates to the page",
+          "isCorrect": true,
+          "explanation": "Correct! STEP_SETUP commands execute before the page content is shown. Use it to generate config files, load credentials, or provision resources the lesson depends on."
+        },
+        {
+          "id": "c",
+          "text": "Once when the Codespace container first starts (like post-create.sh)",
+          "isCorrect": false,
+          "explanation": "post-create.sh runs at container creation time. STEP_SETUP is per-page, triggered when the learner navigates to that specific lesson."
+        },
+        {
+          "id": "d",
+          "text": "After the learner completes all checks on the page",
+          "isCorrect": false,
+          "explanation": "STEP_SETUP runs before the page renders, not after checks are completed."
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "STEP_SETUP is a pre-render hook. Commands listed run in the Orbital container before the page content is displayed. This lets you generate configuration files or set up state that the lesson steps depend on.",
+      "points": 800,
+      "hints": [
+        "The word 'SETUP' suggests it prepares something before the lesson begins.",
+        "Compare with the devcontainer postCreateCommand: STEP_SETUP is the per-page equivalent."
+      ]
+    },
+    {
+      "id": "q4-assessment-binding",
+      "type": "multiple-choice",
+      "title": "How do you attach a scored assessment to a lesson page?",
+      "content": "A trainer has created `.assessment/my-lab-quiz.json`. How do they attach it to the last lesson page?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Add `<!-- boundScenarioId: my-lab-quiz retake=false -->` to the markdown file",
+          "isCorrect": true,
+          "explanation": "Correct! The boundScenarioId comment links the assessment scenario (by its JSON `id` field) to the current page. `retake=false` prevents re-takes after passing."
+        },
+        {
+          "id": "b",
+          "text": "Reference the JSON file path in mkdocs.yaml under the `assessments:` key",
+          "isCorrect": false,
+          "explanation": "mkdocs.yaml controls navigation and site metadata, not assessment binding. The binding is in the markdown file."
+        },
+        {
+          "id": "c",
+          "text": "Add `assessment: my-lab-quiz.json` to the page frontmatter",
+          "isCorrect": false,
+          "explanation": "The framework uses HTML comments for all interactive bindings, not YAML frontmatter."
+        },
+        {
+          "id": "d",
+          "text": "Name the JSON file the same as the markdown file and place both in docs/",
+          "isCorrect": false,
+          "explanation": "Assessment JSON files live in the hidden `.assessment/` directory at repo root. The link is through the `id` field, not the file name."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "The `<!-- boundScenarioId: <id> retake=false -->` comment is the only binding mechanism. The `id` value must match the `id` field in the JSON file. Place this comment anywhere on the lesson page — typically at the end, after all shell/DQL checks.",
+      "points": 1000,
+      "hints": [
+        "Look at how kubernetes-101/docs/3-restart-services.md ends.",
+        "The JSON `id` field and the boundScenarioId value must match exactly."
+      ]
+    },
+    {
+      "id": "q5-orbital-role",
+      "type": "multiple-choice",
+      "title": "What does Orbital provide for interactive trainings?",
+      "content": "A learner opens a Dynatrace App training and clicks 'Check Cluster' (a shell-verification button). What system actually executes the `kubectl` command?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The learner's browser — WebAssembly kubectl running client-side",
+          "isCorrect": false,
+          "explanation": "kubectl is not available in the browser. Shell commands execute in a managed container."
+        },
+        {
+          "id": "b",
+          "text": "The Dynatrace App backend — DT runs the command in a shared Dynatrace-managed cluster",
+          "isCorrect": false,
+          "explanation": "Dynatrace does not run shell commands. The Dynatrace App renders the lesson UI; the shell execution happens on the Orbital Operations server."
+        },
+        {
+          "id": "c",
+          "text": "The Orbital Operations server — a dedicated container provisioned for the learner's session runs the command",
+          "isCorrect": true,
+          "explanation": "Correct! Orbital provisions an isolated Docker container for each training session. The Dynatrace App's lesson UI connects to this container via a PTY bridge. Shell checks, kubectl commands, and custom functions all execute inside this container."
+        },
+        {
+          "id": "d",
+          "text": "The learner's GitHub Codespace — the devcontainer handles all command execution",
+          "isCorrect": false,
+          "explanation": "Codespaces and Orbital are two different deployment modes. In the Dynatrace App flow, Orbital provides the container — no Codespace is involved."
+        }
+      ],
+      "correctAnswer": "c",
+      "explanation": "Orbital is the execution backbone. It provisions a per-session container (using Sysbox for nested Docker/K8s support), exposes a PTY bridge for the interactive terminal in the Dynatrace App, and executes all shell-verification commands. The Dynatrace App renders the lesson UI and calls Orbital APIs for shell execution and verification.",
+      "points": 1200,
+      "hints": [
+        "Orbital is at autonomous-enablements.whydevslovedynatrace.com — it hosts containers, not just docs.",
+        "Think about what PTY bridge means: a pseudo-terminal from a remote container exposed through the app."
+      ]
+    }
+  ],
+  "maxScore": 4800,
+  "tags": [
+    "authoring",
+    "enablement",
+    "orbital",
+    "dynatrace-app",
+    "shell-verification",
+    "assessment"
+  ],
+  "learningObjectives": [
+    "Explain where interactive block definitions live in the lesson markdown",
+    "Choose the correct block type for container-side vs tenant-side verification",
+    "Describe when STEP_SETUP commands execute",
+    "Attach a scored assessment scenario to a lesson page",
+    "Explain the role of Orbital in executing shell commands from the Dynatrace App"
+  ]
+}
