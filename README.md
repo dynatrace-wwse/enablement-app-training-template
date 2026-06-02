@@ -8,6 +8,8 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?color=green)](https://github.com/dynatrace-wwse/enablement-app-training-template/blob/main/LICENSE)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-green)](https://dynatrace-wwse.github.io/enablement-app-training-template/)
 
+[![Version](https://img.shields.io/github/v/release/dynatrace-wwse/enablement-app-training-template?color=blueviolet)](https://github.com/dynatrace-wwse/enablement-app-training-template/releases)
+[![Commits](https://img.shields.io/github/commits-since/dynatrace-wwse/enablement-app-training-template/latest?color=ff69b4&include_prereleases)](https://github.com/dynatrace-wwse/enablement-app-training-template/graphs/commit-activity)
 ___
 
 **Trainer-authoring scaffold for building interactive Dynatrace in-app enablement trainings.**
