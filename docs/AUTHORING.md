@@ -4,6 +4,49 @@ This document consolidates schemas, field definitions, gotchas, and canonical pa
 
 ---
 
+## Content types — not only hands-on trainings
+
+The same authoring format produces every kind of training. What changes is the content:
+
+- **Hands-On** — the repo ships a codespaces-framework container (`.devcontainer/devcontainer.json`). The app provisions a **live environment** (Kubernetes + terminal). `shell-verification` and `STEP_SETUP` run in that environment.
+- **Self-paced** — docs-only repo (no `.devcontainer`). Markdown + quizzes, no environment. Use for Learning Bytes, onboarding modules, quizzes.
+
+Delivery is **auto-detected** from the `.devcontainer` presence — you do not declare it.
+
+A single repo can hold **one** training (a top-level `nav` entry points at a file) or **many** (every top-level `nav` entry is a section — each becomes its own training).
+
+---
+
+## Front-matter (catalog metadata) {#front-matter}
+
+Add YAML **front-matter** to a training's **intro page** (the first `nav` entry of a single-training repo; each module's `00-*.md` of a multi-training repo). It powers the app catalog card/table (description, filters) and is invisible to the learner.
+
+```yaml
+---
+description: One-line summary shown on the catalog card/table.
+tags: [kubernetes, observability]
+difficulty: beginner        # beginner | intermediate | advanced | expert
+duration: 90                # minutes
+---
+```
+
+All fields optional. `tags`, `difficulty`, and `duration` drive the catalog filters; `description` shows on the card. MkDocs Material renders this as page metadata (hidden); the app importer (`extractFrontMatter`) strips it before rendering.
+
+---
+
+## Preview locally (with the quiz plugin)
+
+Author repos ship `hooks.py` (the quiz-preview MkDocs plugin) so quizzes render during preview:
+
+```bash
+pip install -r requirements.txt   # mkdocs-material + PyYAML
+mkdocs serve                       # http://127.0.0.1:8000
+```
+
+Each `<!-- LAB_QUESTION -->` shows as a card (question, options with the correct one marked, collapsible explanation) — the same block the app imports and grades.
+
+---
+
 ## shell-verification {#shell-verification}
 
 Runs a shell command in the Orbital container and compares the output to an `expect` condition.
