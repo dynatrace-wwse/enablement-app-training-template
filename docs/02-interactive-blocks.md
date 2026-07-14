@@ -186,11 +186,15 @@ Run this DQL query in **Notebooks** to explore your logs:
 
 ```dql
 fetch logs
+| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
 | filter k8s.namespace.name == "todoapp"
 | filter timestamp > now() - 10m
 | limit 10
 ```
 ````
+
+!!! important "Scope every Grail query to the learner's cluster"
+    `{{DT_SESSION_ID}}` is substituted by the session player with the learner's per-user id (`<user>-<yyyymmdd>`), which the framework also bakes into the session's cluster identity (DynaKube name / `hostGroup`). The `endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` filter is what lets 100 learners run this training against ONE tenant without seeing each other's data — include it in every log/span query, inline or verification. See [AUTHORING → Template variables](AUTHORING.md#template-variables).
 
 ---
 
@@ -207,6 +211,7 @@ question: "Verify Dynatrace is collecting logs from todoapp"
 buttonText: "Check DT Logs"
 dql: |
   fetch logs
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
   | filter k8s.namespace.name == "todoapp"
   | filter timestamp > now() - 10m
   | limit 1
