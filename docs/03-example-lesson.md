@@ -164,11 +164,14 @@ Open **Notebooks** in Dynatrace and run this query to explore your logs:
 
 ```dql
 fetch logs
+| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
 | filter k8s.namespace.name == "todoapp"
 | filter contains(content, "Adding a new todo: ")
 | filter timestamp > now() - 10m
 | limit 5
 ```
+
+The `k8s.cluster.name` filter scopes the query to **your** session's cluster (`{{DT_SESSION_ID}}` resolves to your personal session id) — required whenever several learners share one tenant.
 
 Then validate with the button below:
 
@@ -178,6 +181,7 @@ question: "Verify Dynatrace is collecting logs from the todoapp namespace"
 buttonText: "Check DT Logs"
 dql: |
   fetch logs
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
   | filter k8s.namespace.name == "todoapp"
   | filter contains(content, "Adding a new todo: ")
   | filter timestamp > now() - 10m

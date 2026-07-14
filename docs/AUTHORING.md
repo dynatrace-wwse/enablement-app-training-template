@@ -132,6 +132,24 @@ explanation: "Shown after the learner answers."
 
 ---
 
+## Template variables {#template-variables}
+
+The session player substitutes these placeholders into lesson markdown and `dql-verification` queries before rendering/execution:
+
+| Placeholder | Resolves to | Purpose |
+|---|---|---|
+| `{{DT_SESSION_ID}}` | `<user>-<yyyymmdd>` (e.g. `alice-20260714`) | Per-user Grail-isolation id. The framework bakes the same id into the session's DynaKube name and `hostGroup` (via `DT_HOSTGROUP`), so the learner's cluster identity in the tenant ends with it. |
+
+**The isolation rule:** many learners run the same training against ONE shared tenant (bootcamps run 100+ parallel sessions). Every Grail query — inline ```` ```dql ```` blocks and `dql-verification` questions — MUST scope to the learner's own cluster:
+
+```dql
+| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+```
+
+Use `endsWith` (not `==`): the cluster name is `<repo>-<session-id>` and the repo part may be truncated, but the session id always survives as the suffix. Inside the Orbital container the same id is available to shell steps as `$DT_HOSTGROUP`.
+
+---
+
 ## dql-verification (inline) {#dql-verification-inline}
 
 Runs a DQL query against the learner's Dynatrace tenant and validates the result.
@@ -143,6 +161,7 @@ question: "Human-readable question text"
 buttonText: "Button Label"
 dql: |
   fetch logs
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
   | filter k8s.namespace.name == "my-namespace"
   | filter timestamp > now() - 10m
   | limit 1
@@ -174,6 +193,7 @@ explanation: "What it means when the check passes."
 ```dql
 -- Check any rows returned (use with not-empty)
 fetch logs
+| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
 | filter k8s.namespace.name == "todoapp"
 | filter timestamp > now() - 10m
 | limit 1
@@ -194,6 +214,7 @@ fetch metrics
 - Time-bounded queries prevent false positives from previous training sessions: `filter timestamp > now() - 10m`.
 - The `matchesPhrase` function is fuzzy — use exact `==` comparisons when precision matters.
 - `dql-verification` runs in the learner's tenant, not the Orbital container. Do not reference local filesystem paths.
+- **Always scope log/span queries to the learner's cluster** with `| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` — see [Template variables](#template-variables). Without it, a classmate's session in the same tenant can give a false pass (namespace names like `todoapp` are identical across sessions). Entity queries (`fetch dt.entity.*`) can't always carry the filter — prefer log/metric checks for multi-user trainings.
 
 ---
 
