@@ -753,11 +753,16 @@ explanation: "customFunction ran successfully — custom functions are available
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="sb">```dql</span>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="s">fetch logs</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="s">| filter k8s.namespace.name == &quot;todoapp&quot;</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="s">| filter timestamp &gt; now() - 10m</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="s">| limit 10</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="sb">```</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="s">| filter endsWith(k8s.cluster.name, &quot;{{DT_SESSION_ID}}&quot;)</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="s">| filter k8s.namespace.name == &quot;todoapp&quot;</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="s">| filter timestamp &gt; now() - 10m</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="s">| limit 10</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="sb">```</span>
 </span></code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">Scope every Grail query to the learner's cluster</p>
+<p><code>{{DT_SESSION_ID}}</code> is substituted by the session player with the learner's per-user id (<code>&lt;user&gt;-&lt;yyyymmdd&gt;</code>), which the framework also bakes into the session's cluster identity (DynaKube name / <code>hostGroup</code>). The <code>endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")</code> filter is what lets 100 learners run this training against ONE tenant without seeing each other's data — include it in every log/span query, inline or verification. See <a href="../AUTHORING/#template-variables">AUTHORING → Template variables</a>.</p>
+</div>
 <hr />
 <h2 id="6-dql-verification-query-with-assertion">6. DQL Verification — query with assertion<a class="headerlink" href="#6-dql-verification-query-with-assertion" title="Permanent link">#</a></h2>
 <p>Use when: you want to gate lesson progression on a Dynatrace entity or observability state. The learner's tenant must return a result that matches <code>expect</code>.</p>
@@ -768,14 +773,15 @@ explanation: "customFunction ran successfully — custom functions are available
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>buttonText: &quot;Check DT Logs&quot;
 </span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>dql: |
 </span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  fetch logs
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  | filter k8s.namespace.name == &quot;todoapp&quot;
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  | filter timestamp &gt; now() - 10m
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>  | limit 1
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>expect:
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>  operator: not-empty
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>hint: &quot;Interact with the app first to generate some logs, then wait 2 minutes.&quot;
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>explanation: &quot;Dynatrace is collecting logs — observability is active.&quot;
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>--&gt;
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  | filter endsWith(k8s.cluster.name, &quot;{{DT_SESSION_ID}}&quot;)
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  | filter k8s.namespace.name == &quot;todoapp&quot;
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>  | filter timestamp &gt; now() - 10m
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>  | limit 1
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>expect:
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>  operator: not-empty
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>hint: &quot;Interact with the app first to generate some logs, then wait 2 minutes.&quot;
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>explanation: &quot;Dynatrace is collecting logs — observability is active.&quot;
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>--&gt;
 </span></code></pre></div>
 <p><strong><code>expect.operator: gte</code> with <code>field</code></strong> — passes if a DQL aggregation meets a threshold:</p>
 <div class="language-markdown highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&lt;!-- LAB_QUESTION

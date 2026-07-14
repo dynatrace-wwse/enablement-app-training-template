@@ -572,11 +572,13 @@ explanation: "customFunction ran successfully — custom helpers are working."
 <p>Generate some log data by interacting with the TODO application in the <strong>Apps</strong> tab. Add a new TODO item, then wait 1–2 minutes for Dynatrace to ingest the logs.</p>
 <p>Open <strong>Notebooks</strong> in Dynatrace and run this query to explore your logs:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>fetch logs
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>| filter k8s.namespace.name == &quot;todoapp&quot;
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>| filter contains(content, &quot;Adding a new todo: &quot;)
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>| filter timestamp &gt; now() - 10m
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>| limit 5
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>| filter endsWith(k8s.cluster.name, &quot;{{DT_SESSION_ID}}&quot;)
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>| filter k8s.namespace.name == &quot;todoapp&quot;
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>| filter contains(content, &quot;Adding a new todo: &quot;)
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>| filter timestamp &gt; now() - 10m
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>| limit 5
 </span></code></pre></div>
+<p>The <code>k8s.cluster.name</code> filter scopes the query to <strong>your</strong> session's cluster (<code>{{DT_SESSION_ID}}</code> resolves to your personal session id) — required whenever several learners share one tenant.</p>
 <p>Then validate with the button below:</p>
 <!-- LAB_QUESTION
 type: dql-verification
@@ -584,6 +586,7 @@ question: "Verify Dynatrace is collecting logs from the todoapp namespace"
 buttonText: "Check DT Logs"
 dql: |
   fetch logs
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
   | filter k8s.namespace.name == "todoapp"
   | filter contains(content, "Adding a new todo: ")
   | filter timestamp > now() - 10m
