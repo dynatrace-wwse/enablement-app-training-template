@@ -805,7 +805,8 @@
 <li>Open Notebooks in your Dynatrace tenant</li>
 <li>Run the DQL query manually to see what it returns</li>
 <li>Common fixes:</li>
-<li>Add <code>filter timestamp &gt; now() - 10m</code> to scope to recent data</li>
+<li>Bound the query to recent data with the <code>from:</code> parameter — <code>fetch logs, from:now()-15m</code>. Do <strong>not</strong> use <code>| filter timestamp &gt; …</code> on <code>fetch spans</code>: <code>timestamp</code> is null there, so the query returns nothing and the check fails as an empty result rather than an error</li>
+<li>Check <code>{{DT_SESSION_ID}}</code> actually resolved — run the query in a Notebook with the literal id from <code>echo $DT_HOSTGROUP</code>. An unresolved placeholder is left as literal text and matches nothing</li>
 <li>Generate the expected state first (e.g., create a log entry, restart a pod)</li>
 <li>Check tenant permissions — <code>DT_OPERATOR_TOKEN</code> and <code>DT_INGEST_TOKEN</code> must have the correct scopes</li>
 </ol>

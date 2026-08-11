@@ -398,6 +398,30 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#template-variables-write-one-query-isolate-every-learner" class="md-nav__link">
+    <span class="md-ellipsis">
+      Template variables — write one query, isolate every learner
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Template variables — write one query, isolate every learner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-isolation-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      The isolation rule
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#5-dql-query-inline-read-only" class="md-nav__link">
     <span class="md-ellipsis">
       5. DQL Query — inline read-only
@@ -551,6 +575,30 @@
       4. Custom Helper Functions
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#template-variables-write-one-query-isolate-every-learner" class="md-nav__link">
+    <span class="md-ellipsis">
+      Template variables — write one query, isolate every learner
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Template variables — write one query, isolate every learner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-isolation-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      The isolation rule
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -746,56 +794,116 @@ explanation: "customFunction ran successfully — custom functions are available
 -->
 
 <hr />
+<h2 id="template-variables-write-one-query-isolate-every-learner">Template variables — write one query, isolate every learner<a class="headerlink" href="#template-variables-write-one-query-isolate-every-learner" title="Permanent link">#</a></h2>
+<p>Before you author anything that touches Grail, know these three placeholders. The player substitutes them into your lesson markdown and into every <code>dql-verification</code> query, so one training can run for 100 learners against ONE tenant and each of them sees only their own data.</p>
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Resolves to</th>
+<th>Available in</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{{DT_SESSION_ID}}</code></td>
+<td><code>&lt;user&gt;-&lt;yyyymmdd&gt;</code> — e.g. <code>alice-20260811</code></td>
+<td>every player</td>
+<td><strong>Scoping Grail queries to the learner's own cluster.</strong></td>
+</tr>
+<tr>
+<td><code>{{DT_TENANT}}</code></td>
+<td>tenant URL, no trailing slash</td>
+<td>every player</td>
+<td>Deep links. Not needed in DQL — the query already runs in this tenant.</td>
+</tr>
+<tr>
+<td><code>{{JOB_ID}}</code></td>
+<td>Orbital environment id, <code>enablement-&lt;12hex&gt;</code></td>
+<td>session player only (needs a live environment)</td>
+<td>Support references, the learner's app URL. <strong>Never a DQL filter</strong> — no telemetry is tagged with it.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-isolation-rule">The isolation rule<a class="headerlink" href="#the-isolation-rule" title="Permanent link">#</a></h3>
+<p>The framework names the learner's cluster <code>&lt;repo&gt;-&lt;session-id&gt;</code> and truncates the <strong>repo</strong> part to fit the DynaKube name cap — the session id always survives as the suffix. So every log, span, event and metric query gets this line:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>| filter endsWith(k8s.cluster.name, &quot;{{DT_SESSION_ID}}&quot;)   // correct
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>| filter k8s.cluster.name == &quot;{{DT_SESSION_ID}}&quot;           // never matches
+</span></code></pre></div>
+<p>Leave it out and a classmate's identically-named <code>todoapp</code> namespace can give your learner a false pass.</p>
+<div class="admonition warning">
+<p class="admonition-title">Placeholders do NOT resolve in shell commands</p>
+<p>Substitution reaches lesson markdown and the <code>dql:</code> field only. In a <code>shell-verification</code> <code>command:</code>, a <code>LAB_SOLUTION</code>, or a <code>STEP_SETUP</code>, use the environment variable instead — <code>$DT_HOSTGROUP</code> holds the same value. A <code>{{DT_SESSION_ID}}</code> left in a shell command stays literal and the check fails silently.</p>
+</div>
+<p>An unresolved variable is left as literal text, never replaced with an empty string — <code>endsWith(k8s.cluster.name, "")</code> would match every cluster in the tenant and pass. Full reference, including which fields carry the session id in <code>apponly</code> vs <code>cloudnative</code> mode: <a href="../AUTHORING/#template-variables">AUTHORING → Template variables</a>.</p>
+<hr />
 <h2 id="5-dql-query-inline-read-only">5. DQL Query — inline read-only<a class="headerlink" href="#5-dql-query-inline-read-only" title="Permanent link">#</a></h2>
 <p>Use when: you want to show learners an example DQL query to explore their tenant. No validation required — just document the query in a <code>dql</code> code block.</p>
 <p><strong>How to author:</strong></p>
-<div class="language-markdown highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Run this DQL query in <span class="gs">**Notebooks**</span> to explore your logs:
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="sb">```dql</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="s">fetch logs</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="s">| filter endsWith(k8s.cluster.name, &quot;{{DT_SESSION_ID}}&quot;)</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="s">| filter k8s.namespace.name == &quot;todoapp&quot;</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="s">| filter timestamp &gt; now() - 10m</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="s">| limit 10</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="sb">```</span>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Run this DQL query in <span class="gs">**Notebooks**</span> to explore your logs:
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="sb">```dql</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="s">fetch logs, from:now()-15m</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="s">| filter endsWith(k8s.cluster.name, &quot;{{DT_SESSION_ID}}&quot;)</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="s">| filter k8s.namespace.name == &quot;todoapp&quot;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="s">| limit 10</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="sb">```</span>
 </span></code></pre></div>
-<div class="admonition important">
-<p class="admonition-title">Scope every Grail query to the learner's cluster</p>
-<p><code>{{DT_SESSION_ID}}</code> is substituted by the session player with the learner's per-user id (<code>&lt;user&gt;-&lt;yyyymmdd&gt;</code>), which the framework also bakes into the session's cluster identity (DynaKube name / <code>hostGroup</code>). The <code>endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")</code> filter is what lets 100 learners run this training against ONE tenant without seeing each other's data — include it in every log/span query, inline or verification. See <a href="../AUTHORING/#template-variables">AUTHORING → Template variables</a>.</p>
-</div>
 <hr />
 <h2 id="6-dql-verification-query-with-assertion">6. DQL Verification — query with assertion<a class="headerlink" href="#6-dql-verification-query-with-assertion" title="Permanent link">#</a></h2>
 <p>Use when: you want to gate lesson progression on a Dynatrace entity or observability state. The learner's tenant must return a result that matches <code>expect</code>.</p>
-<p><strong><code>expect.operator: not-empty</code></strong> — passes if DQL returns at least one row:</p>
-<div class="language-markdown highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&lt;!-- LAB_QUESTION
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>type: dql-verification
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>question: &quot;Verify Dynatrace is collecting logs from todoapp&quot;
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>buttonText: &quot;Check DT Logs&quot;
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>dql: |
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  fetch logs
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  | filter endsWith(k8s.cluster.name, &quot;{{DT_SESSION_ID}}&quot;)
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  | filter k8s.namespace.name == &quot;todoapp&quot;
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>  | filter timestamp &gt; now() - 10m
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>  | limit 1
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>expect:
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>  operator: not-empty
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>hint: &quot;Interact with the app first to generate some logs, then wait 2 minutes.&quot;
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>explanation: &quot;Dynatrace is collecting logs — observability is active.&quot;
-</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>--&gt;
-</span></code></pre></div>
-<p><strong><code>expect.operator: gte</code> with <code>field</code></strong> — passes if a DQL aggregation meets a threshold:</p>
+<p><strong>Logs — <code>expect.operator: not-empty</code></strong> passes if DQL returns at least one row. This one is from <code>enablement-kubernetes-101</code>, checking that the learner's <em>own</em> todo produced a log line:</p>
 <div class="language-markdown highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&lt;!-- LAB_QUESTION
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>type: dql-verification
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>question: &quot;Verify Dynatrace discovered the todoapp namespace&quot;
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>buttonText: &quot;Validate&quot;
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>dql: &quot;fetch dt.entity.cloud_application_namespace | filter matchesPhrase(entity.name, \&quot;todoapp\&quot;) | summarize count = count()&quot;
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>expect:
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>  operator: gte
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>  field: count
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>  value: 1
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>hint: &quot;Navigate to Kubernetes in Dynatrace to visually confirm the namespace is visible.&quot;
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>explanation: &quot;Dynatrace discovered the todoapp namespace — entity data is flowing.&quot;
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>--&gt;
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>question: &quot;Verify the log line for your todo reached Dynatrace Grail&quot;
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>buttonText: &quot;Check logs in Grail&quot;
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>dql: |
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>  fetch logs, from:now()-15m
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>  | filter endsWith(k8s.cluster.name, &quot;{{DT_SESSION_ID}}&quot;)
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>  | filter k8s.namespace.name == &quot;todoapp&quot;
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>  | filter contains(content, &quot;Adding a new todo&quot;)
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>  | limit 1
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>expect:
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>  operator: not-empty
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>hint: &quot;Add a todo first. Logs take ~1–2 minutes to reach Grail — wait a moment and check again.&quot;
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>explanation: &quot;Your todo&#39;s log line is in Grail — captured by the log module, with no code change to the application.&quot;
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>--&gt;
+</span></code></pre></div>
+<p><strong>Traces / spans</strong> — same shape, <code>fetch spans</code>, filtered to one endpoint:</p>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&lt;!-- LAB_QUESTION
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>type: dql-verification
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>question: &quot;Verify the trace for your todo request reached Dynatrace Grail&quot;
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>buttonText: &quot;Check traces in Grail&quot;
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>dql: |
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>  fetch spans, from:now()-15m
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>  | filter endsWith(k8s.cluster.name, &quot;{{DT_SESSION_ID}}&quot;)
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>  | filter k8s.namespace.name == &quot;todoapp&quot;
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>  | filter span.name == &quot;POST /todos&quot;
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>  | limit 1
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>expect:
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>  operator: not-empty
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>hint: &quot;Traces exist only for pods restarted AFTER the DynaKube was applied. Restart the workload, add another todo, then wait ~1–2 minutes.&quot;
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>explanation: &quot;The trace is in Grail — the request was recorded from inside the application process.&quot;
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>--&gt;
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title"><code>fetch spans</code>: bound it with <code>from:</code>, never <code>filter timestamp</code></p>
+<p>On <code>fetch spans</code> the <code>timestamp</code> field is <strong>null</strong> — a span carries <code>start_time</code> / <code>end_time</code>. <code>| filter timestamp &gt; now()-15m</code> therefore returns nothing, and the check fails as an <em>empty result rather than an error</em>, which looks exactly like "the data never arrived". Use the <code>from:</code> parameter, as above; it works for <code>fetch logs</code> too. <code>service.name</code> is null on spans as well (it is an OpenTelemetry resource attribute) — filter on <code>span.name</code> or <code>endpoint.name</code>.</p>
+</div>
+<p><strong><code>expect.operator: gte</code> with <code>field</code></strong> — passes if a DQL aggregation meets a threshold:</p>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&lt;!-- LAB_QUESTION
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>type: dql-verification
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>question: &quot;Verify Dynatrace discovered the todoapp namespace&quot;
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>buttonText: &quot;Validate&quot;
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>dql: &quot;fetch dt.entity.cloud_application_namespace | filter matchesPhrase(entity.name, \&quot;todoapp\&quot;) | summarize count = count()&quot;
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>expect:
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  operator: gte
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>  field: count
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>  value: 1
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>hint: &quot;Navigate to Kubernetes in Dynatrace to visually confirm the namespace is visible.&quot;
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>explanation: &quot;Dynatrace discovered the todoapp namespace — entity data is flowing.&quot;
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>--&gt;
 </span></code></pre></div>
 <!-- LAB_QUESTION
 type: dql-verification
@@ -814,38 +922,38 @@ explanation: "Dynatrace connection verified — your tenant is reachable and ret
 <h2 id="7-assessment-multiple-choice-dql-scored">7. Assessment (multiple-choice + DQL, scored)<a class="headerlink" href="#7-assessment-multiple-choice-dql-scored" title="Permanent link">#</a></h2>
 <p>Use when: you want to formally score the learner at the end of a lesson section. Create a <code>.assessment/&lt;id&gt;.json</code> file and bind it with <code>boundScenarioId</code>.</p>
 <p><strong>Step 1 — Create the assessment JSON:</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">// .assessment/my-training-quiz.json</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="p">{</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">&quot;templateVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-training-quiz&quot;</span><span class="p">,</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CO&quot;</span><span class="p">,</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Training — Knowledge Check&quot;</span><span class="p">,</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Validate understanding of key concepts.&quot;</span><span class="p">,</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span><span class="nt">&quot;difficulty&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;beginner&quot;</span><span class="p">,</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">  </span><span class="nt">&quot;estimatedTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">  </span><span class="nt">&quot;questions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="p">{</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;q1&quot;</span><span class="p">,</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;multiple-choice&quot;</span><span class="p">,</span>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">      </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Question title&quot;</span><span class="p">,</span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">      </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Question body text.&quot;</span><span class="p">,</span>
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">      </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Correct answer&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isCorrect&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;explanation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Why it&#39;s correct.&quot;</span><span class="w"> </span><span class="p">},</span>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Wrong answer&quot;</span><span class="p">,</span><span class="w">   </span><span class="nt">&quot;isCorrect&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;explanation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Why it&#39;s wrong.&quot;</span><span class="w"> </span><span class="p">}</span>
-</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">      </span><span class="p">],</span>
-</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">      </span><span class="nt">&quot;correctAnswer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">      </span><span class="nt">&quot;explanation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Full explanation shown after answering.&quot;</span><span class="p">,</span>
-</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">      </span><span class="nt">&quot;points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span>
-</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">      </span><span class="nt">&quot;hints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;First hint.&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Second hint.&quot;</span><span class="p">]</span>
-</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="w">  </span><span class="nt">&quot;maxScore&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span>
-</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">  </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;my-training&quot;</span><span class="p">],</span>
-</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">  </span><span class="nt">&quot;learningObjectives&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;State what the learner gains.&quot;</span><span class="p">]</span>
-</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">// .assessment/my-training-quiz.json</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="p">{</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="nt">&quot;templateVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-training-quiz&quot;</span><span class="p">,</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CO&quot;</span><span class="p">,</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Training — Knowledge Check&quot;</span><span class="p">,</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Validate understanding of key concepts.&quot;</span><span class="p">,</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">  </span><span class="nt">&quot;difficulty&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;beginner&quot;</span><span class="p">,</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">  </span><span class="nt">&quot;estimatedTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">  </span><span class="nt">&quot;questions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;q1&quot;</span><span class="p">,</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;multiple-choice&quot;</span><span class="p">,</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">      </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Question title&quot;</span><span class="p">,</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="w">      </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Question body text.&quot;</span><span class="p">,</span>
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="w">      </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Correct answer&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isCorrect&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;explanation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Why it&#39;s correct.&quot;</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Wrong answer&quot;</span><span class="p">,</span><span class="w">   </span><span class="nt">&quot;isCorrect&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;explanation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Why it&#39;s wrong.&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="w">      </span><span class="p">],</span>
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="w">      </span><span class="nt">&quot;correctAnswer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="w">      </span><span class="nt">&quot;explanation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Full explanation shown after answering.&quot;</span><span class="p">,</span>
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="w">      </span><span class="nt">&quot;points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span>
+</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a><span class="w">      </span><span class="nt">&quot;hints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;First hint.&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Second hint.&quot;</span><span class="p">]</span>
+</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-13-26"><a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a><span class="w">  </span><span class="nt">&quot;maxScore&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span>
+</span><span id="__span-13-27"><a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a><span class="w">  </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;my-training&quot;</span><span class="p">],</span>
+</span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a><span class="w">  </span><span class="nt">&quot;learningObjectives&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;State what the learner gains.&quot;</span><span class="p">]</span>
+</span><span id="__span-13-29"><a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong>Step 2 — Bind to a lesson page:</strong></p>
-<div class="language-markdown highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&lt;!-- boundScenarioId: my-training-quiz retake=false --&gt;
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>&lt;!-- boundScenarioId: my-training-quiz retake=false --&gt;
 </span></code></pre></div>
 <p>This template's example assessment is bound below. Click through it to see the learner experience:</p>
 <!-- boundScenarioId: template-authoring-fundamentals retake=true -->
@@ -853,17 +961,17 @@ explanation: "Dynatrace connection verified — your tenant is reachable and ret
 <hr />
 <h2 id="8-qa-knowledge-check-inline-multiple-choice">8. Q&amp;A / Knowledge Check (inline multiple-choice)<a class="headerlink" href="#8-qa-knowledge-check-inline-multiple-choice" title="Permanent link">#</a></h2>
 <p>Use when: you want a lightweight inline question without the overhead of a full assessment scenario. No separate JSON file needed.</p>
-<div class="language-markdown highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&lt;!-- LAB_QUESTION
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>type: multiple-choice
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>question: &quot;What is the role of Orbital in the training runtime?&quot;
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>options:
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;It provisions and runs the training container, exposing a PTY bridge for the interactive terminal&quot;
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;It hosts the GitHub Pages site where the lesson markdown is served&quot;
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;It is the Dynatrace app plugin that renders lesson content&quot;
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;It manages the GitHub Actions workflow that deploys the training&quot;
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>correct: 0
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>explanation: &quot;Orbital is the execution backend. It runs the container, exposes the PTY terminal, and executes shell-verification commands on behalf of the Dynatrace app.&quot;
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>--&gt;
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>&lt;!-- LAB_QUESTION
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>type: multiple-choice
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>question: &quot;What is the role of Orbital in the training runtime?&quot;
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>options:
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;It provisions and runs the training container, exposing a PTY bridge for the interactive terminal&quot;
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;It hosts the GitHub Pages site where the lesson markdown is served&quot;
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;It is the Dynatrace app plugin that renders lesson content&quot;
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;It manages the GitHub Actions workflow that deploys the training&quot;
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>correct: 0
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>explanation: &quot;Orbital is the execution backend. It runs the container, exposes the PTY terminal, and executes shell-verification commands on behalf of the Dynatrace app.&quot;
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>--&gt;
 </span></code></pre></div>
 <!-- LAB_QUESTION
 type: multiple-choice
