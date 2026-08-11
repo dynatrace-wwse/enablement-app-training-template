@@ -119,10 +119,10 @@ type: dql-verification
 question: "Verify Dynatrace is collecting logs from the todoapp namespace"
 buttonText: "Check DT Logs"
 dql: |
-  fetch logs
+  fetch logs, from:now()-15m
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
   | filter k8s.namespace.name == "todoapp"
   | filter contains(content, "Adding a new todo: ")
-  | filter timestamp > now() - 10m
   | limit 1
 expect:
   operator: not-empty

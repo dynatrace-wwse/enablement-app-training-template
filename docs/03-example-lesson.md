@@ -163,11 +163,10 @@ Generate some log data by interacting with the TODO application in the **Apps** 
 Open **Notebooks** in Dynatrace and run this query to explore your logs:
 
 ```dql
-fetch logs
+fetch logs, from:now()-15m
 | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
 | filter k8s.namespace.name == "todoapp"
 | filter contains(content, "Adding a new todo: ")
-| filter timestamp > now() - 10m
 | limit 5
 ```
 
@@ -180,16 +179,33 @@ type: dql-verification
 question: "Verify Dynatrace is collecting logs from the todoapp namespace"
 buttonText: "Check DT Logs"
 dql: |
-  fetch logs
+  fetch logs, from:now()-15m
   | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
   | filter k8s.namespace.name == "todoapp"
   | filter contains(content, "Adding a new todo: ")
-  | filter timestamp > now() - 10m
   | limit 1
 expect:
   operator: not-empty
 hint: "Open the TODO app in the Apps tab, create a new item, then wait 2 minutes before clicking this button."
 explanation: "Dynatrace is collecting logs from todoapp — full observability is active."
+-->
+
+The same request also produced a trace. `fetch spans` needs the `from:` parameter — a span's `timestamp` field is null, so a `| filter timestamp > …` line would return nothing and this check would fail as an empty result:
+
+<!-- LAB_QUESTION
+type: dql-verification
+question: "Verify the trace for your TODO request reached Grail"
+buttonText: "Check DT Traces"
+dql: |
+  fetch spans, from:now()-15m
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+  | filter k8s.namespace.name == "todoapp"
+  | filter span.name == "POST /todos"
+  | limit 1
+expect:
+  operator: not-empty
+hint: "Traces exist only for pods restarted after the DynaKube was applied. Restart the workload, add another TODO, then wait ~2 minutes."
+explanation: "The trace is in Grail — the request was recorded from inside the application process."
 -->
 
 Explore your services:

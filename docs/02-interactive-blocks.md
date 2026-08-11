@@ -175,6 +175,34 @@ explanation: "customFunction ran successfully — custom functions are available
 
 ---
 
+## Template variables — write one query, isolate every learner
+
+Before you author anything that touches Grail, know these three placeholders. The player substitutes them into your lesson markdown and into every `dql-verification` query, so one training can run for 100 learners against ONE tenant and each of them sees only their own data.
+
+| Placeholder | Resolves to | Available in | Use it for |
+|---|---|---|---|
+| `{{DT_SESSION_ID}}` | `<user>-<yyyymmdd>` — e.g. `alice-20260811` | every player | **Scoping Grail queries to the learner's own cluster.** |
+| `{{DT_TENANT}}` | tenant URL, no trailing slash | every player | Deep links. Not needed in DQL — the query already runs in this tenant. |
+| `{{JOB_ID}}` | Orbital environment id, `enablement-<12hex>` | session player only (needs a live environment) | Support references, the learner's app URL. **Never a DQL filter** — no telemetry is tagged with it. |
+
+### The isolation rule
+
+The framework names the learner's cluster `<repo>-<session-id>` and truncates the **repo** part to fit the DynaKube name cap — the session id always survives as the suffix. So every log, span, event and metric query gets this line:
+
+```dql
+| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")   // correct
+| filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
+```
+
+Leave it out and a classmate's identically-named `todoapp` namespace can give your learner a false pass.
+
+!!! warning "Placeholders do NOT resolve in shell commands"
+    Substitution reaches lesson markdown and the `dql:` field only. In a `shell-verification` `command:`, a `LAB_SOLUTION`, or a `STEP_SETUP`, use the environment variable instead — `$DT_HOSTGROUP` holds the same value. A `{{DT_SESSION_ID}}` left in a shell command stays literal and the check fails silently.
+
+An unresolved variable is left as literal text, never replaced with an empty string — `endsWith(k8s.cluster.name, "")` would match every cluster in the tenant and pass. Full reference, including which fields carry the session id in `apponly` vs `cloudnative` mode: [AUTHORING → Template variables](AUTHORING.md#template-variables).
+
+---
+
 ## 5. DQL Query — inline read-only
 
 Use when: you want to show learners an example DQL query to explore their tenant. No validation required — just document the query in a `dql` code block.
@@ -185,16 +213,12 @@ Use when: you want to show learners an example DQL query to explore their tenant
 Run this DQL query in **Notebooks** to explore your logs:
 
 ```dql
-fetch logs
+fetch logs, from:now()-15m
 | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
 | filter k8s.namespace.name == "todoapp"
-| filter timestamp > now() - 10m
 | limit 10
 ```
 ````
-
-!!! important "Scope every Grail query to the learner's cluster"
-    `{{DT_SESSION_ID}}` is substituted by the session player with the learner's per-user id (`<user>-<yyyymmdd>`), which the framework also bakes into the session's cluster identity (DynaKube name / `hostGroup`). The `endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` filter is what lets 100 learners run this training against ONE tenant without seeing each other's data — include it in every log/span query, inline or verification. See [AUTHORING → Template variables](AUTHORING.md#template-variables).
 
 ---
 
@@ -202,25 +226,48 @@ fetch logs
 
 Use when: you want to gate lesson progression on a Dynatrace entity or observability state. The learner's tenant must return a result that matches `expect`.
 
-**`expect.operator: not-empty`** — passes if DQL returns at least one row:
+**Logs — `expect.operator: not-empty`** passes if DQL returns at least one row. This one is from `enablement-kubernetes-101`, checking that the learner's *own* todo produced a log line:
 
 ```markdown
 <!-- LAB_QUESTION
 type: dql-verification
-question: "Verify Dynatrace is collecting logs from todoapp"
-buttonText: "Check DT Logs"
+question: "Verify the log line for your todo reached Dynatrace Grail"
+buttonText: "Check logs in Grail"
 dql: |
-  fetch logs
+  fetch logs, from:now()-15m
   | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
   | filter k8s.namespace.name == "todoapp"
-  | filter timestamp > now() - 10m
+  | filter contains(content, "Adding a new todo")
   | limit 1
 expect:
   operator: not-empty
-hint: "Interact with the app first to generate some logs, then wait 2 minutes."
-explanation: "Dynatrace is collecting logs — observability is active."
+hint: "Add a todo first. Logs take ~1–2 minutes to reach Grail — wait a moment and check again."
+explanation: "Your todo's log line is in Grail — captured by the log module, with no code change to the application."
 -->
 ```
+
+**Traces / spans** — same shape, `fetch spans`, filtered to one endpoint:
+
+```markdown
+<!-- LAB_QUESTION
+type: dql-verification
+question: "Verify the trace for your todo request reached Dynatrace Grail"
+buttonText: "Check traces in Grail"
+dql: |
+  fetch spans, from:now()-15m
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+  | filter k8s.namespace.name == "todoapp"
+  | filter span.name == "POST /todos"
+  | limit 1
+expect:
+  operator: not-empty
+hint: "Traces exist only for pods restarted AFTER the DynaKube was applied. Restart the workload, add another todo, then wait ~1–2 minutes."
+explanation: "The trace is in Grail — the request was recorded from inside the application process."
+-->
+```
+
+!!! warning "`fetch spans`: bound it with `from:`, never `filter timestamp`"
+    On `fetch spans` the `timestamp` field is **null** — a span carries `start_time` / `end_time`. `| filter timestamp > now()-15m` therefore returns nothing, and the check fails as an *empty result rather than an error*, which looks exactly like "the data never arrived". Use the `from:` parameter, as above; it works for `fetch logs` too. `service.name` is null on spans as well (it is an OpenTelemetry resource attribute) — filter on `span.name` or `endpoint.name`.
 
 **`expect.operator: gte` with `field`** — passes if a DQL aggregation meets a threshold:
 

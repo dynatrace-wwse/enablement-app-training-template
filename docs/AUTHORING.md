@@ -134,19 +134,116 @@ explanation: "Shown after the learner answers."
 
 ## Template variables {#template-variables}
 
-The session player substitutes these placeholders into lesson markdown and `dql-verification` queries before rendering/execution:
+A placeholder written as `{{NAME}}` is substituted by the player *before* the lesson renders and *before* a `dql-verification` query executes. They are what makes a training multi-learner safe: 100 people run the same lesson against ONE Dynatrace tenant, and every query still returns only that learner's data.
 
-| Placeholder | Resolves to | Purpose |
-|---|---|---|
-| `{{DT_SESSION_ID}}` | `<user>-<yyyymmdd>` (e.g. `alice-20260714`) | Per-user Grail-isolation id. The framework bakes the same id into the session's DynaKube name and `hostGroup` (via `DT_HOSTGROUP`), so the learner's cluster identity in the tenant ends with it. |
+### The placeholders
 
-**The isolation rule:** many learners run the same training against ONE shared tenant (bootcamps run 100+ parallel sessions). Every Grail query — inline ```` ```dql ```` blocks and `dql-verification` questions — MUST scope to the learner's own cluster:
+| Placeholder | Resolves to | Available in | Use it for |
+|---|---|---|---|
+| `{{DT_SESSION_ID}}` | `<user>-<yyyymmdd>` — e.g. `alice-20260811` | every player | Scoping Grail queries to the learner's own cluster. |
+| `{{DT_TENANT}}` | tenant URL, no trailing slash — e.g. `https://abc12345.apps.dynatrace.com` | every player | Deep links into apps and dashboards. **Not needed in DQL** — the query already runs against this tenant. |
+| `{{JOB_ID}}` | Orbital environment id — e.g. `enablement-9f3a1c0d2b77` | session player only (needs a live environment) | Support references, the learner's own app URL. **Never a DQL filter** — nothing tags telemetry with it. |
 
-```dql
-| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+That is the whole set. An unknown name is left alone, so inventing `{{MY_VAR}}` renders the literal text to the learner.
+
+!!! note "`(placeholder)` in a `dt-app` link is something else"
+    `[dt-app|dynatrace.kubernetes|Open Kubernetes App](placeholder)` uses the word *placeholder* as a dummy markdown href — the app rewrites it. It has nothing to do with `{{...}}` template variables. See [dt-app deep links](#dt-app).
+
+### Where substitution happens — and where it does not
+
+| Location | Substituted? |
+|---|---|
+| Lesson markdown — prose, links, ```` ```dql ```` blocks | ✅ |
+| `dql:` field of a `dql-verification` (inline **and** in `.assessment/*.json`) | ✅ |
+| `command:` of a `shell-verification` | ❌ |
+| `LAB_SOLUTION` `commands:` / `verify:` | ❌ |
+| `STEP_SETUP` `commands:` | ❌ |
+
+Anything that executes **inside the learner's container** reads the id from the environment instead:
+
+```bash
+# in a shell-verification command, LAB_SOLUTION, or my_functions.sh
+echo "$DT_HOSTGROUP"              # injected by Orbital, same value
+source .devcontainer/util/source_framework.sh && getDtSessionId
 ```
 
-Use `endsWith` (not `==`): the cluster name is `<repo>-<session-id>` and the repo part may be truncated, but the session id always survives as the suffix. Inside the Orbital container the same id is available to shell steps as `$DT_HOSTGROUP`.
+A `{{DT_SESSION_ID}}` left in a `command:` stays literal, and the check then fails *silently* — a grep for `{{DT_SESSION_ID}}` simply matches nothing.
+
+### Substitution rules
+
+- **Uppercase only.** The pattern is `[A-Z][A-Z0-9_]*`, so mkdocs/jinja macros such as `{{ config.site_name }}` are never touched.
+- **Inner whitespace tolerated:** `{{DT_SESSION_ID}}` and `{{ DT_SESSION_ID }}` are equivalent.
+- **An unresolved variable stays literal — it is never replaced with an empty string.** This is deliberate. `endsWith(k8s.cluster.name, "")` matches EVERY cluster, so an empty substitution would pass a verification against a classmate's data. Seeing a literal `{{JOB_ID}}` on the page means "no live environment here", not "empty".
+
+### How the session id reaches Grail
+
+The framework derives the same id inside the container (`getDtSessionId`) and names the cluster `<repo>-<session-id>`, truncating the **repo** part so the whole fits the DynaKube name cap (38 chars; 37 with telemetry ingest, 35 with KSPM, 31 with extensions). The session id always survives as the suffix — the repo part may not. Therefore:
+
+```dql
+| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")   // correct
+| filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
+```
+
+| Field | Carries the session id? | Notes |
+|---|---|---|
+| `k8s.cluster.name` | ✅ on logs, spans, events and metrics from the learner's cluster | The field to filter on. |
+| `dt.host_group.name` | only in `cloudnative` DynaKube mode | A k3d training runs `apponly` (k3d cannot host the full OneAgent cleanly) and `apponly` emits no hostGroup. Do not rely on it. |
+| `dt.entity.*` | ❌ | Entity queries cannot carry the filter — prefer logs/spans/metrics in a multi-learner training. |
+
+### Example — logs
+
+From `enablement-kubernetes-101`, "verify my todo's log line arrived":
+
+```markdown
+<!-- LAB_QUESTION
+type: dql-verification
+question: "Verify the log line for your todo reached Dynatrace Grail"
+buttonText: "Check logs in Grail"
+dql: |
+  fetch logs, from:now()-15m
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+  | filter k8s.namespace.name == "todoapp"
+  | filter contains(content, "Adding a new todo")
+  | limit 1
+expect:
+  operator: not-empty
+hint: "Add a todo first. Logs take ~1–2 minutes to reach Grail — wait a moment and check again."
+explanation: "Your todo's log line is in Grail — captured by the log module, with no code change to the application."
+-->
+```
+
+### Example — traces / spans
+
+```markdown
+<!-- LAB_QUESTION
+type: dql-verification
+question: "Verify the trace for your todo request reached Dynatrace Grail"
+buttonText: "Check traces in Grail"
+dql: |
+  fetch spans, from:now()-15m
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+  | filter k8s.namespace.name == "todoapp"
+  | filter span.name == "POST /todos"
+  | limit 1
+expect:
+  operator: not-empty
+hint: "Traces exist only for pods restarted AFTER the DynaKube was applied. Restart the workload, add another todo, then wait ~1–2 minutes."
+explanation: "The trace is in Grail — the request was recorded from inside the application process."
+-->
+```
+
+!!! warning "`fetch spans`: bound it with `from:`, never `filter timestamp`"
+    On `fetch spans` the `timestamp` field is **null** — a span has `start_time` / `end_time`. So `| filter timestamp > now()-15m` returns nothing, and the verification fails as an *empty result rather than an error*, which looks identical to "the data never arrived". Use the `from:` parameter (it works for `fetch logs` too). `service.name` is null on spans as well — it is an OpenTelemetry resource attribute — so filter on `span.name` or `endpoint.name`.
+
+### Example — a link with `{{DT_TENANT}}`
+
+```markdown
+Open [Distributed Traces]({{DT_TENANT}}/ui/apps/dynatrace.distributedtraces) and search for your `POST /todos` span.
+```
+
+### Testing your queries
+
+The nightly training-test validates a `dql-verification` **structurally only — it never executes the query.** A wrong field name, a `timestamp` filter on spans, or a typo in the namespace passes CI and fails the learner. Verify by hand: open a Notebook in the training tenant, paste the query with your own session id in place of `{{DT_SESSION_ID}}` (find it with `echo $DT_HOSTGROUP` in the environment's Terminal tab), and confirm it returns rows.
 
 ---
 
@@ -160,10 +257,9 @@ type: dql-verification
 question: "Human-readable question text"
 buttonText: "Button Label"
 dql: |
-  fetch logs
+  fetch logs, from:now()-15m
   | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
   | filter k8s.namespace.name == "my-namespace"
-  | filter timestamp > now() - 10m
   | limit 1
 expect:
   operator: not-empty | gt | gte | eq
@@ -192,10 +288,15 @@ explanation: "What it means when the check passes."
 
 ```dql
 -- Check any rows returned (use with not-empty)
-fetch logs
+fetch logs, from:now()-15m
 | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
 | filter k8s.namespace.name == "todoapp"
-| filter timestamp > now() - 10m
+| limit 1
+
+-- Same for traces; span.timestamp is null, so bound with from: only
+fetch spans, from:now()-15m
+| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+| filter span.name == "POST /todos"
 | limit 1
 
 -- Count entities (use with gte, field: count, value: 1)
@@ -211,7 +312,7 @@ fetch metrics
 
 ### Gotchas
 
-- Time-bounded queries prevent false positives from previous training sessions: `filter timestamp > now() - 10m`.
+- Time-bound every query so a previous training session can't give a false pass: `fetch logs, from:now()-15m`. Use the `from:` parameter rather than `| filter timestamp > …` — it is the only form that works on `fetch spans`, where `timestamp` is null.
 - The `matchesPhrase` function is fuzzy — use exact `==` comparisons when precision matters.
 - `dql-verification` runs in the learner's tenant, not the Orbital container. Do not reference local filesystem paths.
 - **Always scope log/span queries to the learner's cluster** with `| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` — see [Template variables](#template-variables). Without it, a classmate's session in the same tenant can give a false pass (namespace names like `todoapp` are identical across sessions). Entity queries (`fetch dt.entity.*`) can't always carry the filter — prefer log/metric checks for multi-user trainings.
@@ -373,6 +474,14 @@ Full schema for `.assessment/<id>.json`:
   ]
 }
 ```
+
+[Template variables](#template-variables) are substituted in an assessment's `dql` field exactly as they are inline, so a scoped log check works here too — note the escaped quotes required by JSON:
+
+```json
+"dql": "fetch logs, from:now()-15m | filter endsWith(k8s.cluster.name, \"{{DT_SESSION_ID}}\") | filter k8s.namespace.name == \"todoapp\" | limit 1"
+```
+
+The `fetch dt.entity.*` example above is the exception that *cannot* be scoped — entity queries carry no `k8s.cluster.name`. In a training several learners take at once, prefer a logs/spans/metrics check over an entity count.
 
 ### Points guidelines
 

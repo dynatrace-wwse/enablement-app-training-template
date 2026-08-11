@@ -182,7 +182,8 @@ Both modes use the same framework functions. A training that works in Codespaces
 1. Open Notebooks in your Dynatrace tenant
 2. Run the DQL query manually to see what it returns
 3. Common fixes:
-   - Add `filter timestamp > now() - 10m` to scope to recent data
+   - Bound the query to recent data with the `from:` parameter — `fetch logs, from:now()-15m`. Do **not** use `| filter timestamp > …` on `fetch spans`: `timestamp` is null there, so the query returns nothing and the check fails as an empty result rather than an error
+   - Check `{{DT_SESSION_ID}}` actually resolved — run the query in a Notebook with the literal id from `echo $DT_HOSTGROUP`. An unresolved placeholder is left as literal text and matches nothing
    - Generate the expected state first (e.g., create a log entry, restart a pod)
    - Check tenant permissions — `DT_OPERATOR_TOKEN` and `DT_INGEST_TOKEN` must have the correct scopes
 
