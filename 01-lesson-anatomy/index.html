@@ -716,7 +716,7 @@
 <h2 id="lesson-file-structure">Lesson file structure<a class="headerlink" href="#lesson-file-structure" title="Permanent link">#</a></h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docs/
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  index.md                  ← Welcome page (nav entry 1)
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  00-getting-started.md     ← Lesson 0 (this template&#39;s orientation)
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  00-getting-started.md     ← Lesson 0 (this template's orientation)
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  01-lesson-anatomy.md      ← Lesson 1 (this file)
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  02-interactive-blocks.md  ← Lesson 2
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  03-example-lesson.md      ← Lesson 3
@@ -774,43 +774,43 @@ type: dql-verification
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>```markdown
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>&lt;!-- LAB_QUESTION
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>type: shell-verification
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>question: &quot;Verify the cluster node is Ready&quot;
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>buttonText: &quot;Check Cluster&quot;
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>command: &quot;kubectl get nodes --no-headers 2&gt;/dev/null | grep -c &#39; Ready&#39;&quot;
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>question: "Verify the cluster node is Ready"
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>buttonText: "Check Cluster"
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>command: "kubectl get nodes --no-headers 2&gt;/dev/null | grep -c ' Ready'"
 </span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>expect:
 </span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>  operator: gt
 </span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>  value: 0
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>hint: &quot;Wait 30 seconds after the environment starts and try again.&quot;
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>explanation: &quot;Cluster node is Ready — you are good to proceed.&quot;
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>hint: "Wait 30 seconds after the environment starts and try again."
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>explanation: "Cluster node is Ready — you are good to proceed."
 </span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>--&gt;
 </span></code></pre></div>
 <h3 id="multiple-choice-inline-knowledge-check"><code>multiple-choice</code> — inline knowledge check<a class="headerlink" href="#multiple-choice-inline-knowledge-check" title="Permanent link">#</a></h3>
 <div class="language-markdown highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&lt;!-- LAB_QUESTION
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>type: multiple-choice
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>question: &quot;What does <span class="sb">`kubectl rollout restart`</span> do?&quot;
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>question: "What does <span class="sb">`kubectl rollout restart`</span> do?"
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>options:
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;Triggers a rolling restart of all pods in a deployment — new pods start before old ones terminate&quot;
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;Deletes all pods in the namespace immediately&quot;
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;Reloads the Kubernetes API server configuration&quot;
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;Restarts the k3d cluster host process&quot;
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>"Triggers a rolling restart of all pods in a deployment — new pods start before old ones terminate"
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>"Deletes all pods in the namespace immediately"
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>"Reloads the Kubernetes API server configuration"
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>"Restarts the k3d cluster host process"
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>correct: 0
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>explanation: &quot;A rolling restart replaces pods gradually, keeping the application available throughout.&quot;
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>explanation: "A rolling restart replaces pods gradually, keeping the application available throughout."
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>--&gt;
 </span></code></pre></div>
 <h3 id="dql-verification-runs-a-dql-query-against-the-learners-dynatrace-tenant"><code>dql-verification</code> — runs a DQL query against the learner's Dynatrace tenant<a class="headerlink" href="#dql-verification-runs-a-dql-query-against-the-learners-dynatrace-tenant" title="Permanent link">#</a></h3>
 <div class="language-markdown highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&lt;!-- LAB_QUESTION
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>type: dql-verification
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>question: &quot;Verify Dynatrace is collecting logs from your namespace&quot;
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>buttonText: &quot;Check DT Logs&quot;
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>question: "Verify Dynatrace is collecting logs from your namespace"
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>buttonText: "Check DT Logs"
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>dql: |
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  fetch logs, from:now()-15m
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  | filter endsWith(k8s.cluster.name, &quot;{{DT_SESSION_ID}}&quot;)
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  | filter k8s.namespace.name == &quot;my-namespace&quot;
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  | filter k8s.namespace.name == "my-namespace"
 </span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  | limit 1
 </span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>expect:
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>  operator: not-empty
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>hint: &quot;Generate some logs first by interacting with the app, then wait 2 minutes.&quot;
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>explanation: &quot;Dynatrace is collecting logs from your namespace.&quot;
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>hint: "Generate some logs first by interacting with the app, then wait 2 minutes."
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>explanation: "Dynatrace is collecting logs from your namespace."
 </span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>--&gt;
 </span></code></pre></div>
 <h3 id="step_setup-runs-functions-before-the-page-renders-no-button-shown"><code>STEP_SETUP</code> — runs functions before the page renders (no button shown)<a class="headerlink" href="#step_setup-runs-functions-before-the-page-renders-no-button-shown" title="Permanent link">#</a></h3>
@@ -860,19 +860,19 @@ type: dql-verification
 <p>Every lesson file must be listed in <code>mkdocs.yaml</code> nav or it will not appear in the lesson menu:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># mkdocs.yaml</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">INHERIT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mkdocs-base.yaml</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nt">site_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Dynatrace</span><span class="nv"> </span><span class="s">Enablement</span><span class="nv"> </span><span class="s">Lab:</span><span class="nv"> </span><span class="s">My</span><span class="nv"> </span><span class="s">Training&quot;</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nt">repo_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;View</span><span class="nv"> </span><span class="s">Code</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">GitHub&quot;</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nt">repo_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://github.com/dynatrace-wwse/my-training-repo&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nt">site_name</span><span class="p">:</span><span class="w"> </span><span class="s">"Dynatrace</span><span class="nv"> </span><span class="s">Enablement</span><span class="nv"> </span><span class="s">Lab:</span><span class="nv"> </span><span class="s">My</span><span class="nv"> </span><span class="s">Training"</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nt">repo_name</span><span class="p">:</span><span class="w"> </span><span class="s">"View</span><span class="nv"> </span><span class="s">Code</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">GitHub"</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nt">repo_url</span><span class="p">:</span><span class="w"> </span><span class="s">"https://github.com/dynatrace-wwse/my-training-repo"</span>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nt">nav</span><span class="p">:</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Welcome&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">index.md</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;00.</span><span class="nv"> </span><span class="s">Getting</span><span class="nv"> </span><span class="s">Started&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">00-getting-started.md</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;01.</span><span class="nv"> </span><span class="s">Lesson</span><span class="nv"> </span><span class="s">Anatomy&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">01-lesson-anatomy.md</span>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;02.</span><span class="nv"> </span><span class="s">Interactive</span><span class="nv"> </span><span class="s">Blocks&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">02-interactive-blocks.md</span>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;03.</span><span class="nv"> </span><span class="s">Example</span><span class="nv"> </span><span class="s">Lesson&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">03-example-lesson.md</span>
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;04.</span><span class="nv"> </span><span class="s">Publishing&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">04-publishing-validation.md</span>
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Resources&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resources.md</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Welcome"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">index.md</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"00.</span><span class="nv"> </span><span class="s">Getting</span><span class="nv"> </span><span class="s">Started"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">00-getting-started.md</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"01.</span><span class="nv"> </span><span class="s">Lesson</span><span class="nv"> </span><span class="s">Anatomy"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">01-lesson-anatomy.md</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"02.</span><span class="nv"> </span><span class="s">Interactive</span><span class="nv"> </span><span class="s">Blocks"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">02-interactive-blocks.md</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"03.</span><span class="nv"> </span><span class="s">Example</span><span class="nv"> </span><span class="s">Lesson"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">03-example-lesson.md</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"04.</span><span class="nv"> </span><span class="s">Publishing"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">04-publishing-validation.md</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Resources"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resources.md</span>
 </span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="nt">extra</span><span class="p">:</span>
-</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">  </span><span class="nt">rum_snippet</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://js-cdn.dynatrace.com/jstag/1612cf70810/&lt;tenant-id&gt;/&lt;app-id&gt;_complete.js&quot;</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">  </span><span class="nt">rum_snippet</span><span class="p">:</span><span class="w"> </span><span class="s">"https://js-cdn.dynatrace.com/jstag/1612cf70810/&lt;tenant-id&gt;/&lt;app-id&gt;_complete.js"</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Nav order = lesson order</p>
@@ -892,22 +892,22 @@ type: dql-verification
 </ol>
 <hr />
 <h2 id="admonition-quick-reference">Admonition quick reference<a class="headerlink" href="#admonition-quick-reference" title="Permanent link">#</a></h2>
-<div class="language-markdown highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>!!! tip &quot;Tip heading&quot;
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>!!! tip "Tip heading"
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    Content here.
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>!!! note &quot;Note heading&quot;
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>!!! note "Note heading"
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    Content here.
 </span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>!!! warning &quot;Warning heading&quot;
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>!!! warning "Warning heading"
 </span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    Content here.
 </span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>!!! success &quot;Success heading&quot;
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>!!! success "Success heading"
 </span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    Content here.
 </span></code></pre></div>
 <hr />
 <h2 id="grid-card-navigation">Grid card navigation<a class="headerlink" href="#grid-card-navigation" title="Permanent link">#</a></h2>
 <p>Use at the bottom of each page to guide the learner to the next step:</p>
-<div class="language-markdown highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&lt;div class=&quot;grid cards&quot; markdown&gt;
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&lt;div class="grid cards" markdown&gt;
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">-</span><span class="w"> </span>[<span class="nt">Next: 02 — Interactive Building Blocks :octicons-arrow-right-24:</span>](<span class="na">02-interactive-blocks.md</span>)
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>&lt;/div&gt;
 </span></code></pre></div>
