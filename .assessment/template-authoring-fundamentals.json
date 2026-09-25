@@ -7,7 +7,7 @@
   "difficulty": "beginner",
   "estimatedTime": 6,
   "imagine": "You have just finished the template walk-through and have a working lesson running on Orbital, rendered inside the Dynatrace app. You want to confirm you understood the authoring model before building your first real training.",
-  "yourGoal": "Answer five questions about enablement anatomy, interactive block types, and the Orbital + Dynatrace app runtime.",
+  "yourGoal": "Answer six questions about enablement anatomy, interactive block types, and the Orbital + Dynatrace app runtime.",
   "tools": [
     {
       "label": "GitHub Codespaces"
@@ -92,9 +92,9 @@
         },
         {
           "id": "d",
-          "text": "A boundScenarioId block that combines both checks in one assessment",
+          "text": "A LAB_QUESTIONAIRE line that combines both checks in one assessment",
           "isCorrect": false,
-          "explanation": "boundScenarioId binds a full assessment scenario (.assessment/*.json), not individual validation checks. Use inline blocks for step-by-step gates."
+          "explanation": "LAB_QUESTIONAIRE places a full assessment (.assessment/*.json) on a page, not individual validation checks. Use inline blocks for step-by-step gates."
         }
       ],
       "correctAnswer": "a",
@@ -119,7 +119,7 @@
         },
         {
           "id": "b",
-          "text": "Before the lesson page renders — automatically when the learner navigates to the page",
+          "text": "Automatically, in the learner's container, when the learner opens the step — no button",
           "isCorrect": true,
           "explanation": "Correct! STEP_SETUP commands execute before the page content is shown. Use it to generate config files, load credentials, or provision resources the lesson depends on."
         },
@@ -137,7 +137,7 @@
         }
       ],
       "correctAnswer": "b",
-      "explanation": "STEP_SETUP is a pre-render hook. Commands listed run in the Orbital container before the page content is displayed. This lets you generate configuration files or set up state that the lesson steps depend on.",
+      "explanation": "STEP_SETUP runs silently in the learner's container each time the step opens, so its commands must be idempotent. Use it to prepare a step (e.g. generate the DynaKube file the learner then applies), never to do the learner's work.",
       "points": 800,
       "hints": [
         "The word 'SETUP' suggests it prepares something before the lesson begins.",
@@ -152,9 +152,9 @@
       "options": [
         {
           "id": "a",
-          "text": "Add `<!-- boundScenarioId: my-lab-quiz retake=false -->` to the markdown file",
+          "text": "Add `<!-- LAB_QUESTIONAIRE: my-lab-quiz retake=false -->` to the markdown file",
           "isCorrect": true,
-          "explanation": "Correct! The boundScenarioId comment links the assessment scenario (by its JSON `id` field) to the current page. `retake=false` prevents re-takes after passing."
+          "explanation": "Correct! The LAB_QUESTIONAIRE comment places the assessment (by its JSON `id` field) on the current page. `retake=false` allows a single attempt."
         },
         {
           "id": "b",
@@ -176,11 +176,11 @@
         }
       ],
       "correctAnswer": "a",
-      "explanation": "The `<!-- boundScenarioId: <id> retake=false -->` comment is the only binding mechanism. The `id` value must match the `id` field in the JSON file. Place this comment anywhere on the lesson page — typically at the end, after all shell/DQL checks.",
+      "explanation": "The `<!-- LAB_QUESTIONAIRE: <id> retake=false -->` comment is the binding mechanism (the older `boundScenarioId:` spelling still works). The `id` value must match the `id` field in the JSON file, case-sensitive. Place it on the page where the assessment belongs — typically the last one.",
       "points": 1000,
       "hints": [
         "Look at how kubernetes-101/docs/3-restart-services.md ends.",
-        "The JSON `id` field and the boundScenarioId value must match exactly."
+        "The JSON `id` field and the LAB_QUESTIONAIRE id must match exactly."
       ]
     },
     {
@@ -221,9 +221,48 @@
         "Orbital is at autonomous-enablements.whydevslovedynatrace.com — it hosts containers, not just docs.",
         "Think about what PTY bridge means: a pseudo-terminal from a remote container exposed through the app."
       ]
+    },
+    {
+      "id": "q6-lab-solution",
+      "type": "multiple-choice",
+      "title": "Why does every step need a LAB_SOLUTION?",
+      "content": "A step asks the learner to restart a deployment so OneAgent gets injected. The step has a shell-verification check but no LAB_SOLUTION. What breaks?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The nightly training-test cannot pass the step, and resume cannot rebuild a fresh environment past it",
+          "isCorrect": true,
+          "explanation": "Correct! Automation cannot type in a terminal. The nightly test and resume both execute the LAB_SOLUTION commands — without them the step is a dead end for both."
+        },
+        {
+          "id": "b",
+          "text": "Nothing — the check alone is enough for the platform to run the step",
+          "isCorrect": false,
+          "explanation": "A check proves a state; it does not create it. Something has to perform the restart when no human is there."
+        },
+        {
+          "id": "c",
+          "text": "The shell-verification check will no longer render in the app",
+          "isCorrect": false,
+          "explanation": "Checks render with or without a solution."
+        },
+        {
+          "id": "d",
+          "text": "The learner cannot start the training",
+          "isCorrect": false,
+          "explanation": "Starting is unaffected; resuming and nightly testing are."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "A LAB_SOLUTION's commands are what Run solution, the nightly training-test and resume execute; its verify proves they worked. That is what makes a training self-maintaining and its environments disposable.",
+      "points": 1000,
+      "hints": [
+        "Who runs a training when no learner is at the keyboard?",
+        "Think about the nightly test and about resuming in a fresh container."
+      ]
     }
   ],
-  "maxScore": 4800,
+  "maxScore": 5800,
   "tags": [
     "authoring",
     "enablement",
@@ -237,6 +276,7 @@
     "Choose the correct block type for container-side vs tenant-side verification",
     "Describe when STEP_SETUP commands execute",
     "Attach a scored assessment scenario to a lesson page",
-    "Explain the role of Orbital in executing shell commands from the Dynatrace App"
+    "Explain the role of Orbital in executing shell commands from the Dynatrace App",
+    "Explain why every step that changes the environment needs a LAB_SOLUTION"
   ]
 }

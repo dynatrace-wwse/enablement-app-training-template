@@ -1,18 +1,42 @@
 # Resources
 
-## Authoring references
+## This template, by topic
 
-- [AUTHORING.md](AUTHORING.md) — complete schema reference for all interactive block types
-- [ORBITAL_AND_APP.md](ORBITAL_AND_APP.md) — runtime architecture: how Orbital and the Dynatrace app connect
-- [REFERENCE_KUBERNETES_101.md](REFERENCE_KUBERNETES_101.md) — full inventory of interactive mechanisms from the reference training
+| I want to… | Go to |
+|---|---|
+| understand why interactive content matters | [Welcome](index.md) |
+| follow the path from zero to a shipped training | [00 — Getting Started](00-getting-started.md) |
+| know what happens when a learner clicks *Start* | [01 — How It Works](01-how-it-works.md) |
+| write `post-create.sh`, add an app, write `my_functions.sh` | [02 — Automate the Environment](02-automation.md) |
+| get an extra Dynatrace token minted for my training | [02 → Tokens](02-automation.md#tokens-dt-tokensyaml) |
+| change the DynaKube (mode, KSPM, extensions, ActiveGate size) | [02 → DynaKube](02-automation.md#the-dynakube-defaults-and-your-override) |
+| structure a step | [03 — Lesson Anatomy](03-lesson-anatomy.md) |
+| look up a block's fields and operators | [04 — Interactive Blocks](04-interactive-blocks.md) |
+| copy a complete lesson | [05 — Example Lesson](05-example-lesson.md) |
+| test, publish and ship | [06 — Test, Publish & Ship](06-test-publish-ship.md) |
 
 ## Reference training
 
-- [enablement-kubernetes-101](https://github.com/dynatrace-wwse/enablement-kubernetes-101) — canonical reference training
+- [enablement-kubernetes-101](https://github.com/dynatrace-wwse/enablement-kubernetes-101) — the golden example: checks, quizzes, DQL validations and a solution on every step. Read its `docs/`, `.devcontainer/util/my_functions.sh` and `.devcontainer/yaml/dt-tokens.yaml` side by side.
+- [EasyTrade sample lab `post-create.sh`](https://github.com/sergiohinojosa/easytrade-sample-lab/blob/main/.devcontainer/post-create.sh) — Kubernetes 101 cloned, with the operator, DynaKube and EasyTrade automated in `post-create.sh`.
 
-## Framework documentation
+## Codespaces Framework
 
-- [Codespaces Framework docs](https://dynatrace-wwse.github.io/codespaces-framework) — full framework reference: cache, functions.sh, sync CLI, local Docker mode, integration tests
+- [Framework docs](https://dynatrace-wwse.github.io/codespaces-framework) — cache, functions, sync, local mode, testing
+- [Functions reference](https://dynatrace-wwse.github.io/codespaces-framework/functions/)
+- [Container post-creation & start](https://dynatrace-wwse.github.io/codespaces-framework/framework/#container-post-creation-start)
+- [Custom functions (`my_functions.sh`)](https://dynatrace-wwse.github.io/codespaces-framework/framework/#custom-functions-my_functionssh)
+- [Deploying an app](https://dynatrace-wwse.github.io/codespaces-framework/framework/#to-deploy-an-app)
+- [Tokens: `dt-tokens.yaml`](https://dynatrace-wwse.github.io/codespaces-framework/dynatrace-integration/#tokens-dt-tokensyaml) · [the default file](https://github.com/dynatrace-wwse/codespaces-framework/blob/main/.devcontainer/yaml/dt-tokens.yaml)
+- [DynaKube configuration](https://dynatrace-wwse.github.io/codespaces-framework/dynatrace-integration/#dynakube-configuration-defaults-and-repo-override) · [the defaults file](https://github.com/dynatrace-wwse/codespaces-framework/blob/main/.devcontainer/yaml/dynakube-defaults.yaml)
+- [Live documentation, locally (`installMkdocs`)](https://dynatrace-wwse.github.io/codespaces-framework/framework/#live-documentation-locally)
+- [K3d vs Kind](https://dynatrace-wwse.github.io/codespaces-framework/framework/#kubernetes-cluster)
+- [Secrets & environment (local `.env`)](https://dynatrace-wwse.github.io/codespaces-framework/instantiation-types/#secrets-environment)
+
+## Orbital and the app
+
+- Register a tenant and install the app: [autonomous-enablements.whydevslovedynatrace.com/#register](https://autonomous-enablements.whydevslovedynatrace.com/#register)
+- No tenant of your own: use the SE sandbox tenant (ask in the enablement channel)
 
 ## MkDocs Material
 
@@ -25,11 +49,6 @@
 - [Dynatrace Operator for Kubernetes](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/deployment)
 - [DynaKube custom resource reference](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/reference/dynakube)
 - [Dynatrace App Toolkit](https://dt-url.net/app-toolkit) — App IDs for `dt-app` deep links
-
-## Orbital Operations server
-
-- URL: `https://autonomous-enablements.whydevslovedynatrace.com`
-- Contact: Orbital administrator (Slack: #enablement-orbital)
 
 ## GitHub Codespaces
 
@@ -65,30 +84,29 @@ kubectl describe dynakube -n dynatrace
 ## Quick reference — framework shell functions
 
 ```bash
-# Print section header
-printInfoSection "Section heading"
-
-# Print info line
-printInfo "Info message"
-
-# Deploy standard apps
-deployTodoApp
-deployAstroshop
-
-# Dynatrace operator
-dynatraceEvalReadSaveCredentials
-generateDynakube
-dynatraceDeployOperator
-
-# Docs
-installMkdocs
-exposeMkdocs
-deployGhdocs
-
 # Cluster
-startK3dCluster
+startCluster · stopCluster · deleteCluster     # follow CLUSTER_ENGINE (k3d default)
 installK9s
 
-# Codespace management
-deleteCodespace
+# Dynatrace
+dynatraceDeployOperator
+deployApplicationMonitoring     # AppOnly (recommended on k3d / Orbital)
+deployDynatrace [mode]          # apponly | k8s-only | cloudnative
+generateDynakube                # only writes .devcontainer/yaml/gen/dynakube.yaml
+undeployDynakubes
+
+# Apps
+deployApp                       # list; deployApp <name> [-d]
+deployTodoApp
+registerApp <name> <ns> <svc> <port>
+
+# Waiting
+waitForPod <ns> <name>
+waitForAllReadyPods <ns>
+
+# Docs
+installMkdocs · exposeMkdocs · deployGhdocs
+
+# Output
+printInfoSection "…" · printInfo "…" · printWarn "…" · printError "…"
 ```
