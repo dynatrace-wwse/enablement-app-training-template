@@ -12,38 +12,29 @@
 [![Commits](https://img.shields.io/github/commits-since/dynatrace-wwse/enablement-app-training-template/latest?color=ff69b4&include_prereleases)](https://github.com/dynatrace-wwse/enablement-app-training-template/graphs/commit-activity)
 ___
 
-**Trainer-authoring scaffold for building interactive Dynatrace in-app enablement trainings.**
+**The one place to learn how to build interactive trainings for the Dynatrace Enablement app — and how they work underneath.**
 
-This template lets Solutions Engineers and content authors create scored, interactive trainings that run on the **Orbital Operations server** and render inside the **Dynatrace app** — without reverse-engineering an existing training.
+📖 **Read it here: [dynatrace-wwse.github.io/enablement-app-training-template](https://dynatrace-wwse.github.io/enablement-app-training-template/)**
 
-## What this template gives you
+Content matters most. A training built the interactive way — like [Kubernetes 101](https://github.com/dynatrace-wwse/enablement-kubernetes-101) — gives every step a check against the learner's container or Grail, and a solution. That lets you see how far each learner got, lets environments be shut down and recreated at the step a learner left off, and lets the platform test the whole training end to end every night.
 
-- **5-lesson trainer guide** — follow in order to understand the authoring model and produce your first lesson in ~30 minutes
-- **Working examples** of every interactive block type: shell verification, kubectl (interactive + non-interactive), custom helper functions, DQL queries, DQL validation, and scored assessments
-- **Docs** — `docs/AUTHORING.md` (schema reference), `docs/ORBITAL_AND_APP.md` (runtime architecture), `docs/REFERENCE_KUBERNETES_101.md` (mechanism inventory from the reference training)
-- **Example assessment** — `.assessment/template-authoring-fundamentals.json` — a live, scored quiz the trainer can use as a pattern
-- **Full devcontainer** — same k3d + Dynatrace Operator environment as all other enablement repos
+## What the guide covers
 
-## How to use this template
+| | |
+|---|---|
+| **00 Getting Started** | the path: install the app → do Kubernetes 101 → look under the hood → clone & adapt → write → test → import → ship |
+| **01 How It Works** | import, token minting, the Orbital container, checks, resume, the nightly test, workshops |
+| **02 Automate the Environment** | `post-create.sh`, framework functions, `my_functions.sh`, apps, **`dt-tokens.yaml`**, **`dynakube-config.yaml`** |
+| **03 Lesson Anatomy** | `mkdocs.yaml`, front-matter, the shape of a step |
+| **04 Interactive Blocks** | `shell-verification`, `dql-verification`, `multiple-choice`, `LAB_SOLUTION`, `STEP_SETUP`, `LAB_QUESTIONAIRE`, … |
+| **05 Example Lesson** | a complete, runnable lesson |
+| **06 Test, Publish & Ship** | `installMkdocs`, testing checks and solutions, the nightly pipeline, a review checklist |
 
-1. Click **Use this template** → **Create a new repository**
-2. Name your repo `enablement-<topic>` in the `dynatrace-wwse` org
-3. Open in GitHub Codespaces
-4. Follow the lesson menu in order: `00 → 04`
-5. Replace the example content with your training's content
-6. Deploy to GitHub Pages with `deployGhdocs`
-7. Contact the Orbital administrator to register your training
+## Use this template
 
-## Reference training
+1. **Use this template → Create a new repository** (`enablement-<topic>`).
+2. Open it in a Codespace or a VS Code Dev Container.
+3. Follow the guide; replace the example content with yours.
+4. Import it into the app, test it as learner and trainer, then bring it into `dynatrace-wwse`.
 
-The mechanisms in this template were extracted from [`enablement-kubernetes-101`](https://github.com/dynatrace-wwse/enablement-kubernetes-101) — the canonical example of an interactive Dynatrace in-app training. See `docs/REFERENCE_KUBERNETES_101.md` for the complete inventory.
-
-## Framework documentation
-
-Full framework docs: [https://dynatrace-wwse.github.io/codespaces-framework](https://dynatrace-wwse.github.io/codespaces-framework)
-
-<p align="center">
-<img src="docs/img/dt_professors.png" alt="Trainers" width="400"/>
-</p>
-
-## [🎓 Start authoring: Open the template guide](https://dynatrace-wwse.github.io/enablement-app-training-template)
+Framework documentation: [dynatrace-wwse.github.io/codespaces-framework](https://dynatrace-wwse.github.io/codespaces-framework)
