@@ -1,0 +1,1145 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../01-how-it-works/">
+      
+      
+        <link rel="next" href="../03-lesson-anatomy/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>02. Automate the Environment - Dynatrace Enablement App Training Template</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+  
+      
+    
+  
+  <script type="text/javascript"
+    src="https://js-cdn.dynatrace.com/jstag/1612cf70810/bf81393wlb/7c50bce5c0cc890f_complete.js"
+    crossorigin="anonymous"></script>
+  
+
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#02-automate-the-environment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Dynatrace Enablement App Training Template" class="md-header__button md-logo" aria-label="Dynatrace Enablement App Training Template" data-md-component="logo">
+      
+  <img src="https://cdn.bfldr.com/B686QPH3/at/w5hnjzb32k5wcrcxnwcx4ckg/Dynatrace_signet_RGB_HTML.svg?auto=webp&format=pngg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Dynatrace Enablement App Training Template
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              02. Automate the Environment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dynatrace-wwse/enablement-app-training-template" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    View Code on GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Dynatrace Enablement App Training Template" class="md-nav__button md-logo" aria-label="Dynatrace Enablement App Training Template" data-md-component="logo">
+      
+  <img src="https://cdn.bfldr.com/B686QPH3/at/w5hnjzb32k5wcrcxnwcx4ckg/Dynatrace_signet_RGB_HTML.svg?auto=webp&format=pngg" alt="logo">
+
+    </a>
+    Dynatrace Enablement App Training Template
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dynatrace-wwse/enablement-app-training-template" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    View Code on GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    00. Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-how-it-works/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    01. How It Works
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    02. Automate the Environment
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    02. Automate the Environment
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#post-createsh-the-most-important-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      post-create.sh — the most important file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#framework-functions-you-will-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Framework functions you will use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my_functionssh-your-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      my_functions.sh — your functions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tokens-dt-tokensyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tokens: dt-tokens.yaml
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-dynakube-defaults-and-your-override" class="md-nav__link">
+    <span class="md-ellipsis">
+      The DynaKube: defaults and your override
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-lesson-anatomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    03. Lesson Anatomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-interactive-blocks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    04. Interactive Blocks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-example-lesson/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    05. Example Lesson
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-test-publish-ship/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    06. Test, Publish & Ship
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#post-createsh-the-most-important-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      post-create.sh — the most important file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#framework-functions-you-will-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Framework functions you will use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my_functionssh-your-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      my_functions.sh — your functions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tokens-dt-tokensyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tokens: dt-tokens.yaml
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-dynakube-defaults-and-your-override" class="md-nav__link">
+    <span class="md-ellipsis">
+      The DynaKube: defaults and your override
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="02-automate-the-environment">02 — Automate the Environment<a class="headerlink" href="#02-automate-the-environment" title="Permanent link">#</a></h1>
+<p>Everything a learner finds when their environment is ready — the cluster, Dynatrace, the demo apps, the scenario — is built by code in <code>.devcontainer/</code>. Nothing is built by hand, and nothing in this folder is specific to Orbital: the same files build the same environment in a Codespace, a Dev Container or the app.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>.devcontainer/
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── devcontainer.json            image + lifecycle hooks (its presence = "hands-on")
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── post-create.sh               ★ what gets built — the most important file
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── post-start.sh                runs after post-create, and on every Codespace restart
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├── util/
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   ├── source_framework.sh      pulls the framework at a pinned version (do not edit)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   └── my_functions.sh          ★ your functions — checks, scenarios, solutions
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>├── yaml/
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   ├── dt-tokens.yaml           ★ optional: the tokens the app mints for this training
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   ├── dynakube-config.yaml     ★ optional: your changes to the default DynaKube
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│   └── gen/                     generated output (gitignored) — e.g. dynakube.yaml
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>└── test/integration.sh          assertions the nightly integration test runs
+</span></code></pre></div>
+<hr />
+<h2 id="post-createsh-the-most-important-file"><code>post-create.sh</code> — the most important file<a class="headerlink" href="#post-createsh-the-most-important-file" title="Permanent link">#</a></h2>
+<p><code>post-create.sh</code> runs once, when the environment is created — on Orbital, before the learner sees anything. It is a plain bash script that <strong>calls functions</strong>: the framework's, and yours.</p>
+<div class="language-bash highlight"><span class="filename">.devcontainer/post-create.sh</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SECONDS</span><span class="o">=</span><span class="m">0</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">source</span><span class="w"> </span>.devcontainer/util/source_framework.sh<span class="w">   </span><span class="c1"># loads the framework + my_functions.sh</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>setUpTerminal<span class="w">          </span><span class="c1"># zsh, powerlevel10k, aliases, the greeting</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>startK3dCluster<span class="w">        </span><span class="c1"># the Kubernetes cluster (k3d is the default engine)</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>installK9s<span class="w">             </span><span class="c1"># k9s for the learner</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># --- Dynatrace ------------------------------------------------------------</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>dynatraceDeployOperator<span class="w">   </span><span class="c1"># Helm-installs the operator + CSI driver + webhook</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>deployApplicationMonitoring<span class="w">   </span><span class="c1"># generates and applies an AppOnly DynaKube</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># --- Apps -----------------------------------------------------------------</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>deployTodoApp<span class="w">             </span><span class="c1"># or: deployApp easytrade | deployApp astroshop | ...</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1"># deployMyApp             # your own, from my_functions.sh</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1"># --- Scenario -------------------------------------------------------------</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1"># prepareScenario         # e.g. inject the fault the learner will hunt</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>finalizePostCreation<span class="w">      </span><span class="c1"># REQUIRED: verifies the creation, reports errors in the greeting</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>printInfoSection<span class="w"> </span><span class="s2">"Your dev container finished creating"</span>
+</span></code></pre></div>
+<p><strong>Decide what the learner does, and automate everything else.</strong> If step 1 of your training is "install the Dynatrace Operator", leave <code>dynatraceDeployOperator</code> <em>out</em> of <code>post-create.sh</code> — it becomes that step's <a href="../04-interactive-blocks/#lab_solution-how-a-step-solves-itself">solution</a> instead. If the training is about DQL on a running system, deploy everything here and start the learner in Grail. Kubernetes 101 leaves the operator and the DynaKube to the learner; the <a href="https://github.com/sergiohinojosa/easytrade-sample-lab/blob/main/.devcontainer/post-create.sh">EasyTrade sample lab <code>post-create.sh</code></a> automates both and deploys EasyTrade.</p>
+<p>Keep it fast — the learner is waiting — and keep it idempotent: it runs again on every provision and before every <a href="../01-how-it-works/#4-resume-rebuilt-from-the-solutions">resume</a>.</p>
+<p><code>post-start.sh</code> runs right after <code>post-create.sh</code> (and on every Codespace restart). Use it for things that must happen on each start, such as <code>exposeMkdocs</code>.</p>
+<p>Framework docs: <a href="https://dynatrace-wwse.github.io/codespaces-framework/framework/#container-post-creation-start">Container post-creation &amp; start</a> · <a href="https://dynatrace-wwse.github.io/codespaces-framework/functions/#unified-cluster-api-use-these-in-post-createsh">Cluster functions for post-create.sh</a></p>
+<h2 id="framework-functions-you-will-use">Framework functions you will use<a class="headerlink" href="#framework-functions-you-will-use" title="Permanent link">#</a></h2>
+<p>All of these are loaded into every shell. Full list: <a href="https://dynatrace-wwse.github.io/codespaces-framework/functions/">Functions Reference</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setUpTerminal</code></td>
+<td>zsh, p10k theme, aliases, greeting</td>
+</tr>
+<tr>
+<td><code>startK3dCluster</code> · <code>startCluster</code> · <code>stopCluster</code> · <code>deleteCluster</code></td>
+<td>cluster lifecycle; <code>*Cluster</code> follows <code>CLUSTER_ENGINE</code> (<code>k3d</code> default, <code>kind</code> alternative)</td>
+</tr>
+<tr>
+<td><code>installK9s</code></td>
+<td>installs k9s</td>
+</tr>
+<tr>
+<td><code>dynatraceDeployOperator</code></td>
+<td>installs the Dynatrace Operator (Helm) and its token secret</td>
+</tr>
+<tr>
+<td><code>deployDynatrace [mode]</code></td>
+<td>generates the DynaKube from the <a href="#the-dynakube-defaults-and-your-override">config</a> and applies it; waits for the ActiveGate. No mode = the configured <code>mode:</code> (<strong><code>apponly</code></strong>) — from the framework release after 1.11.1; 1.11.1 and earlier default to <code>cloudnative</code>, so pass the mode or use <code>deployApplicationMonitoring</code></td>
+</tr>
+<tr>
+<td><code>deployApplicationMonitoring</code></td>
+<td><code>deployDynatrace apponly</code> — code injection via CSI, plus log module</td>
+</tr>
+<tr>
+<td><code>deployCloudNative</code></td>
+<td><code>deployDynatrace cloudnative</code> — <strong>does not work on k3d or on Orbital</strong> (the OneAgent DaemonSet needs a real host); Kind outside Orbital only</td>
+</tr>
+<tr>
+<td><code>generateDynakube</code></td>
+<td>only writes <code>.devcontainer/yaml/gen/dynakube.yaml</code> (for a step where the learner applies it)</td>
+</tr>
+<tr>
+<td><code>dynatraceEvalReadSaveCredentials</code></td>
+<td>reads and validates <code>DT_ENVIRONMENT</code> + tokens from the environment</td>
+</tr>
+<tr>
+<td><code>deployApp [app] [-d]</code></td>
+<td>deploys (or <code>-d</code> undeploys) a framework app; bare <code>deployApp</code> lists them</td>
+</tr>
+<tr>
+<td><code>deployTodoApp</code></td>
+<td>the small TODO app used by Kubernetes 101</td>
+</tr>
+<tr>
+<td><code>registerApp &lt;name&gt; &lt;ns&gt; &lt;svc&gt; &lt;port&gt;</code></td>
+<td>exposes a service through the ingress, in Codespaces, locally and on Orbital</td>
+</tr>
+<tr>
+<td><code>waitForPod &lt;ns&gt; &lt;name&gt;</code> · <code>waitForAllReadyPods &lt;ns&gt;</code></td>
+<td>block until pods are Ready</td>
+</tr>
+<tr>
+<td><code>installMkdocs</code> · <code>exposeMkdocs</code> · <code>deployGhdocs</code></td>
+<td>live docs preview on port 8000 · publish to GitHub Pages</td>
+</tr>
+<tr>
+<td><code>variablesNeeded VAR:true VAR2:false</code></td>
+<td>fail early if a required variable is missing</td>
+</tr>
+<tr>
+<td><code>finalizePostCreation</code></td>
+<td>required last call of <code>post-create.sh</code></td>
+</tr>
+<tr>
+<td><code>printInfoSection</code> · <code>printInfo</code> · <code>printWarn</code> · <code>printError</code></td>
+<td>consistent output</td>
+</tr>
+</tbody>
+</table>
+<h2 id="apps">Apps<a class="headerlink" href="#apps" title="Permanent link">#</a></h2>
+<p>The framework ships ready-to-deploy demo apps: <code>ai-travel-advisor</code>, <code>astroshop</code>, <code>bugzapper</code>, <code>easytrade</code>, <code>hipstershop</code>, <code>todoapp</code>, <code>unguard</code>, <code>opentelemetry-demo</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>deployApp<span class="w">               </span><span class="c1"># list the apps</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>deployApp<span class="w"> </span>easytrade<span class="w">     </span><span class="c1"># deploy by name (or number / letter)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>deployApp<span class="w"> </span>easytrade<span class="w"> </span>-d<span class="w">  </span><span class="c1"># undeploy</span>
+</span></code></pre></div>
+<p>Each app is exposed through the ingress, so it opens in the browser the same way in a Codespace, locally and in the app. Framework docs: <a href="https://dynatrace-wwse.github.io/codespaces-framework/framework/#to-deploy-an-app">To deploy an app</a> · <a href="https://dynatrace-wwse.github.io/codespaces-framework/framework/#nginx-ingress-app-exposure">Nginx ingress + app exposure</a>.</p>
+<p><strong>Your own app</strong> does not go into <code>deployApp</code> — that list belongs to the framework. Write a function in <code>my_functions.sh</code>, and call <code>registerApp</code> so it is reachable:</p>
+<div class="language-bash highlight"><span class="filename">.devcontainer/util/my_functions.sh</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>deployMyApp<span class="o">(){</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>printInfoSection<span class="w"> </span><span class="s2">"Deploying my app"</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>myapp<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span>myapp<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>.devcontainer/apps/myapp/<span class="w">   </span><span class="c1"># your manifests, in your repo</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>waitForAllReadyPods<span class="w"> </span>myapp
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span>registerApp<span class="w"> </span><span class="s2">"myapp"</span><span class="w"> </span><span class="s2">"myapp"</span><span class="w"> </span><span class="s2">"myapp-frontend"</span><span class="w"> </span><span class="m">8080</span><span class="w">     </span><span class="c1"># &lt;name&gt; &lt;ns&gt; &lt;service&gt; &lt;port&gt;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="o">}</span>
+</span></code></pre></div>
+<h2 id="my_functionssh-your-functions"><code>my_functions.sh</code> — your functions<a class="headerlink" href="#my_functionssh-your-functions" title="Permanent link">#</a></h2>
+<p><code>my_functions.sh</code> is loaded on top of the framework in <strong>every</strong> shell, so a function defined here can be called from four places — which is exactly why it exists:</p>
+<table>
+<thead>
+<tr>
+<th>Called from</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>post-create.sh</code></td>
+<td><code>deployMyApp</code>, <code>prepareScenario</code></td>
+</tr>
+<tr>
+<td>the learner's terminal</td>
+<td><code>injectFault</code> — "run this and watch Dynatrace"</td>
+</tr>
+<tr>
+<td>a <code>shell-verification</code> check</td>
+<td><code>checkOperatorReady</code></td>
+</tr>
+<tr>
+<td>a <code>LAB_SOLUTION</code></td>
+<td><code>restartTodoApp</code></td>
+</tr>
+</tbody>
+</table>
+<p>Write each step's <strong>check</strong> and <strong>solution</strong> as functions here, and the lesson Markdown stays short: the same logic is reused by the learner, the check, the solution and the nightly test. This template's <code>my_functions.sh</code> contains the Kubernetes 101 check helpers (<code>checkNodeReady</code>, <code>checkOperatorReady</code>, <code>checkDynakube</code>, <code>checkOneAgentInjected</code>, …) and a solution helper (<code>restartTodoApp</code>) to copy from.</p>
+<p><strong>The check pattern</strong> (from Kubernetes 101): a check probes <strong>once</strong> and answers immediately for a learner's click, but <strong>waits</strong> for the expected state first when automation sets <code>LAB_WAIT=1</code> — so the nightly test and resume never race a rollout:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>checkOperatorReady<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">LAB_WAIT</span><span class="k">:-</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>waitForPod<span class="w"> </span>dynatrace<span class="w"> </span>operator<span class="w">          </span><span class="c1"># automation waits</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>dynatrace<span class="w"> </span>--no-headers<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'operator'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span>Running<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>printInfo<span class="w"> </span><span class="s2">"Dynatrace Operator pod is Running"</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="m">0</span><span class="w">         </span><span class="c1"># pass = exit 0</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="k">fi</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span>printError<span class="w"> </span><span class="s2">"Dynatrace Operator is not running — run the install steps above, then check again"</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>Rules: <code>return</code>, never <code>exit</code> (the file is sourced — <code>exit</code> kills the learner's shell); keep functions idempotent; send noise to <code>2&gt;/dev/null</code>.</p>
+<p>Framework docs: <a href="https://dynatrace-wwse.github.io/codespaces-framework/framework/#custom-functions-my_functionssh">Custom functions (<code>my_functions.sh</code>)</a></p>
+<hr />
+<h2 id="tokens-dt-tokensyaml">Tokens: <code>dt-tokens.yaml</code><a class="headerlink" href="#tokens-dt-tokensyaml" title="Permanent link">#</a></h2>
+<p>In the app, <strong>nobody pastes a token.</strong> Before the container starts, the app mints the training's tokens <strong>in the learner's own tenant</strong> — scoped, named per learner, and valid for 4 hours — and Orbital writes each one into <code>.devcontainer/.env</code> under the variable name you chose. <code>post-create.sh</code> and your functions simply read <code>$DT_OPERATOR_TOKEN</code>, <code>$DT_INGEST_TOKEN</code>, or whatever you declared.</p>
+<p><strong>Where the list comes from:</strong></p>
+<ol>
+<li>your repo's <strong><code>.devcontainer/yaml/dt-tokens.yaml</code></strong>, if it exists — otherwise</li>
+<li>the framework default: <a href="https://github.com/dynatrace-wwse/codespaces-framework/blob/main/.devcontainer/yaml/dt-tokens.yaml"><code>codespaces-framework/.devcontainer/yaml/dt-tokens.yaml</code></a> — <code>DT_OPERATOR_TOKEN</code> + <code>DT_INGEST_TOKEN</code>, which is everything <code>dynatraceDeployOperator</code> and <code>deployApplicationMonitoring</code> need.</li>
+</ol>
+<p><strong>If the defaults are enough, add no file.</strong> Add one when your training needs another token — for example an API token your own function uses to create a dashboard or read entities:</p>
+<div class="language-yaml highlight"><span class="filename">.devcontainer/yaml/dt-tokens.yaml</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">migrationStatus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">migrated</span><span class="w">        </span><span class="c1"># see below</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nt">tokens</span><span class="p">:</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="c1"># --- the two the framework needs: copy them, the file REPLACES the default ---</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name_suffix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">operator</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nt">env_var</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DT_OPERATOR_TOKEN</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="nt">scopes</span><span class="p">:</span><span class="w">                      </span><span class="c1"># classic scopes (dotted names)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">activeGateTokenManagement.create</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">activeGateTokenManagement.write</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entities.read</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">settings.read</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">settings.write</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DataExport</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InstallerDownload</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="nt">platform_scopes</span><span class="p">:</span><span class="w">             </span><span class="c1"># used where the tenant mints platform (dt0s16) tokens</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fleet-management:activegate.connection-info:read</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fleet-management:activegate.tokens:create</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fleet-management:container-images:read</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fleet-management:oneagent.connection-info:read</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fleet-management:oneagents:download</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">settings:objects:read</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">settings:objects:write</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name_suffix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">    </span><span class="nt">env_var</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DT_INGEST_TOKEN</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="nt">scopes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">metrics.ingest</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">logs.ingest</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">events.ingest</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">openTelemetryTrace.ingest</span><span class="p p-Indicator">]</span>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">    </span><span class="nt">platform_scopes</span><span class="p">:</span>
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openpipeline:logs:ingest</span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openpipeline:metrics:ingest</span>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openpipeline:traces:ingest</span>
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage:metrics:write</span>
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>
+</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="w">  </span><span class="c1"># --- your own ---</span>
+</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name_suffix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api</span>
+</span><span id="__span-5-35"><a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="w">    </span><span class="nt">env_var</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DT_API_TOKEN</span><span class="w">          </span><span class="c1"># your functions read $DT_API_TOKEN</span>
+</span><span id="__span-5-36"><a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="w">    </span><span class="nt">aliases</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">DT_BIZEVENTS_TOKEN</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># the same value under a second name</span>
+</span><span id="__span-5-37"><a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="w">    </span><span class="nt">scopes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">entities.read</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">settings.read</span><span class="p p-Indicator">]</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name_suffix</code></td>
+<td><strong>required</strong> — the token is named <code>enbl-&lt;training&gt;-&lt;user&gt;-&lt;suffix&gt;</code> in the tenant</td>
+</tr>
+<tr>
+<td><code>env_var</code></td>
+<td><strong>required</strong> — the variable name the container receives. This is how you "name" a token.</td>
+</tr>
+<tr>
+<td><code>scopes</code></td>
+<td>classic scopes (<code>metrics.ingest</code>, <code>entities.read</code>, …)</td>
+</tr>
+<tr>
+<td><code>platform_scopes</code></td>
+<td>platform scopes (<code>storage:logs:read</code>, <code>openpipeline:logs:ingest</code>, …) used when the token is minted as a platform token; if absent, <code>scopes</code> is translated</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td><code>classic</code> (default) or <code>platform</code> — <code>platform</code> always mints a <code>dt0s16</code> platform token, and then <code>scopes</code> holds platform scope names</td>
+</tr>
+<tr>
+<td><code>aliases</code></td>
+<td>extra variable names that receive the same value</td>
+</tr>
+<tr>
+<td><code>migrationStatus</code></td>
+<td>top level: <code>migrated</code> (proven on tenants that no longer create classic tokens), <code>pending</code> (default), <code>legacy-classic-only</code> (needs a classic-only capability — the only value that refuses a workshop at creation)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">The repo file REPLACES the default — it is not merged</p>
+<p>Adding one token means copying the operator and ingest tokens too, or the environment starts without them and the Dynatrace deployment fails. A file with an empty or missing <code>tokens:</code> list does <strong>not</strong> fall back to the framework file. Declare exactly what the training needs — the app mints exactly that.</p>
+</div>
+<p>A complete real example, with the reasoning for every scope: <a href="https://github.com/dynatrace-wwse/enablement-kubernetes-101/blob/main/.devcontainer/yaml/dt-tokens.yaml">Kubernetes 101 <code>dt-tokens.yaml</code></a>. Framework docs: <a href="https://dynatrace-wwse.github.io/codespaces-framework/dynatrace-integration/#tokens-dt-tokensyaml">Tokens: <code>dt-tokens.yaml</code></a>.</p>
+<p><strong>Outside the app nothing is minted.</strong> In a Codespace, set the same variable names as Codespaces secrets; locally, put them in <code>.devcontainer/.env</code> (gitignored):</p>
+<div class="language-bash highlight"><span class="filename">.devcontainer/.env</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">DT_ENVIRONMENT</span><span class="o">=</span>https://abc12345.apps.dynatrace.com
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">DT_OPERATOR_TOKEN</span><span class="o">=</span>dt0c01.XXXX...
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nv">DT_INGEST_TOKEN</span><span class="o">=</span>dt0c01.YYYY...
+</span></code></pre></div>
+<p>Framework docs: <a href="https://dynatrace-wwse.github.io/codespaces-framework/instantiation-types/#secrets-environment">Secrets &amp; environment</a></p>
+<hr />
+<h2 id="the-dynakube-defaults-and-your-override">The DynaKube: defaults and your override<a class="headerlink" href="#the-dynakube-defaults-and-your-override" title="Permanent link">#</a></h2>
+<p>There is no DynaKube manifest to maintain. <code>deployDynatrace</code> (and <code>generateDynakube</code>) <strong>generate</strong> it at run time into <code>.devcontainer/yaml/gen/dynakube.yaml</code>, from two flat YAML files:</p>
+<ol>
+<li><strong>Defaults</strong> — <a href="https://github.com/dynatrace-wwse/codespaces-framework/blob/main/.devcontainer/yaml/dynakube-defaults.yaml"><code>codespaces-framework/.devcontainer/yaml/dynakube-defaults.yaml</code></a>, owned by the framework. Do not copy or edit it in your repo.</li>
+<li><strong>Your override</strong> — <strong><code>.devcontainer/yaml/dynakube-config.yaml</code></strong> in your repo. Only the keys you write change; everything else keeps the default. It is never touched by framework syncs.</li>
+</ol>
+<div class="language-yaml highlight"><span class="filename">.devcontainer/yaml/dynakube-config.yaml</span><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># flat key: value pairs only — nested YAML is ignored</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">kspm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">             </span><span class="c1"># Kubernetes security posture management</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nt">extensions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">       </span><span class="c1"># e.g. for Prometheus scraping</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nt">ag_memory_limit</span><span class="p">:</span><span class="w"> </span><span class="s">"2Gi"</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mode</code></td>
+<td><code>apponly</code></td>
+<td><code>apponly</code> · <code>k8s-only</code> (ActiveGate only, no OneAgent) · <code>cloudnative</code> (not on k3d/Orbital)</td>
+</tr>
+<tr>
+<td><code>operator_version</code> · <code>dynakube_api_version</code></td>
+<td>pinned by the framework</td>
+<td></td>
+</tr>
+<tr>
+<td><code>log_monitoring</code></td>
+<td><code>true</code></td>
+<td>the log module — container logs to Grail, no restart needed</td>
+</tr>
+<tr>
+<td><code>telemetry_ingest</code></td>
+<td><code>true</code></td>
+<td>OTLP / telemetry endpoints</td>
+</tr>
+<tr>
+<td><code>sensitive_data</code></td>
+<td><code>true</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>kspm</code> · <code>extensions</code></td>
+<td><code>false</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>routing</code> · <code>debugging</code> · <code>dynatrace_api</code></td>
+<td><code>true</code> · <code>false</code> · <code>false</code></td>
+<td>ActiveGate capabilities</td>
+</tr>
+<tr>
+<td><code>ag_replicas</code>, <code>ag_cpu_*</code>, <code>ag_memory_*</code></td>
+<td><code>1</code>, <code>100m</code>/<code>500m</code>, <code>512Mi</code>/<code>1Gi</code></td>
+<td>ActiveGate resources</td>
+</tr>
+</tbody>
+</table>
+<p>The authoritative list is the defaults file itself. Framework docs: <a href="https://dynatrace-wwse.github.io/codespaces-framework/dynatrace-integration/#dynakube-configuration-defaults-and-repo-override">DynaKube configuration</a> · <a href="https://dynatrace-wwse.github.io/codespaces-framework/functions/#dynakube-configuration">keys reference</a>.</p>
+<p><strong>Why the name matters.</strong> The DynaKube name, and the Kubernetes cluster name Dynatrace sees, is <code>&lt;repo without "enablement-"&gt;-&lt;session id&gt;</code>, where the session id is <code>DT_HOSTGROUP</code> (<code>&lt;user&gt;-&lt;yyyymmdd&gt;</code>, set by Orbital per learner). The repo part is shortened to fit the operator's name limit; the session id <strong>always survives whole at the end</strong>. That is what makes <code>filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")</code> isolate one learner's telemetry in a shared tenant — see <a href="../04-interactive-blocks/#template-variables-one-query-every-learner-isolated">Template variables</a>.</p>
+<hr />
+<h2 id="check-it">Check it<a class="headerlink" href="#check-it" title="Permanent link">#</a></h2>
+<!-- LAB_QUESTION
+type: shell-verification
+question: "Verify the todoapp deployed by post-create.sh is Running"
+buttonText: "Check todoapp"
+command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkTodoAppRunning"
+expect:
+  operator: exit-zero
+hint: "post-create.sh deploys it with deployTodoApp. Run `kubectl get pods -n todoapp` in the terminal to see its state."
+explanation: "todoapp is Running — deployed by post-create.sh with no learner action."
+-->
+
+<!-- LAB_QUESTION
+type: multiple-choice
+question: "Your training needs an extra token, DT_API_TOKEN, besides the defaults. What goes in your repo's .devcontainer/yaml/dt-tokens.yaml?"
+options:
+  - "The operator and ingest tokens copied from the framework default, plus the new DT_API_TOKEN entry"
+  - "Only the new DT_API_TOKEN entry — it is merged with the framework default"
+  - "Nothing — export DT_API_TOKEN in post-create.sh"
+  - "The token value itself, so the app can inject it"
+correct: 0
+explanation: "A repo dt-tokens.yaml replaces the default rather than merging with it, so it must list every token the training needs. It holds names and scopes only — the app mints the values."
+-->
+
+<!-- LAB_SOLUTION
+reveal: |
+  `post-create.sh` deploys the TODO app with `deployTodoApp`. If it is not running,
+  deploy it again — the "Run solution" button does exactly that.
+commands:
+  - deployTodoApp
+verify:
+  - kubectl get pods -n todoapp --no-headers 2>/dev/null | grep -q Running
+-->
+
+<div class="grid cards">
+<ul>
+<li><a href="../03-lesson-anatomy/">03 — Lesson Anatomy <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../01-how-it-works/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 01. How It Works">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                01. How It Works
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../03-lesson-anatomy/" class="md-footer__link md-footer__link--next" aria-label="Next: 03. Lesson Anatomy">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                03. Lesson Anatomy
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.top", "navigation.sections", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "search.share"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof dynatrace !== 'undefined') {
+        dynatrace.sendBizEvent('page_load', {'page': "02. Automate the Environment"});
+      }
+    });
+  </script>
+  
+
+  </body>
+</html>

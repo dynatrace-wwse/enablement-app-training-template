@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../04-interactive-blocks/">
+      
+      
+        <link rel="next" href="../06-test-publish-ship/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Cleanup - Dynatrace Enablement App Training Template</title>
+        <title>05. Example Lesson - Dynatrace Enablement App Training Template</title>
       
     
     
@@ -76,6 +80,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#05-example-lesson" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -107,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Cleanup
+              05. Example Lesson
             
           </span>
         </div>
@@ -373,10 +382,30 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../05-example-lesson/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    05. Example Lesson
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -385,6 +414,71 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-deploy-the-dynatrace-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Deploy the Dynatrace Operator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-deploy-the-dynakube" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Deploy the DynaKube
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-restart-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Restart the application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-prove-it-in-grail" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Prove it in Grail
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-knowledge-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Knowledge check
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -446,6 +540,61 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-deploy-the-dynatrace-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Deploy the Dynatrace Operator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-deploy-the-dynakube" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Deploy the DynaKube
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-restart-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Restart the application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-prove-it-in-grail" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Prove it in Grail
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-knowledge-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Knowledge check
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -463,17 +612,157 @@
   
 
 
-  <h1>Cleanup</h1>
-
-<div class="admonition tip">
-<p class="admonition-title">Deleting the codespace from inside the container</p>
-<p>We like to make your life easier, for convenience there is a function loaded in the shell of the Codespace for deleting the codespace, just type <code>deleteCodespace</code>. This will trigger the deletion of the codespace.</p>
+<h1 id="05-example-lesson">05 — Example Lesson<a class="headerlink" href="#05-example-lesson" title="Permanent link">#</a></h1>
+<p>A complete lesson that puts everything together, modelled on <a href="https://github.com/dynatrace-wwse/enablement-kubernetes-101">Kubernetes 101</a>: the learner instruments the TODO app that <code>post-create.sh</code> deployed, and every action is <strong>checked</strong> in the container, <strong>proven</strong> in Grail and <strong>solvable</strong> by automation.</p>
+<div class="admonition note">
+<p class="admonition-title">One page here, one page per step in your training</p>
+<p>To keep the template short this lesson is a single page, so its solutions are merged into one. In your training, give each section its own page (its own <code>nav</code> entry): the app treats a page as a step, and resume and the nightly test work step by step. Kubernetes 101 splits exactly these sections into three pages.</p>
 </div>
-<p>Another way to do this is by going to <a href="https://github.com/codespaces" target="_blank">https://github.com/codespaces</a> and delete the codespace.</p>
-<p>You may also want to deactivate or delete the API token needed for this lab.</p>
+<!-- STEP_SETUP
+commands:
+  - dynatraceEvalReadSaveCredentials && generateDynakube
+-->
+
+<hr />
+<h2 id="1-deploy-the-dynatrace-operator">1. Deploy the Dynatrace Operator<a class="headerlink" href="#1-deploy-the-dynatrace-operator" title="Permanent link">#</a></h2>
+<p>The operator manages everything Dynatrace runs in the cluster. Install it with Helm, in the <strong>terminal</strong>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>helm<span class="w"> </span>install<span class="w"> </span>dynatrace-operator<span class="w"> </span>oci://public.ecr.aws/dynatrace/dynatrace-operator<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--create-namespace<span class="w"> </span>--namespace<span class="w"> </span>dynatrace<span class="w"> </span>--atomic
+</span></code></pre></div>
+<!-- LAB_QUESTION
+type: shell-verification
+question: "Verify the Dynatrace Operator is Running"
+buttonText: "Check Operator"
+command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkOperatorReady"
+expect:
+  operator: exit-zero
+hint: "Run the helm install above, wait about 30 seconds, then check again. `kubectl get pods -n dynatrace` shows the state."
+explanation: "The operator is Running, together with its webhook and CSI driver."
+-->
+
+<!-- LAB_QUESTION
+type: multiple-choice
+question: "In AppOnly mode, which two components get the agent into your pods?"
+options:
+  - "A CSI driver that delivers the code modules, and a mutating webhook that injects them at pod creation"
+  - "A OneAgent DaemonSet on every node"
+  - "A sidecar container added to every deployment"
+  - "A Helm post-install hook that restarts every deployment"
+correct: 0
+explanation: "AppOnly needs no host agent: the CSI driver provides the binaries and the webhook injects them when a pod is created."
+-->
+
+<hr />
+<h2 id="2-deploy-the-dynakube">2. Deploy the DynaKube<a class="headerlink" href="#2-deploy-the-dynakube" title="Permanent link">#</a></h2>
+<p>The DynaKube tells the operator <em>what</em> to monitor. It was <strong>generated for you</strong> when this step opened (the step's <code>STEP_SETUP</code> ran <code>generateDynakube</code>, from the <a href="../02-automation/#the-dynakube-defaults-and-your-override">framework defaults</a>). Look at it, then apply it:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cat<span class="w"> </span>.devcontainer/yaml/gen/dynakube.yaml
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>.devcontainer/yaml/gen/dynakube.yaml
+</span></code></pre></div>
+<!-- LAB_QUESTION
+type: shell-verification
+question: "Verify the DynaKube custom resource exists"
+buttonText: "Check DynaKube"
+command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkDynakube"
+expect:
+  operator: exit-zero
+hint: "Apply the generated manifest with kubectl apply -f .devcontainer/yaml/gen/dynakube.yaml."
+explanation: "The DynaKube exists — the operator is rolling out the ActiveGate and the log module."
+-->
+
+<p>Open your cluster in Dynatrace:</p>
+<p><a href="placeholder">dt-app|dynatrace.kubernetes|Open the Kubernetes app</a></p>
+<hr />
+<h2 id="3-restart-the-application">3. Restart the application<a class="headerlink" href="#3-restart-the-application" title="Permanent link">#</a></h2>
+<p>The TODO app was started by <code>post-create.sh</code> <strong>before</strong> the webhook existed, so it is not instrumented yet. Restart it so its new pods pass through the webhook:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>deployment<span class="w"> </span>-n<span class="w"> </span>todoapp
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>kubectl<span class="w"> </span>rollout<span class="w"> </span>status<span class="w"> </span>deployment<span class="w"> </span>-n<span class="w"> </span>todoapp<span class="w"> </span>--timeout<span class="o">=</span>180s
+</span></code></pre></div>
+<!-- LAB_QUESTION
+type: shell-verification
+question: "Verify OneAgent was injected into the todoapp pods"
+buttonText: "Check Injection"
+command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkOneAgentInjected"
+expect:
+  operator: exit-zero
+hint: "Restart the deployment, wait for the rollout to finish, then check again."
+explanation: "The pods carry oneagent.dynatrace.com/injected=true — every request is now traced from inside the process."
+-->
+
+<hr />
+<h2 id="4-prove-it-in-grail">4. Prove it in Grail<a class="headerlink" href="#4-prove-it-in-grail" title="Permanent link">#</a></h2>
+<p>Open the TODO app and <strong>add a todo</strong>. Its log line and its trace reach Grail within a minute or two. Explore them yourself:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>fetch logs, from:now()-15m
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>| filter k8s.namespace.name == "todoapp"
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>| filter contains(content, "Adding a new todo")
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>| fields timestamp, content
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>| limit 5
+</span></code></pre></div>
+<p>The <code>endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")</code> line scopes the query to <strong>your</strong> cluster — in a workshop, everyone shares one tenant.</p>
+<!-- LAB_QUESTION
+type: dql-verification
+question: "Verify the log line for your todo reached Grail"
+buttonText: "Check logs in Grail"
+dql: |
+  fetch logs, from:now()-15m
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+  | filter k8s.namespace.name == "todoapp"
+  | filter contains(content, "Adding a new todo")
+  | limit 1
+expect:
+  operator: not-empty
+pollSeconds: 15
+timeoutSeconds: 180
+hint: "Add a todo in the app first. Logs take 1–2 minutes to reach Grail."
+explanation: "Your todo's log line is in Grail — collected by the log module, with no change to the application."
+-->
+
+<!-- LAB_QUESTION
+type: dql-verification
+question: "Verify the trace for your todo reached Grail"
+buttonText: "Check traces in Grail"
+dql: |
+  fetch spans, from:now()-15m
+  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+  | filter k8s.namespace.name == "todoapp"
+  | limit 1
+expect:
+  operator: not-empty
+pollSeconds: 15
+timeoutSeconds: 180
+hint: "Only pods restarted after the DynaKube was applied are traced. Pass the injection check, add another todo, and wait 1–2 minutes."
+explanation: "The trace is in Grail — the restart made the request visible from inside the process."
+-->
+
+<p><a href="placeholder">dt-app|dynatrace.distributedtraces|Open Distributed Traces</a></p>
+<!-- LAB_SOLUTION
+reveal: |
+  1. Install the operator — `dynatraceDeployOperator` wraps the Helm install.
+  2. Apply the DynaKube — `deployApplicationMonitoring` generates and applies the AppOnly DynaKube and waits for it.
+  3. Restart the TODO app so it gets injected — `restartTodoApp` (in `my_functions.sh`).
+  4. Create a todo so a log line and a trace exist — `generateTodoTraffic` (in `my_functions.sh`).
+commands:
+  - dynatraceDeployOperator
+  - deployApplicationMonitoring
+  - restartTodoApp
+  - generateTodoTraffic
+verify:
+  - source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkOperatorReady
+  - source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkDynakube
+  - source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkOneAgentInjected
+-->
+
+<hr />
+<h2 id="5-knowledge-check">5. Knowledge check<a class="headerlink" href="#5-knowledge-check" title="Permanent link">#</a></h2>
+<!-- LAB_QUESTIONAIRE: template-authoring-fundamentals retake=true -->
+
+<div class="admonition success">
+<p class="admonition-title">That is a complete interactive step</p>
+<p>Content, a check in the container, a check in Grail, a quiz, and a solution that lets the platform replay it — every night, and every time a learner resumes. Copy this page as the starting point of your first real lesson.</p>
+</div>
 <div class="grid cards">
 <ul>
-<li><a href="../resources/">Resources <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
+<li><a href="../06-test-publish-ship/">06 — Test, Publish &amp; Ship <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
 </ul>
 </div>
 
@@ -509,6 +798,44 @@
         <footer class="md-footer">
   
     
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../04-interactive-blocks/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 04. Interactive Blocks">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                04. Interactive Blocks
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../06-test-publish-ship/" class="md-footer__link md-footer__link--next" aria-label="Next: 06. Test, Publish &amp; Ship">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                06. Test, Publish & Ship
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -543,7 +870,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if (typeof dynatrace !== 'undefined') {
-        dynatrace.sendBizEvent('page_load', {'page': "Cleanup"});
+        dynatrace.sendBizEvent('page_load', {'page': "05. Example Lesson"});
       }
     });
   </script>
