@@ -94,7 +94,21 @@ Merging to `main` publishes GitHub Pages automatically (`.github/workflows/deplo
 3. Run a **workshop** as the **trainer** with a second account — ideally on a second tenant — so you see both sides: the roster and join code, the live board, chat and questions, and *Run solution* on a stuck learner.
 4. Fix, merge, import again.
 
-## 5. Ship it into dynatrace-wwse
+## 5. After every publish: refresh the app and verify
+
+**After publishing, open the Enablement App workspace, refresh the application, and verify that the documentation reflects the latest changes.** A merge to `main` updates GitHub Pages, but a training that is already in the app keeps the content it was imported with until it is refreshed. The app imports the raw Markdown at a commit, not the Pages site.
+
+1. Open the **Dynatrace Enablement** app in your tenant and go to **Administration** (the gear icon in the header).
+2. Refresh the training:
+    - **Delivered by the catalog** (a dynatrace-wwse repo in `repos.yaml`): press **Refresh content**. It re-imports every training whose commit changed and skips the rest. Orbital sees a new commit within about a minute of the merge; if the summary says your repo was skipped as unchanged, wait a minute and press it again.
+    - **Imported by hand**: under **Import your own lab**, enter the same repository URL and press **Import lab**. The existing training is updated in place. If `main` has not moved since the last import, the import is skipped as unchanged.
+    - **Force re-import** re-imports every catalog training, changed or not. Use it only if a refresh did not pick up a change you can see on `main`.
+3. Open the training from the **Catalog** and go to the step you changed.
+4. Confirm that the step shows the new content: the text, the checks, the solution and, on the last page, the assessment. If it still shows the old version, check that the merge landed on `main`, then refresh again.
+
+Also check that the **deploy mkdocs to github pages** workflow run for the merge is green and that the published site shows the change. That site is what learners see outside the app.
+
+## 6. Ship it into dynatrace-wwse
 
 When it is solid, bring the repo into the **dynatrace-wwse** organization and ask for it to be added to the catalog ([`repos.yaml`](https://github.com/dynatrace-wwse/codespaces-framework/blob/main/repos.yaml)). From then on:
 
@@ -117,6 +131,7 @@ Then decide how customers get it: **self-service**, a **workshop series**, or bo
 - [ ] `.assessment/*.json` is bound once, on the last page
 - [ ] `installMkdocs` / `exposeMkdocs` are commented out in `post-create.sh` / `post-start.sh`
 - [ ] Run once as a learner and once as a trainer in the app
+- [ ] After the merge: refreshed in the app, and the changed steps show the latest content
 
 <!-- LAB_QUESTION
 type: multiple-choice
