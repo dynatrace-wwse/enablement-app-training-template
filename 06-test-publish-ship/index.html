@@ -451,9 +451,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-preview-the-docs-while-you-write" class="md-nav__link">
+  <a href="#1-preview-and-validate-the-docs-locally" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Preview the docs while you write
+      1. Preview and validate the docs locally
     </span>
   </a>
   
@@ -487,9 +487,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-ship-it-into-dynatrace-wwse" class="md-nav__link">
+  <a href="#5-after-every-publish-refresh-the-app-and-verify" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Ship it into dynatrace-wwse
+      5. After every publish: refresh the app and verify
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ship-it-into-dynatrace-wwse" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Ship it into dynatrace-wwse
     </span>
   </a>
   
@@ -532,6 +541,26 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-final-assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    07. Final Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -559,9 +588,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-preview-the-docs-while-you-write" class="md-nav__link">
+  <a href="#1-preview-and-validate-the-docs-locally" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Preview the docs while you write
+      1. Preview and validate the docs locally
     </span>
   </a>
   
@@ -595,9 +624,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-ship-it-into-dynatrace-wwse" class="md-nav__link">
+  <a href="#5-after-every-publish-refresh-the-app-and-verify" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Ship it into dynatrace-wwse
+      5. After every publish: refresh the app and verify
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ship-it-into-dynatrace-wwse" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Ship it into dynatrace-wwse
     </span>
   </a>
   
@@ -633,50 +671,88 @@
 <h1 id="06-test-publish-ship">06 — Test, Publish &amp; Ship<a class="headerlink" href="#06-test-publish-ship" title="Permanent link">#</a></h1>
 <p>From your first draft to a training the dynatrace-wwse nightly pipeline keeps green.</p>
 <hr />
-<h2 id="1-preview-the-docs-while-you-write">1. Preview the docs while you write<a class="headerlink" href="#1-preview-the-docs-while-you-write" title="Permanent link">#</a></h2>
-<p>In the container's shell:</p>
+<h2 id="1-preview-and-validate-the-docs-locally">1. Preview and validate the docs locally<a class="headerlink" href="#1-preview-and-validate-the-docs-locally" title="Permanent link">#</a></h2>
+<p>Validate the rendered site <strong>before</strong> you publish — the same build GitHub Pages runs on merge. In the container's shell (the framework is loaded in every shell):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>installMkdocs
 </span></code></pre></div>
-<p>It installs MkDocs and serves the docs on <strong>port 8000</strong> with live reload — save a Markdown file and the page refreshes. In a Codespace, open port 8000 from the <em>Ports</em> tab. <code>exposeMkdocs</code> restarts the server if you need it again.</p>
+<p>That is the framework's <code>installMkdocs</code> (the version pinned in <code>.devcontainer/util/source_framework.sh</code>). It installs the pinned requirements (<code>pip install -r docs/requirements/requirements-mkdocs.txt</code>), fetches <code>mkdocs-base.yaml</code> — the shared theme and extensions your <code>mkdocs.yaml</code> inherits — and calls <code>exposeMkdocs</code>, which serves the docs on <strong>port 8000</strong> with live reload. In a Codespace, open port 8000 from the <em>Ports</em> tab; <code>exposeMkdocs</code> restarts the server if you need it again.</p>
+<p><code>installMkdocs</code> does not fetch the framework stylesheet the published site uses. Fetch it the way the publish workflow does, so the preview looks like GitHub Pages:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">FRAMEWORK_VERSION</span><span class="o">=</span><span class="k">$(</span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s1">':-\K[^}"]+'</span><span class="w"> </span>.devcontainer/util/source_framework.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>docs/stylesheets
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/dynatrace-wwse/codespaces-framework/</span><span class="si">${</span><span class="nv">FRAMEWORK_VERSION</span><span class="si">}</span><span class="s2">/docs/stylesheets/extra.css"</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>-o<span class="w"> </span>docs/stylesheets/extra.css
+</span></code></pre></div>
+<p>(<code>mkdocs-base.yaml</code> and <code>docs/stylesheets/extra.css</code> are gitignored — never commit them.)</p>
+<p>Then validate, in this order:</p>
+<ol>
+<li>
+<p><strong>Build</strong> — the same command the publish workflow runs. It must finish without errors:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdocs<span class="w"> </span>build
+</span></code></pre></div>
+</li>
+<li>
+<p><strong>Check the links</strong> — MkDocs reports a link to a missing page as a <code>WARNING</code>, but a link to a missing <em>anchor</em> only as <code>INFO</code>, so search for both:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>mkdocs<span class="w"> </span>build<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"WARNING|contains a link|anchor"</span>
+</span></code></pre></div>
+<p>Expect exactly one line, <code>Unrecognised configuration name: training_name</code> — the display name Orbital reads, harmless to MkDocs. Any other line is a broken link or anchor: fix it.</p>
+</li>
+<li>
+<p><strong>Preview</strong> — open port 8000 and read every page you changed: the navigation order, headings, code blocks, admonitions, tables and images.</p>
+</li>
+</ol>
 <p>Keep <code>installMkdocs</code> and <code>exposeMkdocs</code> <strong>commented out</strong> in <code>post-create.sh</code> / <code>post-start.sh</code> when the training goes live: learners use the app, and outside the app the published GitHub Pages site (it carries RUM).</p>
 <div class="admonition note">
 <p class="admonition-title">Interactive blocks do not show in MkDocs</p>
-<p><code>LAB_QUESTION</code>, <code>LAB_SOLUTION</code> and the rest are HTML comments: MkDocs hides them. The preview checks your prose, code and layout; the blocks are tested in the steps below.</p>
+<p><code>LAB_QUESTION</code>, <code>LAB_SOLUTION</code> and the rest are HTML comments: MkDocs hides them. The preview checks your prose, code, links and layout; the blocks are tested in the steps below.</p>
 </div>
 <h2 id="2-test-every-check-and-every-solution-by-hand">2. Test every check and every solution by hand<a class="headerlink" href="#2-test-every-check-and-every-solution-by-hand" title="Permanent link">#</a></h2>
 <p>In a <strong>Codespace</strong> or a <strong>VS Code Dev Container</strong> (use <strong>k3d</strong>, the default — Kind does not work in the Docker-in-Docker setup):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Locally, provide the credentials the app would mint (.devcontainer/.env, gitignored):</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#   DT_ENVIRONMENT=https://abc12345.apps.dynatrace.com</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#   DT_OPERATOR_TOKEN=dt0c01....</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#   DT_INGEST_TOKEN=dt0c01....</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nb">source</span><span class="w"> </span>.devcontainer/util/source_framework.sh
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>checkOperatorReady<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"exit=</span><span class="nv">$?</span><span class="s2">"</span><span class="w">     </span><span class="c1"># BEFORE the step: must FAIL (exit=1)</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>dynatraceDeployOperator<span class="w">                </span><span class="c1"># the step's LAB_SOLUTION commands</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nv">LAB_WAIT</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>checkOperatorReady<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"exit=</span><span class="nv">$?</span><span class="s2">"</span><span class="w">   </span><span class="c1"># AFTER: must PASS (exit=0)</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Locally, provide the credentials the app would mint (.devcontainer/.env, gitignored):</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1">#   DT_ENVIRONMENT=https://abc12345.apps.dynatrace.com</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1">#   DT_OPERATOR_TOKEN=dt0c01....</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">#   DT_INGEST_TOKEN=dt0c01....</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nb">source</span><span class="w"> </span>.devcontainer/util/source_framework.sh
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>checkOperatorReady<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"exit=</span><span class="nv">$?</span><span class="s2">"</span><span class="w">     </span><span class="c1"># BEFORE the step: must FAIL (exit=1)</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>dynatraceDeployOperator<span class="w">                </span><span class="c1"># the step's LAB_SOLUTION commands</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nv">LAB_WAIT</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>checkOperatorReady<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"exit=</span><span class="nv">$?</span><span class="s2">"</span><span class="w">   </span><span class="c1"># AFTER: must PASS (exit=0)</span>
 </span></code></pre></div>
 <p><strong>A check that could never fail proves nothing.</strong> Run each one before its step (it must say no) and after its solution (it must say yes).</p>
 <p>For DQL checks: open a <strong>Notebook</strong> in your tenant, paste the query with your own session id in place of <code>{{DT_SESSION_ID}}</code> (<code>echo $DT_HOSTGROUP</code> in the container prints it), and confirm it returns rows <em>after</em> the step and none before.</p>
 <p>The cluster is cheap to rebuild — <code>deleteCluster &amp;&amp; startCluster</code>, then re-run <code>post-create.sh</code> — so replay the whole training from a clean state before you publish.</p>
 <h2 id="3-branch-pr-publish">3. Branch, PR, publish<a class="headerlink" href="#3-branch-pr-publish" title="Permanent link">#</a></h2>
 <p><code>main</code> is protected. Work on a branch and open a PR — the <strong>integration test</strong> runs <code>.devcontainer/test/integration.sh</code> on every PR:</p>
-<div class="language-bash highlight"><span class="filename">.devcontainer/test/integration.sh</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="ch">#!/bin/bash</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">source</span><span class="w"> </span>.devcontainer/util/source_framework.sh
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>assertRunningPod<span class="w"> </span>todoapp<span class="w"> </span>todoapp<span class="w">     </span><span class="c1"># what post-create.sh must have built</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>assertRunningApp<span class="w"> </span>todoapp
+<div class="language-bash highlight"><span class="filename">.devcontainer/test/integration.sh</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">source</span><span class="w"> </span>.devcontainer/util/source_framework.sh
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>assertRunningPod<span class="w"> </span>todoapp<span class="w"> </span>todoapp<span class="w">     </span><span class="c1"># what post-create.sh must have built</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>assertRunningApp<span class="w"> </span>todoapp
 </span></code></pre></div>
 <p>The assertions (<code>assertRunningPod</code>, <code>assertRunningApp</code>, <code>assertRunningHttp</code>, …) come from the framework's <code>test_functions.sh</code>. Assert what <code>post-create.sh</code> builds — not what the learner does in the steps; that is the training-test's job.</p>
 <p>Merging to <code>main</code> publishes GitHub Pages automatically (<code>.github/workflows/deploy-ghpages.yaml</code>); <code>deployGhdocs</code> does the same by hand.</p>
 <h2 id="4-import-and-run-it-in-the-app">4. Import and run it in the app<a class="headerlink" href="#4-import-and-run-it-in-the-app" title="Permanent link">#</a></h2>
 <ol>
 <li>In the app, <strong>Import Lab</strong> and give it the repo — <code>owner/repo</code>, the GitHub URL, or the GitHub Pages URL. The app reads <code>main</code>. (Private repos import through the catalog's content service; a hand import of a private repo needs a GitHub token.)</li>
-<li>Run it once as a <strong>learner</strong>, start to finish: every button, every quiz, the assessment.</li>
+<li>Run it once as a <strong>learner</strong>, start to finish: every button, every quiz, and the final assessment.</li>
 <li>Run a <strong>workshop</strong> as the <strong>trainer</strong> with a second account — ideally on a second tenant — so you see both sides: the roster and join code, the live board, chat and questions, and <em>Run solution</em> on a stuck learner.</li>
 <li>Fix, merge, import again.</li>
 </ol>
-<h2 id="5-ship-it-into-dynatrace-wwse">5. Ship it into dynatrace-wwse<a class="headerlink" href="#5-ship-it-into-dynatrace-wwse" title="Permanent link">#</a></h2>
+<h2 id="5-after-every-publish-refresh-the-app-and-verify">5. After every publish: refresh the app and verify<a class="headerlink" href="#5-after-every-publish-refresh-the-app-and-verify" title="Permanent link">#</a></h2>
+<p><strong>After publishing, open the Enablement App workspace, refresh the application, and verify that the documentation reflects the latest changes.</strong> A merge to <code>main</code> updates GitHub Pages, but a training that is already in the app keeps the content it was imported with until it is refreshed. The app imports the raw Markdown at a commit, not the Pages site.</p>
+<ol>
+<li>Open the <strong>Dynatrace Enablement</strong> app in your tenant and go to <strong>Administration</strong> (the gear icon in the header).</li>
+<li>Refresh the training:<ul>
+<li><strong>Delivered by the catalog</strong> (a dynatrace-wwse repo in <code>repos.yaml</code>): press <strong>Refresh content</strong>. It re-imports every training whose commit changed and skips the rest. Orbital sees a new commit within about a minute of the merge; if the summary says your repo was skipped as unchanged, wait a minute and press it again.</li>
+<li><strong>Imported by hand</strong>: under <strong>Import your own lab</strong>, enter the same repository URL and press <strong>Import lab</strong>. The existing training is updated in place. If <code>main</code> has not moved since the last import, the import is skipped as unchanged.</li>
+<li><strong>Force re-import</strong> re-imports every catalog training, changed or not. Use it only if a refresh did not pick up a change you can see on <code>main</code>.</li>
+</ul>
+</li>
+<li>Open the training from the <strong>Catalog</strong> and go to the step you changed.</li>
+<li>Confirm that the step shows the new content: the text, the checks, the solution and, on the last page, the assessment. If it still shows the old version, check that the merge landed on <code>main</code>, then refresh again.</li>
+</ol>
+<p>Also check that the <strong>deploy mkdocs to github pages</strong> workflow run for the merge is green and that the published site shows the change. That site is what learners see outside the app.</p>
+<h2 id="6-ship-it-into-dynatrace-wwse">6. Ship it into dynatrace-wwse<a class="headerlink" href="#6-ship-it-into-dynatrace-wwse" title="Permanent link">#</a></h2>
 <p>When it is solid, bring the repo into the <strong>dynatrace-wwse</strong> organization and ask for it to be added to the catalog (<a href="https://github.com/dynatrace-wwse/codespaces-framework/blob/main/repos.yaml"><code>repos.yaml</code></a>). From then on:</p>
 <ul>
 <li>the nightly <strong>integration-test</strong> builds the environment and runs <code>integration.sh</code>;</li>
@@ -693,8 +769,11 @@
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> No interactive block sits inside a code fence</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>dt-tokens.yaml</code> (if any) lists <strong>every</strong> token, including operator and ingest</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.assessment/*.json</code> validates (<code>python3 -m json.tool</code>) and its <code>id</code> matches the <code>LAB_QUESTIONAIRE</code> line</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>mkdocs build</code> passes and the link check finds nothing but <code>training_name</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.assessment/*.json</code> is bound once, on the last page</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>installMkdocs</code> / <code>exposeMkdocs</code> are commented out in <code>post-create.sh</code> / <code>post-start.sh</code></li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Run once as a learner and once as a trainer in the app</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> After the merge: refreshed in the app, and the changed steps show the latest content</li>
 </ul>
 <!-- LAB_QUESTION
 type: multiple-choice
@@ -713,6 +792,7 @@ explanation: "The training-test drives the whole training end to end with the so
 <div class="grid cards">
 <ul>
 <li><a href="../resources/">Resources <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
+<li><a href="../07-final-assessment/">07 — Final Assessment <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
 </ul>
 </div>
 

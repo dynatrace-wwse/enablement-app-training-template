@@ -574,6 +574,26 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-final-assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    07. Final Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -868,21 +888,17 @@ explanation: "The cluster node is Ready."
 <p>The query runs <strong>in the learner's tenant</strong>, as the learner. <code>{{DT_SESSION_ID}}</code> is replaced before it runs (see <a href="#template-variables-one-query-every-learner-isolated">template variables</a>).</p>
 <div class="language-markdown highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&lt;!-- LAB_QUESTION
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>type: dql-verification
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>question: "Verify the log line for your todo reached Grail"
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>question: "Verify your cluster's logs reached Grail"
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>buttonText: "Check logs in Grail"
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>dql: |
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  fetch logs, from:now()-15m
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>  | filter k8s.namespace.name == "todoapp"
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>  | filter contains(content, "Adding a new todo")
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>  | limit 1
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>expect:
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>  operator: not-empty
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>pollSeconds: 15
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>timeoutSeconds: 180
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>hint: "Add a todo first. Logs take 1–2 minutes to reach Grail."
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>explanation: "Your todo's log line is in Grail — captured by the log module, with no code change."
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>--&gt;
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>  | limit 1
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>expect:
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>  operator: not-empty
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>hint: "Logs take 1–2 minutes to reach Grail after the DynaKube is applied. Wait, then check again."
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>explanation: "Your cluster's logs are in Grail — captured by the log module, with no code change."
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>--&gt;
 </span></code></pre></div>
 <table>
 <thead>
@@ -909,22 +925,21 @@ explanation: "The cluster node is Ready."
 <p>Compare a number with <code>field</code>:</p>
 <div class="language-markdown highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&lt;!-- LAB_QUESTION
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>type: dql-verification
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>question: "Verify at least one todoapp span reached Grail"
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>buttonText: "Count spans"
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>question: "Verify at least 10 log lines from your cluster reached Grail"
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>buttonText: "Count logs"
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>dql: |
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  fetch spans, from:now()-15m
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  fetch logs, from:now()-15m
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  | filter k8s.namespace.name == "todoapp"
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>  | summarize count = count()
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>expect:
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>  operator: gte
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>  field: count
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>  value: 1
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>hint: "Only pods restarted after the DynaKube was applied produce traces."
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>explanation: "Traces are flowing from inside the application process."
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>--&gt;
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  | summarize count = count()
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>expect:
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>  operator: gte
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>  field: count
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>  value: 10
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>hint: "Logs take 1–2 minutes to reach Grail after the DynaKube is applied."
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>explanation: "Logs are flowing from every pod in your cluster."
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>--&gt;
 </span></code></pre></div>
-<p><strong>Auto-poll</strong> — telemetry takes a minute or two to arrive. Add <code>pollSeconds</code> (5–60) <strong>and</strong> <code>timeoutSeconds</code> (10–300) and the check re-runs by itself until it passes or times out, instead of making the learner click repeatedly. Give both or neither — one alone is dropped with an import warning.</p>
+<p><strong>Let the learner press the button.</strong> Telemetry takes a minute or two to arrive, so say so in the <code>hint</code> — the learner waits and checks again. The app also accepts <code>pollSeconds</code> (5–60) <strong>and</strong> <code>timeoutSeconds</code> (10–300), which re-run the check in the background until it passes or times out; this template deliberately does not use them, so every check runs only when the learner asks for it and a failure is always visible. Give both or neither — one alone is dropped with an import warning.</p>
 <div class="admonition warning">
 <p class="admonition-title"><code>fetch spans</code>: bound it with <code>from:</code>, never <code>filter timestamp</code></p>
 <p>On spans <code>timestamp</code> is <strong>null</strong> (a span has <code>start_time</code> / <code>end_time</code>), so <code>| filter timestamp &gt; now()-15m</code> returns nothing — the check fails as an empty result, which looks exactly like "the data never arrived". Use <code>from:now()-15m</code>, which works for logs too. <code>service.name</code> is null on spans as well — filter on <code>span.name</code> or <code>endpoint.name</code>.</p>
@@ -1097,9 +1112,8 @@ explanation: "Orbital executes it in the learner's container — which is why it
 </span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">  </span><span class="nt">"learningObjectives"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Explain what a rolling restart does."</span><span class="p">]</span>
 </span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Questions can also be <code>"type": "dql-verification"</code> with a <code>dql</code> field (placeholders work there too; escape quotes in JSON). Validate the file with <code>python3 -m json.tool .assessment/&lt;id&gt;.json</code>. This template's own assessment:</p>
-<!-- LAB_QUESTIONAIRE: template-authoring-fundamentals retake=true -->
-
+<p>Questions can also be <code>"type": "dql-verification"</code> with a <code>dql</code> field (placeholders work there too; escape quotes in JSON). Validate the file with <code>python3 -m json.tool .assessment/&lt;id&gt;.json</code>.</p>
+<p><strong>One assessment, on the last step.</strong> A step that carries an assessment cannot be completed until the assessment is passed, and the app reads one <code>LAB_QUESTIONAIRE</code> line per page. Bind each assessment once, on the final page of the training — this template's own, <code>template-authoring-fundamentals</code>, is on <a href="../07-final-assessment/">Final Assessment</a>.</p>
 <hr />
 <h2 id="instructor-code-a-workshop-gate"><code>instructor-code</code> — a workshop gate<a class="headerlink" href="#instructor-code-a-workshop-gate" title="Permanent link">#</a></h2>
 <div class="language-markdown highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&lt;!-- LAB_QUESTION
