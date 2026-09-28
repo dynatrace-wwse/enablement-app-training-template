@@ -110,16 +110,16 @@ restartTodoApp() {
   kubectl rollout status deployment -n todoapp --timeout=180s
 }
 
-# Create a TODO through the app's HTTP API, so a log line and a POST /todos
-# trace reach Grail. The learner does this by hand in the app UI; this is the
-# automation equivalent the LAB_SOLUTION and the nightly test need — neither can
-# click a web page. The title is fixed: the DQL checks match the log text
-# "Adding a new todo", so the hand-typed and the automated path look the same.
+# Create a TODO through the app's HTTP API, so fresh todoapp log lines reach
+# Grail. The learner may do this by hand in the app UI; this is the automation
+# equivalent the LAB_SOLUTION and the nightly test use — neither can click a web
+# page. The DQL check reads any log line from the learner's cluster, so it does
+# not depend on this text; the title is fixed only to keep runs comparable.
 generateTodoTraffic() {
   local title="App Training Template"
   local url="http://localhost:${K3D_LB_HTTP_PORT:-80}"
   local host="todoapp.$(detectHostname)"
-  printInfoSection "Creating a TODO so logs and traces reach Grail"
+  printInfoSection "Creating a TODO so fresh logs reach Grail"
 
   if [ -n "${LAB_WAIT:-}" ]; then
     local i=0
@@ -137,7 +137,7 @@ generateTodoTraffic() {
   resp=$(curl -s -H "Host: $host" -X POST "$url/todos" -H "Content-Type: application/json" \
     -d "{\"title\":\"$title\",\"completed\":false}")
   if echo "$resp" | grep -q '"status":"ok"'; then
-    printInfo "Created TODO \"$title\" — its log and trace should appear in Grail within ~2 min"
+    printInfo "Created TODO \"$title\" — its log lines should appear in Grail within ~2 min"
     return 0
   fi
   printError "Failed to create the TODO. Response: $resp"

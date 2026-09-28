@@ -64,9 +64,10 @@ Every repository in the worldwide SE GitHub organization ([dynatrace-wwse](https
 | `01` | [How It Works](01-how-it-works.md) | The app, Orbital and the container — what happens when a learner clicks *Start* |
 | `02` | [Automate the Environment](02-automation.md) | `post-create.sh`, framework functions, `my_functions.sh`, apps, **tokens** and the **DynaKube** |
 | `03` | [Lesson Anatomy](03-lesson-anatomy.md) | `mkdocs.yaml`, front-matter, and the shape of a step: content → check → solution |
-| `04` | [Interactive Blocks](04-interactive-blocks.md) | Every block type, live: shell and DQL checks, quizzes, solutions, assessments |
+| `04` | [Interactive Blocks](04-interactive-blocks.md) | Every block type: shell and DQL checks, quizzes, solutions, assessments |
 | `05` | [Example Lesson](05-example-lesson.md) | A complete lesson that uses all of it |
-| `06` | [Test, Publish & Ship](06-test-publish-ship.md) | Preview live, test locally and in the app, bring it into the org |
+| `06` | [Test, Publish & Ship](06-test-publish-ship.md) | Build and validate the docs locally, test in the app, bring it into the org |
+| `07` | [Final Assessment](07-final-assessment.md) | The scored assessment that closes the training |
 
 <div class="grid cards" markdown>
 - [Start here: 00 — Getting Started :octicons-arrow-right-24:](00-getting-started.md)

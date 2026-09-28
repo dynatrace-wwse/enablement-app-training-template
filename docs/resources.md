@@ -110,3 +110,7 @@ installMkdocs · exposeMkdocs · deployGhdocs
 # Output
 printInfoSection "…" · printInfo "…" · printWarn "…" · printError "…"
 ```
+
+<div class="grid cards" markdown>
+- [07 — Final Assessment :octicons-arrow-right-24:](07-final-assessment.md)
+</div>
