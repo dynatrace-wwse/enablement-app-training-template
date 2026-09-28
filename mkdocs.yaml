@@ -15,5 +15,6 @@ nav:
   - "05. Example Lesson": 05-example-lesson.md
   - "06. Test, Publish & Ship": 06-test-publish-ship.md
   - "Resources": resources.md
+  - "07. Final Assessment": 07-final-assessment.md
 extra:
   rum_snippet: "https://js-cdn.dynatrace.com/jstag/1612cf70810/bf81393wlb/7c50bce5c0cc890f_complete.js"

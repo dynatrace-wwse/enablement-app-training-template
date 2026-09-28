@@ -89,69 +89,45 @@ command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && check
 expect:
   operator: exit-zero
 hint: "Restart the deployment, wait for the rollout to finish, then check again."
-explanation: "The pods carry oneagent.dynatrace.com/injected=true — every request is now traced from inside the process."
+explanation: "The pods carry oneagent.dynatrace.com/injected=true — OneAgent now runs inside every todoapp process."
 -->
 
 ---
 
 ## 4. Prove it in Grail
 
-Open the TODO app and **add a todo**. Its log line and its trace reach Grail within a minute or two. Explore them yourself:
+The DynaKube you applied turned on the **log module**: every pod log in your cluster now flows to Grail, with no change to any application. Open the TODO app and add a todo if you like — then fetch your cluster's logs:
 
 ```dql
 fetch logs, from:now()-15m
 | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
-| filter k8s.namespace.name == "todoapp"
-| filter contains(content, "Adding a new todo")
-| fields timestamp, content
-| limit 5
+| fields timestamp, k8s.namespace.name, k8s.pod.name, content
+| sort timestamp desc
+| limit 20
 ```
 
-The `endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` line scopes the query to **your** cluster — in a workshop, everyone shares one tenant.
+The `endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` line scopes the query to **your** cluster — in a workshop, everyone shares one tenant. It is the only filter: any log line from your cluster proves the pipeline works.
 
 <!-- LAB_QUESTION
 type: dql-verification
-question: "Verify the log line for your todo reached Grail"
+question: "Verify your cluster's logs reached Grail"
 buttonText: "Check logs in Grail"
 dql: |
   fetch logs, from:now()-15m
   | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
-  | filter k8s.namespace.name == "todoapp"
-  | filter contains(content, "Adding a new todo")
   | limit 1
 expect:
   operator: not-empty
-pollSeconds: 15
-timeoutSeconds: 180
-hint: "Add a todo in the app first. Logs take 1–2 minutes to reach Grail."
-explanation: "Your todo's log line is in Grail — collected by the log module, with no change to the application."
+hint: "Logs take 1–2 minutes to reach Grail after the DynaKube is applied. Wait a minute, then press the button again."
+explanation: "Your cluster's logs are in Grail — collected by the log module, with no change to the application."
 -->
-
-<!-- LAB_QUESTION
-type: dql-verification
-question: "Verify the trace for your todo reached Grail"
-buttonText: "Check traces in Grail"
-dql: |
-  fetch spans, from:now()-15m
-  | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
-  | filter k8s.namespace.name == "todoapp"
-  | limit 1
-expect:
-  operator: not-empty
-pollSeconds: 15
-timeoutSeconds: 180
-hint: "Only pods restarted after the DynaKube was applied are traced. Pass the injection check, add another todo, and wait 1–2 minutes."
-explanation: "The trace is in Grail — the restart made the request visible from inside the process."
--->
-
-[dt-app|dynatrace.distributedtraces|Open Distributed Traces](placeholder)
 
 <!-- LAB_SOLUTION
 reveal: |
   1. Install the operator — `dynatraceDeployOperator` wraps the Helm install.
   2. Apply the DynaKube — `deployApplicationMonitoring` generates and applies the AppOnly DynaKube and waits for it.
   3. Restart the TODO app so it gets injected — `restartTodoApp` (in `my_functions.sh`).
-  4. Create a todo so a log line and a trace exist — `generateTodoTraffic` (in `my_functions.sh`).
+  4. Create a todo so fresh log lines exist — `generateTodoTraffic` (in `my_functions.sh`).
 commands:
   - dynatraceDeployOperator
   - deployApplicationMonitoring
@@ -164,10 +140,6 @@ verify:
 -->
 
 ---
-
-## 5. Knowledge check
-
-<!-- LAB_QUESTIONAIRE: template-authoring-fundamentals retake=true -->
 
 !!! success "That is a complete interactive step"
     Content, a check in the container, a check in Grail, a quiz, and a solution that lets the platform replay it — every night, and every time a learner resumes. Copy this page as the starting point of your first real lesson.

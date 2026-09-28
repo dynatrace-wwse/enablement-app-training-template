@@ -77,7 +77,7 @@ Compare a number with `field`:
 
 --8<-- "snippets/blocks/dql-verification-field.md"
 
-**Auto-poll** — telemetry takes a minute or two to arrive. Add `pollSeconds` (5–60) **and** `timeoutSeconds` (10–300) and the check re-runs by itself until it passes or times out, instead of making the learner click repeatedly. Give both or neither — one alone is dropped with an import warning.
+**Let the learner press the button.** Telemetry takes a minute or two to arrive, so say so in the `hint` — the learner waits and checks again. The app also accepts `pollSeconds` (5–60) **and** `timeoutSeconds` (10–300), which re-run the check in the background until it passes or times out; this template deliberately does not use them, so every check runs only when the learner asks for it and a failure is always visible. Give both or neither — one alone is dropped with an import warning.
 
 !!! warning "`fetch spans`: bound it with `from:`, never `filter timestamp`"
     On spans `timestamp` is **null** (a span has `start_time` / `end_time`), so `| filter timestamp > now()-15m` returns nothing — the check fails as an empty result, which looks exactly like "the data never arrived". Use `from:now()-15m`, which works for logs too. `service.name` is null on spans as well — filter on `span.name` or `endpoint.name`.
@@ -218,9 +218,9 @@ A multi-question, scored assessment lives in `.assessment/<id>.json` and is plac
 }
 ```
 
-Questions can also be `"type": "dql-verification"` with a `dql` field (placeholders work there too; escape quotes in JSON). Validate the file with `python3 -m json.tool .assessment/<id>.json`. This template's own assessment:
+Questions can also be `"type": "dql-verification"` with a `dql` field (placeholders work there too; escape quotes in JSON). Validate the file with `python3 -m json.tool .assessment/<id>.json`.
 
-<!-- LAB_QUESTIONAIRE: template-authoring-fundamentals retake=true -->
+**One assessment, on the last step.** A step that carries an assessment cannot be completed until the assessment is passed, and the app reads one `LAB_QUESTIONAIRE` line per page. Bind each assessment once, on the final page of the training — this template's own, `template-authoring-fundamentals`, is on [Final Assessment](07-final-assessment.md).
 
 ---
 
