@@ -15,6 +15,8 @@ This is the one place that explains **how to create a training** for the Dynatra
 
 ## Content matters most
 
+## How it is delivered
+
 The platform is the vehicle; the value is in **curated, interactive content**. A training built the interactive way — like the golden example, [Kubernetes 101](https://github.com/dynatrace-wwse/enablement-kubernetes-101) — gives every step a **check, a quiz or an assertion**. The learner is validated against the running container, and against Grail with DQL. That buys three things a slide deck or a static lab never will:
 
 | | What you get |
@@ -22,8 +24,6 @@ The platform is the vehicle; the value is in **curated, interactive content**. A
 | **You see who got how far** | Every check, answer and completed step is recorded per learner. You see exactly how far each customer got and whether they understood the concept — not just whether they showed up. |
 | **Environments are disposable** | Because every step carries its **solution**, an environment can be shut down to save cost and **recreated at the step where the learner left off**: the platform replays the solutions of the completed steps into a fresh container. |
 | **Content stays valid** | Because the solutions are baked into the steps, a pipeline can run the **whole training end to end** — solutions, shell checks and DQL checks against a real tenant — every night. You build it once; the platform keeps proving it still works. |
-
-## How it is delivered
 
 You decide how, and to whom, a training is delivered — per training, and it can be mixed:
 
