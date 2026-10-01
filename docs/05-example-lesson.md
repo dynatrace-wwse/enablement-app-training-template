@@ -144,6 +144,14 @@ verify:
 !!! success "That is a complete interactive step"
     Content, a check in the container, a check in Grail, a quiz, and a solution that lets the platform replay it — every night, and every time a learner resumes. Copy this page as the starting point of your first real lesson.
 
+<!-- LAB_SOLUTION
+commands:
+  - helm install dynatrace-operator oci://public.ecr.aws/dynatrace/dynatrace-operator \
+  - "  --create-namespace --namespace dynatrace --atomic"
+  - kubectl apply -f .devcontainer/yaml/gen/dynakube.yaml
+  - kubectl rollout restart deployment -n todoapp
+-->
+
 <div class="grid cards" markdown>
 - [06 — Test, Publish & Ship :octicons-arrow-right-24:](06-test-publish-ship.md)
 </div>
