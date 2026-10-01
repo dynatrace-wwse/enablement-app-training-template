@@ -1,14 +1,14 @@
+<!-- STEP_SETUP
+commands:
+  - dynatraceEvalReadSaveCredentials && generateDynakube
+-->
+
 # 05 — Example Lesson
 
 A complete lesson that puts everything together, modelled on [Kubernetes 101](https://github.com/dynatrace-wwse/enablement-kubernetes-101): the learner instruments the TODO app that `post-create.sh` deployed, and every action is **checked** in the container, **proven** in Grail and **solvable** by automation.
 
 !!! note "One page here, one page per step in your training"
     To keep the template short this lesson is a single page, so its solutions are merged into one. In your training, give each section its own page (its own `nav` entry): the app treats a page as a step, and resume and the nightly test work step by step. Kubernetes 101 splits exactly these sections into three pages.
-
-<!-- STEP_SETUP
-commands:
-  - dynatraceEvalReadSaveCredentials && generateDynakube
--->
 
 ---
 
