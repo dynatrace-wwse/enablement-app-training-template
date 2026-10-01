@@ -91,9 +91,10 @@ deployApp easytrade -d  # undeploy
 
 Each app is exposed through the ingress, so it opens in the browser the same way in a Codespace, locally and in the app. Framework docs: [To deploy an app](https://dynatrace-wwse.github.io/codespaces-framework/framework/#to-deploy-an-app) · [Nginx ingress + app exposure](https://dynatrace-wwse.github.io/codespaces-framework/framework/#nginx-ingress-app-exposure).
 
-**Your own app** does not go into `deployApp` — that list belongs to the framework. Write a function in `my_functions.sh`, and call `registerApp` so it is reachable:
+**Your own app** does not go into `deployApp` — that list belongs to the framework. Write a function in `my_functions.sh`, and call `registerApp` so it is reachable and added to the Apps tab in the Enablement App.
 
 ```bash title=".devcontainer/util/my_functions.sh"
+#This is a sample how a custom app deployment would look like
 deployMyApp(){
   printInfoSection "Deploying my app"
   kubectl create ns myapp 2>/dev/null || true
@@ -101,6 +102,16 @@ deployMyApp(){
   waitForAllReadyPods myapp
   registerApp "myapp" "myapp" "myapp-frontend" 8080     # <name> <ns> <service> <port>
 }
+```
+
+Next, lets list the app repository within the enablement app editor, it will call the function "deployApp" in the container and will list the available apps that can be deployed in the k8s cluster.
+
+```bash title=".devcontainer/util/my_functions.sh"
+printInfo "Hello World"
+
+deployApp --help
+
+customFunction
 ```
 
 ## `my_functions.sh` — your functions
