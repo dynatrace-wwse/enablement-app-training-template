@@ -949,11 +949,11 @@ explanation: "The cluster node is Ready."
 type: dql-verification
 question: "Verify your tenant answers a DQL query"
 buttonText: "Run DQL"
-dql: "fetch dt.entity.kubernetes_cluster | summarize count = count()"
+dql: "fetch dt.system.events, from:now()-1h | limit 1 | summarize count = count()"
 expect:
   operator: gte
   field: count
-  value: 0
+  value: 1
 hint: "The app could not run the query. Check that you are signed in to the tenant."
 explanation: "The query ran in your tenant — DQL checks work here."
 -->
@@ -993,6 +993,7 @@ explanation: "The query ran in your tenant — DQL checks work here."
 <ul>
 <li><strong>Placeholders do not resolve in shell.</strong> In a <code>command:</code>, a <code>LAB_SOLUTION</code> or a <code>STEP_SETUP</code>, read the environment instead: <code>$DT_HOSTGROUP</code> holds the same session id.</li>
 <li><strong>Entity queries cannot be scoped</strong> — <code>dt.entity.*</code> carries no <code>k8s.cluster.name</code>. In a multi-learner training, check logs, spans or metrics.</li>
+<li><strong><code>dt.entity.*</code> does not exist on Grail-only tenants</strong> — <code>fetch dt.entity.kubernetes_cluster</code> fails there with "isn't a valid data object". Use Smartscape instead: <code>smartscapeNodes "K8S_CLUSTER"</code> (also <code>K8S_NAMESPACE</code>, <code>K8S_POD</code>, …).</li>
 <li><strong>Bound every query in time</strong> (<code>from:now()-15m</code>) so a previous session cannot give a false pass.</li>
 <li>An unknown placeholder is left as literal text, never replaced with an empty string.</li>
 </ul>
