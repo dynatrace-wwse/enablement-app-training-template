@@ -3,8 +3,16 @@ commands:
   - dynatraceEvalReadSaveCredentials && generateDynakube
 -->
 
+<!-- Why not waitAppCanHandleRequests here: it curls http://localhost:80 with no Host header and
+     no --fail. nginx answers that with its own 404, curl exits 0, so it "passes" on the first try
+     even while the todoapp behind the ingress still refuses requests. Readiness (restartTodoApp's
+     kubectl wait) only says the pod is up, not that the ingress route reaches it.
+     generateTodoTraffic already probes the real endpoint (Host: todoapp.<hostname>, /todos, curl -f).
+     With LAB_WAIT=1 it retries up to 30 x 5 s (2.5 min) before creating the TODO, so the wait is
+     bound to the HTTP endpoint the learner actually uses. Same convention as the checks
+     (docs/02-automation.md: probe once for a click, wait under LAB_WAIT). -->
 ```bash
-restartTodoApp && waitAppCanHandleRequests && generateTodoTraffic
+restartTodoApp && LAB_WAIT=1 generateTodoTraffic
 ```
 
 # 05 — Example Lesson
