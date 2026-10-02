@@ -88,12 +88,12 @@ Live — does your tenant answer?
 type: dql-verification
 question: "Verify your tenant answers a DQL query"
 buttonText: "Run DQL"
-dql: "fetch dt.system.events, from:now()-1h | limit 1 | summarize count = count()"
+dql: "fetch logs | limit 1 | summarize count = count()"
 expect:
   operator: gte
   field: count
   value: 1
-hint: "The app could not run the query. Check that you are signed in to the tenant."
+hint: "The query needs at least one log record in the tenant. On a brand-new tenant with no logs yet, wait until something ships logs, then run it again."
 explanation: "The query ran in your tenant — DQL checks work here."
 -->
 
@@ -116,6 +116,7 @@ The framework names the learner's cluster `<repo>-<session id>` and only ever sh
 
 - **Placeholders do not resolve in shell.** In a `command:`, a `LAB_SOLUTION` or a `STEP_SETUP`, read the environment instead: `$DT_HOSTGROUP` holds the same session id.
 - **Entity queries cannot be scoped** — `dt.entity.*` carries no `k8s.cluster.name`. In a multi-learner training, check logs, spans or metrics.
+- **Query only tables the app can read** — the app's DQL runs with the app's own scopes, which cover logs, spans, metrics, events, bizevents and entities but not `dt.system.*`: `fetch dt.system.events` fails there with "Missing OAuth scope 'storage:system:read'" even when `dtctl` runs it fine.
 - **`dt.entity.*` does not exist on Grail-only tenants** — `fetch dt.entity.kubernetes_cluster` fails there with "isn't a valid data object". Use Smartscape instead: `smartscapeNodes "K8S_CLUSTER"` (also `K8S_NAMESPACE`, `K8S_POD`, …).
 - **Bound every query in time** (`from:now()-15m`) so a previous session cannot give a false pass.
 - An unknown placeholder is left as literal text, never replaced with an empty string.
