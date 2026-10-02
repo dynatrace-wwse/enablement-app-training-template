@@ -108,6 +108,7 @@ restartTodoApp() {
   printInfoSection "Restarting todoapp so OneAgent gets injected"
   kubectl rollout restart deployment -n todoapp
   kubectl rollout status deployment -n todoapp --timeout=180s
+  kubectl wait --for=condition=ready pod -l app=todoapp -n todoapp --timeout=180s
 }
 
 # Create a TODO through the app's HTTP API, so fresh todoapp log lines reach

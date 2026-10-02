@@ -3,6 +3,10 @@ commands:
   - dynatraceEvalReadSaveCredentials && generateDynakube
 -->
 
+```bash
+restartTodoApp && waitAppCanHandleRequests && generateTodoTraffic
+```
+
 # 05 — Example Lesson
 
 A complete lesson that puts everything together, modelled on [Kubernetes 101](https://github.com/dynatrace-wwse/enablement-kubernetes-101): the learner instruments the TODO app that `post-create.sh` deployed, and every action is **checked** in the container, **proven** in Grail and **solvable** by automation.
@@ -134,23 +138,16 @@ commands:
   - restartTodoApp
   - generateTodoTraffic
 verify:
-  - source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkOperatorReady
-  - source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkDynakube
-  - source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkOneAgentInjected
+  - checkOperatorReady
+  - checkDynakube
+  - checkOneAgentInjected
 -->
 
 ---
 
 !!! success "That is a complete interactive step"
     Content, a check in the container, a check in Grail, a quiz, and a solution that lets the platform replay it — every night, and every time a learner resumes. Copy this page as the starting point of your first real lesson.
-
-<!-- LAB_SOLUTION
-commands:
-  - helm install dynatrace-operator oci://public.ecr.aws/dynatrace/dynatrace-operator \
-  - "  --create-namespace --namespace dynatrace --atomic"
-  - kubectl apply -f .devcontainer/yaml/gen/dynakube.yaml
-  - kubectl rollout restart deployment -n todoapp
--->
+ 
 
 <div class="grid cards" markdown>
 - [06 — Test, Publish & Ship :octicons-arrow-right-24:](06-test-publish-ship.md)
