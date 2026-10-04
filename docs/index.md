@@ -1,6 +1,6 @@
 ---
 description: How to build interactive, self-testing Dynatrace trainings for the Dynatrace Enablement app — from post-create automation and tokens to checks, solutions and workshops.
-tags: [authoring, orbital, enablement-app]
+tags: [interactive, authoring, orbital, enablement-app]
 difficulty: intermediate
 duration: 60
 ---
