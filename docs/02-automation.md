@@ -138,6 +138,8 @@ checkOperatorReady() {
   printError "Dynatrace Operator is not running — run the install steps above, then check again"
   return 1
 }
+#LAB_WAIT=1 
+#checkOperatorReady
 ```
 
 Rules: `return`, never `exit` (the file is sourced — `exit` kills the learner's shell); keep functions idempotent; send noise to `2>/dev/null`.
