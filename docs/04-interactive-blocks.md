@@ -110,9 +110,13 @@ A workshop puts many learners in **one** tenant. The app replaces these placehol
 The framework names the learner's cluster `<repo>-<session id>` and only ever shortens the **repo** part (see [DynaKube](02-automation.md#the-dynakube-defaults-and-your-override)), so the filter is always `endsWith`:
 
 ```dql
+fetch logs, from:now()-15m
 | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")   // correct
-| filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
+// | filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
+| limit 20
 ```
+
+The cluster name *ends with* the session id, so `==` never matches. DQL accepts `//` comments, so the query runs as written: in a Notebook, select a filter line and toggle its comment (Ctrl/Cmd+/) to try the other one.
 
 - **Placeholders do not resolve in shell.** In a `command:`, a `LAB_SOLUTION` or a `STEP_SETUP`, read the environment instead: `$DT_HOSTGROUP` holds the same session id.
 - **Entity queries cannot be scoped** — `dt.entity.*` carries no `k8s.cluster.name`. In a multi-learner training, check logs, spans or metrics.
