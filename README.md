@@ -20,21 +20,25 @@ Content matters most. A training built the interactive way — like [Kubernetes 
 
 ## What the guide covers
 
+The guide follows the app's **training editor**: a trainer builds, tests and ships a training entirely inside the app — no VS Code, no Codespace.
+
 | | |
 |---|---|
-| **00 Getting Started** | the path: install the app → do Kubernetes 101 → look under the hood → clone & adapt → write → test → import → ship |
-| **01 How It Works** | import, token minting, the Orbital container, checks, resume, the nightly test, workshops |
-| **02 Automate the Environment** | `post-create.sh`, framework functions, `my_functions.sh`, apps, **`dt-tokens.yaml`**, **`dynakube-config.yaml`** |
-| **03 Lesson Anatomy** | `mkdocs.yaml`, front-matter, the shape of a step |
-| **04 Interactive Blocks** | `shell-verification`, `dql-verification`, `multiple-choice`, `LAB_SOLUTION`, `STEP_SETUP`, `LAB_QUESTIONAIRE`, … |
-| **05 Example Lesson** | a complete, runnable lesson |
-| **06 Test, Publish & Ship** | `installMkdocs`, testing checks and solutions, the nightly pipeline, a review checklist |
+| **00 Getting Started** | install the app, turn on the Training Creator, connect GitHub, take Kubernetes 101 as a learner |
+| **01 Open or Fork a Training** | the entry selector: branches, Fork, Create branch, Import from URL |
+| **02 Start the Environment** | Start environment, the Workspace, Open terminal, the Provisioning Log |
+| **03 Command Center** | run commands, framework functions and DQL against your environment |
+| **04 Write and Test Steps** | Source / Preview / Split, Insert, Problems, Test step, Run test, Run validation |
+| **05 Recreate the Environment** | Recreate container (replay the solutions up to a step), Recreate from branch, Restart |
+| **06 Commit and Open a PR** | Commit, History, Create PR |
+| **07 Test as a Learner** | Preview for learners, then the merged training |
+| **Reference** | How It Works · Automate the Environment (`post-create.sh`, `my_functions.sh`, `dt-tokens.yaml`, `dynakube-config.yaml`) · Lesson Anatomy · Interactive Blocks · Example Lesson · Publish & Ship |
+| **Appendix** | optional: VS Code, Codespaces, local Dev Containers, MkDocs |
 
 ## Use this template
 
-1. **Use this template → Create a new repository** (`enablement-<topic>`).
-2. Open it in a Codespace or a VS Code Dev Container.
-3. Follow the guide; replace the example content with yours.
-4. Import it into the app, test it as learner and trainer, then bring it into `dynatrace-wwse`.
+1. In the app's **Editor**, open *App Training Template* and choose **Fork to my account** (or, on GitHub, **Use this template → Create a new repository**, `enablement-<topic>`).
+2. Follow the guide in the editor; replace the example content with yours.
+3. Validate, open a pull request, take it as a learner and as a trainer, then bring it into `dynatrace-wwse`.
 
 Framework documentation: [dynatrace-wwse.github.io/codespaces-framework](https://dynatrace-wwse.github.io/codespaces-framework)

@@ -1,4 +1,4 @@
-# 07 — Final Assessment
+# Final Assessment
 
 You have walked the whole path: the fundamentals of how a training works, a complete example lesson, and how to test, publish and ship it. This scored assessment checks that the authoring model stuck — it is the last step of the training.
 

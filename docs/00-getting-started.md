@@ -1,6 +1,6 @@
 # 00 — Getting Started
 
-The recommended path to your first interactive training. It is "the hard way" — VS Code + GitHub — until the in-app training generator lands, but every step is doable in an afternoon, and after step 2 most of it will already make sense.
+Everything in this training happens **inside the Dynatrace Enablement app**: you write, run, test and ship a training in the app's **training editor**. You need a Dynatrace tenant with the app, a GitHub account, and a browser — nothing else. No VS Code, no Codespace.
 
 ---
 
@@ -15,83 +15,42 @@ The app installs in your tenant as **Dynatrace Enablement**. Orbital uses the cl
 !!! tip "No tenant of your own?"
     Use the **SE sandbox tenant** — the app is already deployed there.
 
-## 2. Do Kubernetes 101 as a learner
+## 2. Turn on the Training Creator
 
-Open the app and run **Kubernetes 101** from start to finish. This is the most important step: it shows you the learner experience you are about to build — the terminal, the checks, the quizzes, the DQL validations and the progress tracking. (The *Show solution* / *Run solution* buttons appear for trainers; learners see them only when a tenant admin turns on **Enable solutions**.)
+The editor is the **Editor** entry in the app's header, after *Progress*. It is switched **per tenant, by anyone in it**, and it is **off by default**. Open **Editor**; on a tenant where it is off the page reads *Training Creator is turned off on this tenant.* Press **Turn on for this tenant**.
 
-## 3. Look under the hood
+![The editor on a tenant where the Training Creator is off](img/editor/01-tc-off.png)
 
-Open the same training in a **GitHub Codespace** or a **VS Code Dev Container**. It is the same image, the same docs and the same pipeline — only the host differs.
+You can switch it on or off again at any time under **Administration → Training Creator**, which also shows who changed it last.
 
-**[github.com/dynatrace-wwse/enablement-kubernetes-101](https://github.com/dynatrace-wwse/enablement-kubernetes-101)**
+!!! note "No Editor entry in the header?"
+    The Editor entry only appears where the platform offers the training editor. If your tenant shows none — or the page says *The training editor is not available on this environment* — use a tenant where it is offered, or build the training the classic way described in the [appendix](outside-the-app.md).
 
-The key files:
+## 3. Connect GitHub
 
-| File | What it is |
+Your training is a GitHub repository, and the editor commits to it **as you**. In the editor's top right corner press **Sign in to GitHub** and approve the GitHub window that opens. Once connected, your GitHub handle (*@you*) sits in the top right corner, next to **Disconnect**.
+
+To push to a repository, the editor's GitHub App must be installed on the repository's owner. When it is not, the editor says so and offers **Install App on &lt;owner&gt;** — or a fork to your own account (see [01 — Open or Fork a Training](open-a-training.md)).
+
+## 4. Take Kubernetes 101 as a learner
+
+Open **Trainings** and run **Kubernetes 101** from start to finish. This is the most important step: it shows you the learner experience you are about to build — the terminal, the checks, the quizzes, the DQL validations and the progress tracking. (The *Show solution* / *Run solution* buttons appear for trainers; learners see them only when a tenant admin turns on **Enable solutions**.)
+
+## 5. The flow from here
+
+Each of the next pages is one thing you do in the editor, in the order you do it:
+
+| Page | In the editor |
 |---|---|
-| `.devcontainer/post-create.sh` | **The most important file** — what gets provisioned when the environment starts. See [02 — Automate the Environment](02-automation.md). |
-| `.devcontainer/util/my_functions.sh` | Your own functions: checks, scenario setup, solutions. |
-| `.devcontainer/yaml/dt-tokens.yaml` | The tokens the app **mints** before the training starts — names, classic/platform, scopes per token. See [Tokens](02-automation.md#tokens-dt-tokensyaml). |
-| `.devcontainer/yaml/dynakube-config.yaml` | Optional override of the default Dynatrace deployment. See [DynaKube](02-automation.md#the-dynakube-defaults-and-your-override). |
-| `mkdocs.yaml` + `docs/*.md` | The steps: content, checks, quizzes and solutions. See [03 — Lesson Anatomy](03-lesson-anatomy.md). |
-| `.assessment/*.json` | Scored assessments. |
+| [01 — Open or Fork a Training](open-a-training.md) | the entry selector: a training, its branches, **Fork**, **Create branch**, **+ Import from URL** |
+| [02 — Start the Environment](start-environment.md) | **Start environment**, the Workspace, **Open terminal**, the Provisioning Log |
+| [03 — Command Center](command-center.md) | run a command, pick a framework function, run DQL |
+| [04 — Write and Test Steps](write-and-test.md) | **Source / Preview / Split**, **Insert**, **Problems**, **Test step**, **Run test**, **Run validation** |
+| [05 — Recreate the Environment](recreate-environment.md) | **Recreate container**, **Recreate from branch**, **Restart** |
+| [06 — Commit and Open a PR](commit-and-pr.md) | **Commit**, **History**, **Create PR** |
+| [07 — Test as a Learner](test-as-learner.md) | **Preview for learners**, then the merged training |
 
-## 4. Clone and adapt
-
-Start from this template (**Use this template → Create a new repository**) or clone Kubernetes 101, then change `post-create.sh` to build *your* scenario. A typical Kubernetes lab with everything deployed automatically:
-
-```bash title=".devcontainer/post-create.sh"
-#!/bin/bash
-source .devcontainer/util/source_framework.sh
-
-setUpTerminal
-startK3dCluster
-installK9s
-
-dynatraceDeployOperator
-deployApplicationMonitoring   # AppOnly: CSI driver + webhook + log module
-
-deployApp easytrade        # or deployTodoApp, or your own function from my_functions.sh
-
-finalizePostCreation
-```
-
-For a worked example of exactly this change — Kubernetes 101 cloned, `post-create.sh` switched to install the operator, the DynaKube and EasyTrade automatically — see the [EasyTrade sample lab `post-create.sh`](https://github.com/sergiohinojosa/easytrade-sample-lab/blob/main/.devcontainer/post-create.sh).
-
-## 5. Use the framework functions, add your own
-
-Every time a shell opens inside the container, the [framework functions](https://dynatrace-wwse.github.io/codespaces-framework/functions/) **and** your `my_functions.sh` are loaded automatically, with autocomplete. The framework gives you `startCluster`, `stopCluster`, `deleteCluster`, `deployApp` (run it bare to list the available apps), `deployDynatrace` / `deployApplicationMonitoring`, and many more.
-
-`my_functions.sh` is where your custom functions sit on top of the framework: deploying your own app, setting up a scenario, the solution for a step, the check for a step. Call them from `post-create.sh`, from the shell, from a check or from a solution — the same logic is reused everywhere, and the framework itself stays untouched.
-
-## 6. Write the content, step by step
-
-The training is just Markdown files. Markdown is the native language of AI tools, and it is also how trainings get imported into the app. Keep steps small, and give **every** step:
-
-- a **validation** — a check against the container, a DQL assertion against Grail, or a quiz;
-- a **solution** — so the nightly test can run the step, and so the environment can be recreated at that step.
-
-That is what turns a lab into an **interactive, self-maintaining** training. See [03 — Lesson Anatomy](03-lesson-anatomy.md) and [04 — Interactive Blocks](04-interactive-blocks.md).
-
-To preview the docs while you write, run **`installMkdocs`** in the shell: it installs MkDocs and serves the docs on port 8000 with live reload, so you see every Markdown change as you save.
-
-## 7. Test it on your own
-
-Run it in a **Codespace**, or locally in **VS Code with Dev Containers**. Tips:
-
-- Use **k3d** — the default (`CLUSTER_ENGINE=k3d`), not Kind. Kind does not work in the Docker-in-Docker setup the platform uses to be fast and cheap.
-- Locally there is no app to mint tokens: put `DT_ENVIRONMENT`, `DT_OPERATOR_TOKEN` and `DT_INGEST_TOKEN` in `.devcontainer/.env` (gitignored). In a Codespace, use Codespaces secrets.
-- Rebuilding a k3d cluster takes seconds (`deleteCluster && startCluster`), so re-run `post-create.sh` often.
-
-See [06 — Test, Publish & Ship](06-test-publish-ship.md).
-
-## 8. Import and run it in the app
-
-Import your repo into the app (**Import Lab** → the GitHub URL, `owner/repo`, or the GitHub Pages URL). Do it once as a **learner**, then run a **workshop** as the **trainer** with a second account — ideally on a second tenant too — so you see both sides: the roster and join code, the live board, and the questions.
-
-## 9. Ship it
-
-Once it is solid, bring the repo into the **dynatrace-wwse** organization so the nightly pipeline picks it up. Then decide how customers get it: self-service, a live workshop series, or both.
+The **Reference** pages ([How It Works](01-how-it-works.md), [Automate the Environment](02-automation.md), [Lesson Anatomy](03-lesson-anatomy.md), [Interactive Blocks](04-interactive-blocks.md), [Example Lesson](05-example-lesson.md)) explain *what* you write; the flow pages explain *where* you write and test it.
 
 ---
 
@@ -113,5 +72,5 @@ explanation: "The cluster is Ready — post-create.sh did its job."
 <!-- LAB_NO_SOLUTION: provisioning sanity check — post-create.sh builds the cluster, there is nothing for the learner to fix -->
 
 <div class="grid cards" markdown>
-- [01 — How It Works :octicons-arrow-right-24:](01-how-it-works.md)
+- [01 — Open or Fork a Training :octicons-arrow-right-24:](open-a-training.md)
 </div>
