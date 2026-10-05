@@ -11,8 +11,6 @@ duration: 60
 
 This is the one place that explains **how to create a training** for the Dynatrace Enablement app *and* **how it works underneath**: what runs when a learner clicks *Start*, where the Dynatrace tokens come from, how the Kubernetes cluster and the DynaKube get built, and how every step becomes a check the platform can verify — for a learner, and for itself every night.
 
-[hs-video](https://autonomous-enablements.whydevslovedynatrace.com/videos/enablement/app/authoring-overview.mp4%7CEnablement%20Authoring%20Overview%7CHow%20to%20build%20interactive%20Dynatrace%20in-app%20trainings%20with%20this%20template.)
-
 ## Content matters most
 
 The platform is the vehicle; the value is in **curated, interactive content**. A training built the interactive way — like the golden example, [Kubernetes 101](https://github.com/dynatrace-wwse/enablement-kubernetes-101) — gives every step a **check, a quiz or an assertion**. The learner is validated against the running container, and against Grail with DQL. That buys three things a slide deck or a static lab never will:
