@@ -949,12 +949,12 @@ explanation: "The cluster node is Ready."
 type: dql-verification
 question: "Verify your tenant answers a DQL query"
 buttonText: "Run DQL"
-dql: "fetch dt.entity.kubernetes_cluster | summarize count = count()"
+dql: "fetch logs | limit 1 | summarize count = count()"
 expect:
   operator: gte
   field: count
-  value: 0
-hint: "The app could not run the query. Check that you are signed in to the tenant."
+  value: 1
+hint: "The query needs at least one log record in the tenant. On a brand-new tenant with no logs yet, wait until something ships logs, then run it again."
 explanation: "The query ran in your tenant — DQL checks work here."
 -->
 
@@ -996,6 +996,8 @@ explanation: "The query ran in your tenant — DQL checks work here."
 <ul>
 <li><strong>Placeholders do not resolve in shell.</strong> In a <code>command:</code>, a <code>LAB_SOLUTION</code> or a <code>STEP_SETUP</code>, read the environment instead: <code>$DT_HOSTGROUP</code> holds the same session id.</li>
 <li><strong>Entity queries cannot be scoped</strong> — <code>dt.entity.*</code> carries no <code>k8s.cluster.name</code>. In a multi-learner training, check logs, spans or metrics.</li>
+<li><strong>Query only tables the app can read</strong> — the app's DQL runs with the app's own scopes, which cover logs, spans, metrics, events, bizevents and entities but not <code>dt.system.*</code>: <code>fetch dt.system.events</code> fails there with "Missing OAuth scope 'storage:system:read'" even when <code>dtctl</code> runs it fine.</li>
+<li><strong><code>dt.entity.*</code> does not exist on Grail-only tenants</strong> — <code>fetch dt.entity.kubernetes_cluster</code> fails there with "isn't a valid data object". Use Smartscape instead: <code>smartscapeNodes "K8S_CLUSTER"</code> (also <code>K8S_NAMESPACE</code>, <code>K8S_POD</code>, …).</li>
 <li><strong>Bound every query in time</strong> (<code>from:now()-15m</code>) so a previous session cannot give a false pass.</li>
 <li>An unknown placeholder is left as literal text, never replaced with an empty string.</li>
 </ul>
