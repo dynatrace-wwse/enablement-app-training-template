@@ -24,7 +24,7 @@ The command runs **in the learner's container** (the same shell as their termina
 
 --8<-- "snippets/blocks/shell-verification.md"
 
-The command does not load your functions by itself — start it with `source .devcontainer/util/source_framework.sh >/dev/null 2>&1 &&`.
+Call your function by its name alone: the platform loads the framework and your `my_functions.sh` before every check, setup and solution command — in the app, the editor and the automated tests — so there is nothing to `source` first.
 
 | Field | |
 |---|---|
@@ -49,7 +49,7 @@ Live — this runs the template's `checkNodeReady` in your container:
 type: shell-verification
 question: "Verify the cluster node is Ready"
 buttonText: "Check Cluster"
-command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkNodeReady"
+command: "checkNodeReady"
 expect:
   operator: exit-zero
 hint: "The cluster is started by post-create.sh. Wait a minute and try again."
@@ -110,9 +110,13 @@ A workshop puts many learners in **one** tenant. The app replaces these placehol
 The framework names the learner's cluster `<repo>-<session id>` and only ever shortens the **repo** part (see [DynaKube](02-automation.md#the-dynakube-defaults-and-your-override)), so the filter is always `endsWith`:
 
 ```dql
+fetch logs, from:now()-15m
 | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")   // correct
-| filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
+// | filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
+| limit 20
 ```
+
+The cluster name *ends with* the session id, so `==` never matches. DQL accepts `//` comments, so the query runs as written: in a Notebook, select a filter line and toggle its comment (Ctrl/Cmd+/) to try the other one.
 
 - **Placeholders do not resolve in shell.** In a `command:`, a `LAB_SOLUTION` or a `STEP_SETUP`, read the environment instead: `$DT_HOSTGROUP` holds the same session id.
 - **Entity queries cannot be scoped** — `dt.entity.*` carries no `k8s.cluster.name`. In a multi-learner training, check logs, spans or metrics.

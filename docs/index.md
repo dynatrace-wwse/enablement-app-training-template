@@ -1,17 +1,15 @@
 ---
 description: How to build interactive, self-testing Dynatrace trainings for the Dynatrace Enablement app — from post-create automation and tokens to checks, solutions and workshops.
-tags: [authoring, orbital, enablement-app]
+tags: [interactive, authoring, orbital, enablement-app]
 difficulty: intermediate
 duration: 60
 ---
 
-# Build interactive trainings for the Dynatrace Enablement app
+## Build interactive trainings for the Dynatrace Enablement app
 
 --8<-- "snippets/disclaimer.md"
 
 This is the one place that explains **how to create a training** for the Dynatrace Enablement app *and* **how it works underneath**: what runs when a learner clicks *Start*, where the Dynatrace tokens come from, how the Kubernetes cluster and the DynaKube get built, and how every step becomes a check the platform can verify — for a learner, and for itself every night.
-
-[hs-video](https://autonomous-enablements.whydevslovedynatrace.com/videos/enablement/app/authoring-overview.mp4%7CEnablement%20Authoring%20Overview%7CHow%20to%20build%20interactive%20Dynatrace%20in-app%20trainings%20with%20this%20template.)
 
 ## Content matters most
 
