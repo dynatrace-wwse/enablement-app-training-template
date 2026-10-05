@@ -694,12 +694,13 @@ explanation: "The pods carry oneagent.dynatrace.com/injected=true — OneAgent n
 <h2 id="4-prove-it-in-grail">4. Prove it in Grail<a class="headerlink" href="#4-prove-it-in-grail" title="Permanent link">#</a></h2>
 <p>The DynaKube you applied turned on the <strong>log module</strong>: every pod log in your cluster now flows to Grail, with no change to any application. Open the TODO app and add a todo if you like — then fetch your cluster's logs:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>fetch logs, from:now()-15m
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>| fields timestamp, k8s.namespace.name, k8s.pod.name, content
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>| sort timestamp desc
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>| limit 20
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")   // correct
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>// | filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>| fields timestamp, k8s.namespace.name, k8s.pod.name, content
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>| sort timestamp desc
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>| limit 20
 </span></code></pre></div>
-<p>The <code>endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")</code> line scopes the query to <strong>your</strong> cluster — in a workshop, everyone shares one tenant. It is the only filter: any log line from your cluster proves the pipeline works.</p>
+<p>The <code>endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")</code> line scopes the query to <strong>your</strong> cluster — in a workshop, everyone shares one tenant. It is the only filter: any log line from your cluster proves the pipeline works. The cluster name <em>ends with</em> your session id, so the commented-out <code>==</code> line never matches — select a line and toggle its comment (Ctrl/Cmd+/) to try it.</p>
 <!-- LAB_QUESTION
 type: dql-verification
 question: "Verify your cluster's logs reached Grail"

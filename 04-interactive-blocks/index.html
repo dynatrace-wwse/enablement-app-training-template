@@ -987,9 +987,12 @@ explanation: "The query ran in your tenant — DQL checks work here."
 </tbody>
 </table>
 <p>The framework names the learner's cluster <code>&lt;repo&gt;-&lt;session id&gt;</code> and only ever shortens the <strong>repo</strong> part (see <a href="../02-automation/#the-dynakube-defaults-and-your-override">DynaKube</a>), so the filter is always <code>endsWith</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")   // correct
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>| filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>fetch logs, from:now()-15m
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")   // correct
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>// | filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>| limit 20
 </span></code></pre></div>
+<p>The cluster name <em>ends with</em> the session id, so <code>==</code> never matches. DQL accepts <code>//</code> comments, so the query runs as written: in a Notebook, select a filter line and toggle its comment (Ctrl/Cmd+/) to try the other one.</p>
 <ul>
 <li><strong>Placeholders do not resolve in shell.</strong> In a <code>command:</code>, a <code>LAB_SOLUTION</code> or a <code>STEP_SETUP</code>, read the environment instead: <code>$DT_HOSTGROUP</code> holds the same session id.</li>
 <li><strong>Entity queries cannot be scoped</strong> — <code>dt.entity.*</code> carries no <code>k8s.cluster.name</code>. In a multi-learner training, check logs, spans or metrics.</li>
