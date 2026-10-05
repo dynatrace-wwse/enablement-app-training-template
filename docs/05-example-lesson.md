@@ -100,13 +100,14 @@ The DynaKube you applied turned on the **log module**: every pod log in your clu
 
 ```dql
 fetch logs, from:now()-15m
-| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")   // correct
+// | filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
 | fields timestamp, k8s.namespace.name, k8s.pod.name, content
 | sort timestamp desc
 | limit 20
 ```
 
-The `endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` line scopes the query to **your** cluster — in a workshop, everyone shares one tenant. It is the only filter: any log line from your cluster proves the pipeline works.
+The `endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` line scopes the query to **your** cluster — in a workshop, everyone shares one tenant. It is the only filter: any log line from your cluster proves the pipeline works. The cluster name *ends with* your session id, so the commented-out `==` line never matches — select a line and toggle its comment (Ctrl/Cmd+/) to try it.
 
 <!-- LAB_QUESTION
 type: dql-verification
