@@ -6,6 +6,6 @@ reveal: |
 commands:
   - restartTodoApp
 verify:
-  - source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && LAB_WAIT=1 checkOneAgentInjected
+  - LAB_WAIT=1 checkOneAgentInjected
 -->
 ```

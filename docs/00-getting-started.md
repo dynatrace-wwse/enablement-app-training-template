@@ -103,7 +103,7 @@ This template is itself an interactive training. The check below runs in *your* 
 type: shell-verification
 question: "Verify the k3d cluster is running in your environment"
 buttonText: "Check Cluster"
-command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkNodeReady"
+command: "checkNodeReady"
 expect:
   operator: exit-zero
 hint: "The cluster is started by post-create.sh. Wait a minute after the environment starts and try again."

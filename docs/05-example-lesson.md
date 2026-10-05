@@ -25,7 +25,7 @@ helm install dynatrace-operator oci://public.ecr.aws/dynatrace/dynatrace-operato
 type: shell-verification
 question: "Verify the Dynatrace Operator is Running"
 buttonText: "Check Operator"
-command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkOperatorReady"
+command: "checkOperatorReady"
 expect:
   operator: exit-zero
 hint: "Run the helm install above, wait about 30 seconds, then check again. `kubectl get pods -n dynatrace` shows the state."
@@ -59,7 +59,7 @@ kubectl apply -f .devcontainer/yaml/gen/dynakube.yaml
 type: shell-verification
 question: "Verify the DynaKube custom resource exists"
 buttonText: "Check DynaKube"
-command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkDynakube"
+command: "checkDynakube"
 expect:
   operator: exit-zero
 hint: "Apply the generated manifest with kubectl apply -f .devcontainer/yaml/gen/dynakube.yaml."
@@ -85,7 +85,7 @@ kubectl rollout status deployment -n todoapp --timeout=180s
 type: shell-verification
 question: "Verify OneAgent was injected into the todoapp pods"
 buttonText: "Check Injection"
-command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkOneAgentInjected"
+command: "checkOneAgentInjected"
 expect:
   operator: exit-zero
 hint: "Restart the deployment, wait for the rollout to finish, then check again."
@@ -100,13 +100,14 @@ The DynaKube you applied turned on the **log module**: every pod log in your clu
 
 ```dql
 fetch logs, from:now()-15m
-| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+| filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")   // correct
+// | filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
 | fields timestamp, k8s.namespace.name, k8s.pod.name, content
 | sort timestamp desc
 | limit 20
 ```
 
-The `endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` line scopes the query to **your** cluster — in a workshop, everyone shares one tenant. It is the only filter: any log line from your cluster proves the pipeline works.
+The `endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` line scopes the query to **your** cluster — in a workshop, everyone shares one tenant. It is the only filter: any log line from your cluster proves the pipeline works. The cluster name *ends with* your session id, so the commented-out `==` line never matches — select a line and toggle its comment (Ctrl/Cmd+/) to try it.
 
 <!-- LAB_QUESTION
 type: dql-verification
@@ -134,9 +135,9 @@ commands:
   - restartTodoApp
   - generateTodoTraffic
 verify:
-  - source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkOperatorReady
-  - source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkDynakube
-  - source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkOneAgentInjected
+  - checkOperatorReady
+  - checkDynakube
+  - checkOneAgentInjected
 -->
 
 ---

@@ -250,7 +250,7 @@ The authoritative list is the defaults file itself. Framework docs: [DynaKube co
 type: shell-verification
 question: "Verify the todoapp deployed by post-create.sh is Running"
 buttonText: "Check todoapp"
-command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkTodoAppRunning"
+command: "checkTodoAppRunning"
 expect:
   operator: exit-zero
 hint: "post-create.sh deploys it with deployTodoApp. Run `kubectl get pods -n todoapp` in the terminal to see its state."

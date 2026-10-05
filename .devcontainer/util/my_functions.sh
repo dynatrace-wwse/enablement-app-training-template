@@ -25,7 +25,7 @@ customFunction(){
 # ----------------------------------------------------------------------
 #   A lesson's shell-verification block calls one of these:
 #
-#     command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkNodeReady"
+#     command: "checkNodeReady"   # the platform sources the framework first
 #     expect:
 #       operator: exit-zero
 #
