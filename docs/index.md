@@ -5,7 +5,7 @@ difficulty: intermediate
 duration: 60
 ---
 
-# Build interactive trainings for the Dynatrace Enablement app
+## Build interactive trainings for the Dynatrace Enablement app
 
 --8<-- "snippets/disclaimer.md"
 
