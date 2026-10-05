@@ -20,7 +20,7 @@
     
     
       
-        <title>04. Interactive Blocks - Dynatrace Enablement Lab: App Training Template</title>
+        <title>Reference: Interactive Blocks - Dynatrace Enablement Lab: App Training Template</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#04-interactive-blocks" class="md-skip">
+        <a href="#reference-interactive-blocks" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              04. Interactive Blocks
+              Reference: Interactive Blocks
             
           </span>
         </div>
@@ -305,11 +305,151 @@
   
   
     <li class="md-nav__item">
+      <a href="../open-a-training/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    01. Open or Fork a Training
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../start-environment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    02. Start the Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../command-center/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    03. Command Center
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../write-and-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    04. Write and Test Steps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recreate-environment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    05. Recreate the Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commit-and-pr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    06. Commit and Open a PR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-as-learner/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    07. Test as a Learner
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../01-how-it-works/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    01. How It Works
+    Reference: How It Works
   </span>
   
 
@@ -329,7 +469,7 @@
         
   
   <span class="md-ellipsis">
-    02. Automate the Environment
+    Reference: Automate the Environment
   </span>
   
 
@@ -349,7 +489,7 @@
         
   
   <span class="md-ellipsis">
-    03. Lesson Anatomy
+    Reference: Lesson Anatomy
   </span>
   
 
@@ -378,7 +518,7 @@
           
   
   <span class="md-ellipsis">
-    04. Interactive Blocks
+    Reference: Interactive Blocks
   </span>
   
 
@@ -389,7 +529,7 @@
         
   
   <span class="md-ellipsis">
-    04. Interactive Blocks
+    Reference: Interactive Blocks
   </span>
   
 
@@ -525,7 +665,7 @@
         
   
   <span class="md-ellipsis">
-    05. Example Lesson
+    Reference: Example Lesson
   </span>
   
 
@@ -545,7 +685,27 @@
         
   
   <span class="md-ellipsis">
-    06. Test, Publish & Ship
+    Reference: Publish & Ship
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../outside-the-app/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Appendix: Working Outside the App
   </span>
   
 
@@ -585,7 +745,7 @@
         
   
   <span class="md-ellipsis">
-    07. Final Assessment
+    Final Assessment
   </span>
   
 
@@ -734,7 +894,7 @@
   
 
 
-<h1 id="04-interactive-blocks">04 — Interactive Blocks<a class="headerlink" href="#04-interactive-blocks" title="Permanent link">#</a></h1>
+<h1 id="reference-interactive-blocks">Reference — Interactive Blocks<a class="headerlink" href="#reference-interactive-blocks" title="Permanent link">#</a></h1>
 <p>Every block the app understands, with its source and — where it makes sense — a <strong>live</strong> instance you can click on this page. Blocks are HTML comments: invisible on GitHub Pages, rendered as buttons, quizzes and panels in the app.</p>
 <table>
 <thead>
@@ -949,12 +1109,12 @@ explanation: "The cluster node is Ready."
 type: dql-verification
 question: "Verify your tenant answers a DQL query"
 buttonText: "Run DQL"
-dql: "fetch logs | limit 1 | summarize count = count()"
+dql: "fetch dt.entity.kubernetes_cluster | summarize count = count()"
 expect:
   operator: gte
   field: count
-  value: 1
-hint: "The query needs at least one log record in the tenant. On a brand-new tenant with no logs yet, wait until something ships logs, then run it again."
+  value: 0
+hint: "The app could not run the query. Check that you are signed in to the tenant."
 explanation: "The query ran in your tenant — DQL checks work here."
 -->
 
@@ -996,8 +1156,6 @@ explanation: "The query ran in your tenant — DQL checks work here."
 <ul>
 <li><strong>Placeholders do not resolve in shell.</strong> In a <code>command:</code>, a <code>LAB_SOLUTION</code> or a <code>STEP_SETUP</code>, read the environment instead: <code>$DT_HOSTGROUP</code> holds the same session id.</li>
 <li><strong>Entity queries cannot be scoped</strong> — <code>dt.entity.*</code> carries no <code>k8s.cluster.name</code>. In a multi-learner training, check logs, spans or metrics.</li>
-<li><strong>Query only tables the app can read</strong> — the app's DQL runs with the app's own scopes, which cover logs, spans, metrics, events, bizevents and entities but not <code>dt.system.*</code>: <code>fetch dt.system.events</code> fails there with "Missing OAuth scope 'storage:system:read'" even when <code>dtctl</code> runs it fine.</li>
-<li><strong><code>dt.entity.*</code> does not exist on Grail-only tenants</strong> — <code>fetch dt.entity.kubernetes_cluster</code> fails there with "isn't a valid data object". Use Smartscape instead: <code>smartscapeNodes "K8S_CLUSTER"</code> (also <code>K8S_NAMESPACE</code>, <code>K8S_POD</code>, …).</li>
 <li><strong>Bound every query in time</strong> (<code>from:now()-15m</code>) so a previous session cannot give a false pass.</li>
 <li>An unknown placeholder is left as literal text, never replaced with an empty string.</li>
 </ul>
@@ -1145,7 +1303,7 @@ explanation: "Orbital executes it in the learner's container — which is why it
 
 <div class="grid cards">
 <ul>
-<li><a href="../05-example-lesson/">05 — Example Lesson <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
+<li><a href="../05-example-lesson/">Example Lesson <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
 </ul>
 </div>
 
@@ -1185,7 +1343,7 @@ explanation: "Orbital executes it in the learner's container — which is why it
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../03-lesson-anatomy/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 03. Lesson Anatomy">
+          <a href="../03-lesson-anatomy/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Reference: Lesson Anatomy">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1195,20 +1353,20 @@ explanation: "Orbital executes it in the learner's container — which is why it
                 Previous
               </span>
               <div class="md-ellipsis">
-                03. Lesson Anatomy
+                Reference: Lesson Anatomy
               </div>
             </div>
           </a>
         
         
           
-          <a href="../05-example-lesson/" class="md-footer__link md-footer__link--next" aria-label="Next: 05. Example Lesson">
+          <a href="../05-example-lesson/" class="md-footer__link md-footer__link--next" aria-label="Next: Reference: Example Lesson">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                05. Example Lesson
+                Reference: Example Lesson
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1255,7 +1413,7 @@ explanation: "Orbital executes it in the learner's container — which is why it
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if (typeof dynatrace !== 'undefined') {
-        dynatrace.sendBizEvent('page_load', {'page': "04. Interactive Blocks"});
+        dynatrace.sendBizEvent('page_load', {'page': "Reference: Interactive Blocks"});
       }
     });
   </script>
