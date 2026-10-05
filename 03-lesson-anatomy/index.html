@@ -702,7 +702,7 @@
 </span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>type: shell-verification
 </span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>question: "Verify the Dynatrace Operator is Running"
 </span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>buttonText: "Check Operator"
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>command: "source .devcontainer/util/source_framework.sh &gt;/dev/null 2&gt;&amp;1 &amp;&amp; checkOperatorReady"
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>command: "checkOperatorReady"
 </span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>expect:
 </span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>  operator: exit-zero
 </span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>hint: "Run the install commands above, wait 30 seconds, then check again."
@@ -725,7 +725,7 @@
 </span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>commands:
 </span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>dynatraceDeployOperator
 </span><span id="__span-2-42"><a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>verify:
-</span><span id="__span-2-43"><a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>source .devcontainer/util/source_framework.sh &gt;/dev/null 2&gt;&amp;1 &amp;&amp; checkOperatorReady
+</span><span id="__span-2-43"><a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a><span class="w">  </span><span class="k">-</span><span class="w"> </span>checkOperatorReady
 </span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>--&gt;
 </span></code></pre></div>
 <p>Top to bottom: an optional <code>STEP_SETUP</code> (runs silently when the step opens), the <strong>tell</strong> and <strong>do</strong> in plain Markdown, then the <strong>checks</strong> — one against the container, one against the learner's understanding — and finally the <strong>solution</strong> that lets automation pass the step without a human.</p>
