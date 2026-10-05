@@ -24,7 +24,7 @@ The command runs **in the learner's container** (the same shell as their termina
 
 --8<-- "snippets/blocks/shell-verification.md"
 
-The command does not load your functions by itself — start it with `source .devcontainer/util/source_framework.sh >/dev/null 2>&1 &&`.
+Call your function by its name alone: the platform loads the framework and your `my_functions.sh` before every check, setup and solution command — in the app, the editor and the automated tests — so there is nothing to `source` first.
 
 | Field | |
 |---|---|
@@ -49,7 +49,7 @@ Live — this runs the template's `checkNodeReady` in your container:
 type: shell-verification
 question: "Verify the cluster node is Ready"
 buttonText: "Check Cluster"
-command: "source .devcontainer/util/source_framework.sh >/dev/null 2>&1 && checkNodeReady"
+command: "checkNodeReady"
 expect:
   operator: exit-zero
 hint: "The cluster is started by post-create.sh. Wait a minute and try again."
