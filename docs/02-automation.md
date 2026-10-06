@@ -1,4 +1,4 @@
-# 02 — Automate the Environment
+# Reference — Automate the Environment
 
 Everything a learner finds when their environment is ready — the cluster, Dynatrace, the demo apps, the scenario — is built by code in `.devcontainer/`. Nothing is built by hand, and nothing in this folder is specific to Orbital: the same files build the same environment in a Codespace, a Dev Container or the app.
 
@@ -280,5 +280,5 @@ verify:
 -->
 
 <div class="grid cards" markdown>
-- [03 — Lesson Anatomy :octicons-arrow-right-24:](03-lesson-anatomy.md)
+- [Lesson Anatomy :octicons-arrow-right-24:](03-lesson-anatomy.md)
 </div>

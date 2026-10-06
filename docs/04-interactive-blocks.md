@@ -1,4 +1,4 @@
-# 04 — Interactive Blocks
+# Reference — Interactive Blocks
 
 Every block the app understands, with its source and — where it makes sense — a **live** instance you can click on this page. Blocks are HTML comments: invisible on GitHub Pages, rendered as buttons, quizzes and panels in the app.
 
@@ -247,5 +247,5 @@ The learner cannot continue until they enter a code the instructor reveals live 
 <!-- LAB_NO_SOLUTION: reference page — the only check is a read-only sanity check of the provisioned cluster -->
 
 <div class="grid cards" markdown>
-- [05 — Example Lesson :octicons-arrow-right-24:](05-example-lesson.md)
+- [Example Lesson :octicons-arrow-right-24:](05-example-lesson.md)
 </div>
