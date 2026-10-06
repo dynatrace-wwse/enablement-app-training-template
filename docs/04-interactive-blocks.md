@@ -224,7 +224,7 @@ A multi-question, scored assessment lives in `.assessment/<id>.json` and is plac
 
 Questions can also be `"type": "dql-verification"` with a `dql` field (placeholders work there too; escape quotes in JSON). Validate the file with `python3 -m json.tool .assessment/<id>.json`.
 
-**One assessment, on the last step.** A step that carries an assessment cannot be completed until the assessment is passed, and the app reads one `LAB_QUESTIONAIRE` line per page. Bind each assessment once, on the final page of the training — this template's own, `template-authoring-fundamentals`, is on [Final Assessment](07-final-assessment.md).
+**One assessment, on the last step.** A step that carries an assessment can be completed once every question is answered — the score is recorded, passing is not required — and the app reads one `LAB_QUESTIONAIRE` line per page. Bind each assessment once, on the final page of the training — this template's own, `template-authoring-fundamentals`, is on [Final Assessment](07-final-assessment.md).
 
 ---
 
