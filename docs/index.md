@@ -32,7 +32,11 @@ This is not theoretical: four bootcamps have been delivered with it — one in A
 
 ## Where things stand
 
-Every repository in the worldwide SE GitHub organization ([dynatrace-wwse](https://github.com/dynatrace-wwse)) is already imported into the app — but most are **not interactive yet**. That is the gap this template closes. An in-app training generator is on the way; until it lands, a training is built "the hard way" — VS Code + GitHub — and this site walks you through it.
+Every repository in the worldwide SE GitHub organization ([dynatrace-wwse](https://github.com/dynatrace-wwse)) is already imported into the app — but most are **not interactive yet**. That is the gap this template closes.
+
+You build a training **inside the app**, in its **training editor** (the **Editor** entry in the app's header, *Training Creator*): open or fork the repository, start a live environment, write the steps, test every check and solution, recreate the environment, commit and open a pull request — and then take the training as a learner. No VS Code, no Codespace, no second application. This site follows that flow, one page per step.
+
+VS Code, Codespaces and local Dev Containers still work — the repository is the same — but they are optional. They are collected in one place: [Appendix — Working Outside the App](outside-the-app.md).
 
 ## The whole picture in one diagram
 
@@ -56,16 +60,31 @@ Every repository in the worldwide SE GitHub organization ([dynatrace-wwse](https
 
 ## Follow the menu in order
 
-| Step | Page | What you get |
+The numbered pages are the editor flow, in the order you work:
+
+| Step | Page | What you do |
 |---|---|---|
-| `00` | [Getting Started](00-getting-started.md) | The recommended path, from installing the app to shipping your training |
-| `01` | [How It Works](01-how-it-works.md) | The app, Orbital and the container — what happens when a learner clicks *Start* |
-| `02` | [Automate the Environment](02-automation.md) | `post-create.sh`, framework functions, `my_functions.sh`, apps, **tokens** and the **DynaKube** |
-| `03` | [Lesson Anatomy](03-lesson-anatomy.md) | `mkdocs.yaml`, front-matter, and the shape of a step: content → check → solution |
-| `04` | [Interactive Blocks](04-interactive-blocks.md) | Every block type: shell and DQL checks, quizzes, solutions, assessments |
-| `05` | [Example Lesson](05-example-lesson.md) | A complete lesson that uses all of it |
-| `06` | [Test, Publish & Ship](06-test-publish-ship.md) | Build and validate the docs locally, test in the app, bring it into the org |
-| `07` | [Final Assessment](07-final-assessment.md) | The scored assessment that closes the training |
+| `00` | [Getting Started](00-getting-started.md) | Install the app, turn on the Training Creator, connect GitHub, take Kubernetes 101 as a learner |
+| `01` | [Open or Fork a Training](open-a-training.md) | Pick a training in the editor, fork it or start a branch |
+| `02` | [Start the Environment](start-environment.md) | One live container for your branch: terminal, apps, provisioning log |
+| `03` | [Command Center](command-center.md) | Run any command, framework function or DQL against that environment |
+| `04` | [Write and Test Steps](write-and-test.md) | Source / Preview / Split, Insert, Problems, **Test step**, **Run test**, **Run validation** |
+| `05` | [Recreate the Environment](recreate-environment.md) | Rebuild from the branch and replay the solutions up to a step |
+| `06` | [Commit and Open a PR](commit-and-pr.md) | Commit to your branch, validate, open the pull request |
+| `07` | [Test as a Learner](test-as-learner.md) | Preview for learners, then the real thing after the merge |
+
+The **Reference** pages explain what you write — keep them open beside the editor:
+
+| Page | What it covers |
+|---|---|
+| [How It Works](01-how-it-works.md) | The app, Orbital and the container — what happens when a learner clicks *Start* |
+| [Automate the Environment](02-automation.md) | `post-create.sh`, framework functions, `my_functions.sh`, apps, **tokens** and the **DynaKube** |
+| [Lesson Anatomy](03-lesson-anatomy.md) | `mkdocs.yaml`, front-matter, and the shape of a step: content → check → solution |
+| [Interactive Blocks](04-interactive-blocks.md) | Every block type: shell and DQL checks, quizzes, solutions, assessments |
+| [Example Lesson](05-example-lesson.md) | A complete lesson that uses all of it |
+| [Publish & Ship](06-test-publish-ship.md) | Refresh the app after a merge, bring the training into the org |
+| [Appendix — Working Outside the App](outside-the-app.md) | Optional: VS Code, Codespaces, local Dev Containers, MkDocs preview |
+| [Final Assessment](07-final-assessment.md) | The scored assessment that closes the training |
 
 <div class="grid cards" markdown>
 - [Start here: 00 — Getting Started :octicons-arrow-right-24:](00-getting-started.md)

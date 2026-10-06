@@ -1,4 +1,4 @@
-# 05 — Example Lesson
+# Reference — Example Lesson
 
 A complete lesson that puts everything together, modelled on [Kubernetes 101](https://github.com/dynatrace-wwse/enablement-kubernetes-101): the learner instruments the TODO app that `post-create.sh` deployed, and every action is **checked** in the container, **proven** in Grail and **solvable** by automation.
 
@@ -146,5 +146,5 @@ verify:
     Content, a check in the container, a check in Grail, a quiz, and a solution that lets the platform replay it — every night, and every time a learner resumes. Copy this page as the starting point of your first real lesson.
 
 <div class="grid cards" markdown>
-- [06 — Test, Publish & Ship :octicons-arrow-right-24:](06-test-publish-ship.md)
+- [Publish & Ship :octicons-arrow-right-24:](06-test-publish-ship.md)
 </div>

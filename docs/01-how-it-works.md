@@ -1,4 +1,4 @@
-# 01 — How It Works
+# Reference — How It Works
 
 Three pieces work together: **your repo** (the content and the automation), the **Dynatrace Enablement app** (in the learner's tenant — the UI, the checks, the token minting) and **Orbital** (the server that runs one container per learner). This page follows a training from import to the last check.
 
@@ -89,5 +89,5 @@ The same training, unchanged, is delivered two ways:
 A training that works in a Codespace works on Orbital — that is the point of building on the framework.
 
 <div class="grid cards" markdown>
-- [02 — Automate the Environment :octicons-arrow-right-24:](02-automation.md)
+- [Automate the Environment :octicons-arrow-right-24:](02-automation.md)
 </div>

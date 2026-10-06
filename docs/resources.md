@@ -6,14 +6,22 @@
 |---|---|
 | understand why interactive content matters | [Welcome](index.md) |
 | follow the path from zero to a shipped training | [00 — Getting Started](00-getting-started.md) |
-| know what happens when a learner clicks *Start* | [01 — How It Works](01-how-it-works.md) |
-| write `post-create.sh`, add an app, write `my_functions.sh` | [02 — Automate the Environment](02-automation.md) |
-| get an extra Dynatrace token minted for my training | [02 → Tokens](02-automation.md#tokens-dt-tokensyaml) |
-| change the DynaKube (mode, KSPM, extensions, ActiveGate size) | [02 → DynaKube](02-automation.md#the-dynakube-defaults-and-your-override) |
-| structure a step | [03 — Lesson Anatomy](03-lesson-anatomy.md) |
-| look up a block's fields and operators | [04 — Interactive Blocks](04-interactive-blocks.md) |
-| copy a complete lesson | [05 — Example Lesson](05-example-lesson.md) |
-| test, publish and ship | [06 — Test, Publish & Ship](06-test-publish-ship.md) |
+| open, fork or branch a training in the editor | [01 — Open or Fork a Training](open-a-training.md) |
+| get a live environment, a terminal, my apps | [02 — Start the Environment](start-environment.md) |
+| try a command, a framework function or a DQL query | [03 — Command Center](command-center.md) |
+| write a step and test it | [04 — Write and Test Steps](write-and-test.md) |
+| rebuild the environment at a step | [05 — Recreate the Environment](recreate-environment.md) |
+| commit, validate and open a pull request | [06 — Commit and Open a PR](commit-and-pr.md) |
+| take my training as a learner | [07 — Test as a Learner](test-as-learner.md) |
+| know what happens when a learner clicks *Start* | [How It Works](01-how-it-works.md) |
+| write `post-create.sh`, add an app, write `my_functions.sh` | [Automate the Environment](02-automation.md) |
+| get an extra Dynatrace token minted for my training | [Automate → Tokens](02-automation.md#tokens-dt-tokensyaml) |
+| change the DynaKube (mode, KSPM, extensions, ActiveGate size) | [Automate → DynaKube](02-automation.md#the-dynakube-defaults-and-your-override) |
+| structure a step | [Lesson Anatomy](03-lesson-anatomy.md) |
+| look up a block's fields and operators | [Interactive Blocks](04-interactive-blocks.md) |
+| copy a complete lesson | [Example Lesson](05-example-lesson.md) |
+| refresh the app after a merge, ship into dynatrace-wwse | [Publish & Ship](06-test-publish-ship.md) |
+| work in VS Code, a Codespace or locally | [Appendix — Working Outside the App](outside-the-app.md) |
 
 ## Reference training
 
@@ -112,5 +120,5 @@ printInfoSection "…" · printInfo "…" · printWarn "…" · printError "…"
 ```
 
 <div class="grid cards" markdown>
-- [07 — Final Assessment :octicons-arrow-right-24:](07-final-assessment.md)
+- [Final Assessment :octicons-arrow-right-24:](07-final-assessment.md)
 </div>

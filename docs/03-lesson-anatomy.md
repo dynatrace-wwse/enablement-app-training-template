@@ -1,4 +1,4 @@
-# 03 — Lesson Anatomy
+# Reference — Lesson Anatomy
 
 A training is a MkDocs site: `mkdocs.yaml` says which pages exist and in what order, and each page is Markdown with interactive blocks written as HTML comments. This page covers the structure; [04 — Interactive Blocks](04-interactive-blocks.md) covers every block.
 
@@ -95,5 +95,5 @@ explanation: "Automation cannot click or type. The LAB_SOLUTION commands are wha
 <!-- LAB_NO_SOLUTION: concept page — nothing in the environment changes -->
 
 <div class="grid cards" markdown>
-- [04 — Interactive Blocks :octicons-arrow-right-24:](04-interactive-blocks.md)
+- [Interactive Blocks :octicons-arrow-right-24:](04-interactive-blocks.md)
 </div>

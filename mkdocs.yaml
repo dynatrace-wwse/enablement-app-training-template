@@ -8,13 +8,21 @@ repo_url: "https://github.com/dynatrace-wwse/enablement-app-training-template"
 nav:
   - "Welcome": index.md
   - "00. Getting Started": 00-getting-started.md
-  - "01. How It Works": 01-how-it-works.md
-  - "02. Automate the Environment": 02-automation.md
-  - "03. Lesson Anatomy": 03-lesson-anatomy.md
-  - "04. Interactive Blocks": 04-interactive-blocks.md
-  - "05. Example Lesson": 05-example-lesson.md
-  - "06. Test, Publish & Ship": 06-test-publish-ship.md
+  - "01. Open or Fork a Training": open-a-training.md
+  - "02. Start the Environment": start-environment.md
+  - "03. Command Center": command-center.md
+  - "04. Write and Test Steps": write-and-test.md
+  - "05. Recreate the Environment": recreate-environment.md
+  - "06. Commit and Open a PR": commit-and-pr.md
+  - "07. Test as a Learner": test-as-learner.md
+  - "Reference: How It Works": 01-how-it-works.md
+  - "Reference: Automate the Environment": 02-automation.md
+  - "Reference: Lesson Anatomy": 03-lesson-anatomy.md
+  - "Reference: Interactive Blocks": 04-interactive-blocks.md
+  - "Reference: Example Lesson": 05-example-lesson.md
+  - "Reference: Publish & Ship": 06-test-publish-ship.md
+  - "Appendix: Working Outside the App": outside-the-app.md
   - "Resources": resources.md
-  - "07. Final Assessment": 07-final-assessment.md
+  - "Final Assessment": 07-final-assessment.md
 extra:
   rum_snippet: "https://js-cdn.dynatrace.com/jstag/1612cf70810/bf81393wlb/7c50bce5c0cc890f_complete.js"
