@@ -102,25 +102,27 @@ The DynaKube you applied turned on the **log module**: every pod log in your clu
 fetch logs, from:now()-15m
 | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")   // correct
 // | filter k8s.cluster.name == "{{DT_SESSION_ID}}"           // never matches
+| filter k8s.namespace.name == "todoapp"
 | fields timestamp, k8s.namespace.name, k8s.pod.name, content
 | sort timestamp desc
 | limit 20
 ```
 
-The `endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` line scopes the query to **your** cluster — in a workshop, everyone shares one tenant. It is the only filter: any log line from your cluster proves the pipeline works. The cluster name *ends with* your session id, so the commented-out `==` line never matches — select a line and toggle its comment (Ctrl/Cmd+/) to try it.
+The `endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")` line scopes the query to **your** cluster — in a workshop, everyone shares one tenant. The `k8s.namespace.name == "todoapp"` line then narrows to the app you are teaching: the point is that *your application's* logs arrive, not that Dynatrace can see its own components in the `dynatrace` namespace. The cluster name *ends with* your session id, so the commented-out `==` line never matches — select a line and toggle its comment (Ctrl/Cmd+/) to try it.
 
 <!-- LAB_QUESTION
 type: dql-verification
-question: "Verify your cluster's logs reached Grail"
+question: "Verify the todoapp's logs reached Grail"
 buttonText: "Check logs in Grail"
 dql: |
   fetch logs, from:now()-15m
   | filter endsWith(k8s.cluster.name, "{{DT_SESSION_ID}}")
+  | filter k8s.namespace.name == "todoapp"
   | limit 1
 expect:
   operator: not-empty
 hint: "Logs take 1–2 minutes to reach Grail after the DynaKube is applied. Wait a minute, then press the button again."
-explanation: "Your cluster's logs are in Grail — collected by the log module, with no change to the application."
+explanation: "The todoapp's logs are in Grail — collected by the log module, with no change to the application."
 -->
 
 <!-- LAB_SOLUTION
