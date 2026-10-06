@@ -1109,12 +1109,12 @@ explanation: "The cluster node is Ready."
 type: dql-verification
 question: "Verify your tenant answers a DQL query"
 buttonText: "Run DQL"
-dql: "fetch logs | limit 1 | summarize count = count()"
+dql: "fetch dt.entity.kubernetes_cluster | summarize count = count()"
 expect:
   operator: gte
   field: count
-  value: 1
-hint: "The query needs at least one log record in the tenant. On a brand-new tenant with no logs yet, wait until something ships logs, then run it again."
+  value: 0
+hint: "The app could not run the query. Check that you are signed in to the tenant."
 explanation: "The query ran in your tenant — DQL checks work here."
 -->
 
@@ -1156,8 +1156,6 @@ explanation: "The query ran in your tenant — DQL checks work here."
 <ul>
 <li><strong>Placeholders do not resolve in shell.</strong> In a <code>command:</code>, a <code>LAB_SOLUTION</code> or a <code>STEP_SETUP</code>, read the environment instead: <code>$DT_HOSTGROUP</code> holds the same session id.</li>
 <li><strong>Entity queries cannot be scoped</strong> — <code>dt.entity.*</code> carries no <code>k8s.cluster.name</code>. In a multi-learner training, check logs, spans or metrics.</li>
-<li><strong>Query only tables the app can read</strong> — the app's DQL runs with the app's own scopes, which cover logs, spans, metrics, events, bizevents and entities but not <code>dt.system.*</code>: <code>fetch dt.system.events</code> fails there with "Missing OAuth scope 'storage:system:read'" even when <code>dtctl</code> runs it fine.</li>
-<li><strong><code>dt.entity.*</code> does not exist on Grail-only tenants</strong> — <code>fetch dt.entity.kubernetes_cluster</code> fails there with "isn't a valid data object". Use Smartscape instead: <code>smartscapeNodes "K8S_CLUSTER"</code> (also <code>K8S_NAMESPACE</code>, <code>K8S_POD</code>, …).</li>
 <li><strong>Bound every query in time</strong> (<code>from:now()-15m</code>) so a previous session cannot give a false pass.</li>
 <li>An unknown placeholder is left as literal text, never replaced with an empty string.</li>
 </ul>
@@ -1278,7 +1276,7 @@ explanation: "Orbital executes it in the learner's container — which is why it
 </span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Questions can also be <code>"type": "dql-verification"</code> with a <code>dql</code> field (placeholders work there too; escape quotes in JSON). Validate the file with <code>python3 -m json.tool .assessment/&lt;id&gt;.json</code>.</p>
-<p><strong>One assessment, on the last step.</strong> A step that carries an assessment cannot be completed until the assessment is passed, and the app reads one <code>LAB_QUESTIONAIRE</code> line per page. Bind each assessment once, on the final page of the training — this template's own, <code>template-authoring-fundamentals</code>, is on <a href="../07-final-assessment/">Final Assessment</a>.</p>
+<p><strong>One assessment, on the last step.</strong> A step that carries an assessment can be completed once every question is answered — the score is recorded, passing is not required — and the app reads one <code>LAB_QUESTIONAIRE</code> line per page. Bind each assessment once, on the final page of the training — this template's own, <code>template-authoring-fundamentals</code>, is on <a href="../07-final-assessment/">Final Assessment</a>.</p>
 <hr />
 <h2 id="instructor-code-a-workshop-gate"><code>instructor-code</code> — a workshop gate<a class="headerlink" href="#instructor-code-a-workshop-gate" title="Permanent link">#</a></h2>
 <div class="language-markdown highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&lt;!-- LAB_QUESTION
