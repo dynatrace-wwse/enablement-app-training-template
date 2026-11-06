@@ -2,10 +2,10 @@
   "templateVersion": "1.0.0",
   "id": "template-authoring-fundamentals",
   "category": "CO",
-  "title": "Enablement Authoring — Fundamentals",
+  "title": "How to Create Trainings — Final Assessment",
   "description": "Validate your understanding of the enablement authoring model: how lessons are structured, how interactive blocks work, and how Orbital connects to the Dynatrace app.",
   "difficulty": "beginner",
-  "estimatedTime": 6,
+  "estimatedTime": 10,
   "imagine": "You have just finished the template walk-through and have a working lesson running on Orbital, rendered inside the Dynatrace app. You want to confirm you understood the authoring model before building your first real training.",
   "yourGoal": "Answer six questions about enablement anatomy, interactive block types, and the Orbital + Dynatrace app runtime.",
   "tools": [
@@ -260,9 +260,169 @@
         "Who runs a training when no learner is at the keyboard?",
         "Think about the nightly test and about resuming in a fresh container."
       ]
+    },
+    {
+      "id": "q7-shared-declaration",
+      "type": "multiple-choice",
+      "title": "Shared infrastructure",
+      "content": "A training ships `.devcontainer/workshop-post-create.sh`. What must it declare for a shared workshop to start?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nothing — the script is enough",
+          "isCorrect": false,
+          "explanation": "Shared infra is derived from the script, but Orbital still requires a declaration."
+        },
+        {
+          "id": "b",
+          "text": "`workshop-only` and `same-tenant` (tenancy single)",
+          "isCorrect": true,
+          "explanation": "Correct: the only combination Orbital accepts for a shared machine."
+        },
+        {
+          "id": "c",
+          "text": "`self-service` and `multi-tenant`",
+          "isCorrect": false,
+          "explanation": "Multi-tenant shared is not built yet, and shared needs workshop-only."
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Shared infrastructure is derived from the script and must be declared workshop-only + single tenant.",
+      "points": 1000,
+      "hints": [
+        "Which combinations does Orbital refuse?"
+      ]
+    },
+    {
+      "id": "q8-sizing",
+      "type": "multiple-choice",
+      "title": "Sizing an unmeasured training",
+      "content": "Nobody has measured your new training. How many seats does Orbital plan per m6a.4xlarge (20 units)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "20",
+          "isCorrect": false,
+          "explanation": "That would price it like Kubernetes 101 — an oversell."
+        },
+        {
+          "id": "b",
+          "text": "5",
+          "isCorrect": true,
+          "explanation": "Correct: unmeasured trainings cost 4 units (HEAVY_DEFAULT), 20 // 4 = 5."
+        },
+        {
+          "id": "c",
+          "text": "10",
+          "isCorrect": false,
+          "explanation": "No rule gives 10 for an unmeasured training on this shape."
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "An unmeasured training is priced as the heaviest known: 4 units.",
+      "points": 1000,
+      "hints": [
+        "seats = units(instance) // units(training)"
+      ]
+    },
+    {
+      "id": "q9-timeout",
+      "type": "multiple-choice",
+      "title": "Long solutions",
+      "content": "A LAB_SOLUTION legitimately takes 7 minutes. What do you write?",
+      "options": [
+        {
+          "id": "a",
+          "text": "`timeout: 420` on the block",
+          "isCorrect": true,
+          "explanation": "Correct: whole seconds, 10..900, for each of the block's commands."
+        },
+        {
+          "id": "b",
+          "text": "`timeout: 7m`",
+          "isCorrect": false,
+          "explanation": "Not an integer: lint error solution-timeout, and the default is used."
+        },
+        {
+          "id": "c",
+          "text": "Nothing — solutions have no limit",
+          "isCorrect": false,
+          "explanation": "Every exec has a limit; without timeout the defaults apply."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Per-block timeout is whole seconds from 10 to 900.",
+      "points": 800,
+      "hints": [
+        "Units are seconds."
+      ]
+    },
+    {
+      "id": "q10-dtctl",
+      "type": "multiple-choice",
+      "title": "dtctl in a learner seat",
+      "content": "Which statement about dtctl in a learner's environment is true?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It is read-only because the token cannot write",
+          "isCorrect": false,
+          "explanation": "The seat token can write documents and settings."
+        },
+        {
+          "id": "b",
+          "text": "Its context is `readonly`, a client-side guard; never run `dtctl config view`",
+          "isCorrect": true,
+          "explanation": "Correct: the readonly safety level is the guard, and config view prints the resolved token."
+        },
+        {
+          "id": "c",
+          "text": "It must be installed in post-create.sh",
+          "isCorrect": false,
+          "explanation": "finalizePostCreation installs it in every repo."
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "installDevTools configures a readonly context referencing DT_DTCTL_TOKEN.",
+      "points": 1000,
+      "hints": [
+        "What actually stops a write?"
+      ]
+    },
+    {
+      "id": "q11-display-name",
+      "type": "multiple-choice",
+      "title": "Renaming a training",
+      "content": "How do you change the name learners see for a training?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Rename the GitHub repository",
+          "isCorrect": false,
+          "explanation": "The repo name is the identity; renaming orphans imports, workshops and history."
+        },
+        {
+          "id": "b",
+          "text": "Set `training_name` in mkdocs.yaml",
+          "isCorrect": true,
+          "explanation": "Correct: Orbital reads training_name first."
+        },
+        {
+          "id": "c",
+          "text": "Change the H1 of docs/index.md",
+          "isCorrect": false,
+          "explanation": "The page heading is not the training's name."
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Identity is <org>/<repo>; the display name comes from mkdocs.yaml.",
+      "points": 800,
+      "hints": [
+        "Identity and name are different things."
+      ]
     }
   ],
-  "maxScore": 5800,
+  "maxScore": 10400,
   "tags": [
     "authoring",
     "enablement",
@@ -277,6 +437,9 @@
     "Describe when STEP_SETUP commands execute",
     "Attach a scored assessment scenario to a lesson page",
     "Explain the role of Orbital in executing shell commands from the Dynatrace App",
-    "Explain why every step that changes the environment needs a LAB_SOLUTION"
+    "Explain why every step that changes the environment needs a LAB_SOLUTION",
+    "Choose the right kind of training and its delivery declaration.",
+    "Size a workshop with capacity units.",
+    "Use dtctl, Monaco and per-block timeouts safely."
   ]
 }

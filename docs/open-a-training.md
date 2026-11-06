@@ -34,7 +34,7 @@ When the row says **Fork**, the panel offers two ways:
 - **Install App on &lt;owner&gt;** — if you own the organization (or can ask its owner), install the editor's GitHub App there. You can then push to the repository's branches directly.
 - **Fork** (or **Fork to my account** under a repository you *can* push to) — a copy under your GitHub account, opened in the editor. Commits are made as you, on your copy. If you already have a fork, the panel offers **Open my existing fork** instead.
 
-A fork is how you start a **new training from this template**: open *App Training Template*, choose **Fork to my account**, and work on the fork.
+A fork is how you start a **new training from this template**: open *How to Create Trainings*, choose **Fork to my account**, and work on the fork.
 
 ## Import a repository by URL
 

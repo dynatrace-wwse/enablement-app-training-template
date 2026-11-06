@@ -88,11 +88,11 @@ Live — does your tenant answer?
 type: dql-verification
 question: "Verify your tenant answers a DQL query"
 buttonText: "Run DQL"
-dql: "fetch dt.entity.kubernetes_cluster | summarize count = count()"
+dql: "fetch dt.system.buckets | summarize count = count()"
 expect:
   operator: gte
   field: count
-  value: 0
+  value: 1
 hint: "The app could not run the query. Check that you are signed in to the tenant."
 explanation: "The query ran in your tenant — DQL checks work here."
 -->
