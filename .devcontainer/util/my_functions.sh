@@ -223,3 +223,32 @@ describeTrainingDelivery() {
   echo "delivery=$source shared=$shared"
   return 0
 }
+
+# Scale the todoapp to N replicas and wait for the rollout. Idempotent: scaling
+# to the current count is a no-op. Used by the "Blocks" module's LAB_SOLUTION,
+# which sets its own `timeout:` because a rollout on a busy box can be slow.
+scaleTodoApp() {
+  local replicas="${1:-2}"
+  printInfoSection "Scaling todoapp to $replicas replicas"
+  kubectl scale deployment todoapp -n todoapp --replicas="$replicas" || return 1
+  kubectl rollout status deployment todoapp -n todoapp --timeout=240s
+}
+
+# The todoapp has at least N ready replicas (default 2).
+checkTodoAppReplicas() {
+  local want="${1:-2}" ready
+  if [ -n "${LAB_WAIT:-}" ]; then
+    local i=0
+    while [ "$i" -lt 24 ]; do
+      ready=$(kubectl get deployment todoapp -n todoapp -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
+      [ "${ready:-0}" -ge "$want" ] && break
+      i=$((i + 1)); printInfo "todoapp has ${ready:-0}/$want ready replicas ($i/24), waiting 5s"; sleep 5
+    done
+  fi
+  ready=$(kubectl get deployment todoapp -n todoapp -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
+  if [ "${ready:-0}" -ge "$want" ]; then
+    printInfo "todoapp has ${ready} ready replicas"; return 0
+  fi
+  printError "todoapp has ${ready:-0} ready replicas, expected at least $want — scale it: kubectl scale deployment todoapp -n todoapp --replicas=$want"
+  return 1
+}
