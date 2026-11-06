@@ -15,6 +15,14 @@ nav:
   - "05. Recreate the Environment": recreate-environment.md
   - "06. Commit and Open a PR": commit-and-pr.md
   - "07. Test as a Learner": test-as-learner.md
+  - "08. Kinds of Trainings and Workshops": m1-kinds-of-trainings.md
+  - "09. The Environment: post-create and Ingress": m2-environment.md
+  - "10. dtctl and Monaco": m3-dtctl-monaco.md
+  - "11. Shared Infrastructure Workshops": m4-shared-workshops.md
+  - "12. Sizing": m5-sizing.md
+  - "13. DQL and Shell Blocks, Live": m6-dql-and-shell-blocks.md
+  - "14. Validations": m7-validations.md
+  - "15. Deliver It": m8-deliver-everywhere.md
   - "Reference: How It Works": 01-how-it-works.md
   - "Reference: Automate the Environment": 02-automation.md
   - "Reference: Lesson Anatomy": 03-lesson-anatomy.md

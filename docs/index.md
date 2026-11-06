@@ -1,11 +1,11 @@
 ---
-description: How to build interactive, self-testing Dynatrace trainings for the Dynatrace Enablement app — from post-create automation and tokens to checks, solutions and workshops.
+description: The master workshop on creating Dynatrace trainings — kinds of workshops (single and multi-tenant, shared infrastructure), post-create, dtctl and Monaco, sizing, DQL and shell checks, validations and delivery to any tenant.
 tags: [interactive, authoring, orbital, enablement-app]
 difficulty: intermediate
-duration: 60
+duration: 120
 ---
 
-## Build interactive trainings for the Dynatrace Enablement app
+## How to Create Trainings — the master workshop
 
 --8<-- "snippets/disclaimer.md"
 
@@ -72,6 +72,19 @@ The numbered pages are the editor flow, in the order you work:
 | `05` | [Recreate the Environment](recreate-environment.md) | Rebuild from the branch and replay the solutions up to a step |
 | `06` | [Commit and Open a PR](commit-and-pr.md) | Commit to your branch, validate, open the pull request |
 | `07` | [Test as a Learner](test-as-learner.md) | Preview for learners, then the real thing after the merge |
+
+Then the **master workshop** modules — what to decide and build before and around the steps. Each one has live checks you can press:
+
+| Step | Page | What you learn |
+|---|---|---|
+| `08` | [Kinds of Trainings and Workshops](m1-kinds-of-trainings.md) | self-paced vs hands-on, self-service vs workshop-only, single vs multi-tenant, `delivery.yaml` |
+| `09` | [The Environment](m2-environment.md) | `post-create.sh`, `my_functions.sh`, `registerApp` and the ingress |
+| `10` | [dtctl and Monaco](m3-dtctl-monaco.md) | the tools in every environment, the seat token, per-learner Monaco with cleanup |
+| `11` | [Shared Infrastructure Workshops](m4-shared-workshops.md) | `workshop-post-create.sh` / `workshop-post-start.sh`, one machine for the room |
+| `12` | [Sizing](m5-sizing.md) | capacity units, seats per machine, the shared machine's shape |
+| `13` | [DQL and Shell Blocks, Live](m6-dql-and-shell-blocks.md) | DQL fences and dashlets, DQL and shell checks, `STEP_SETUP`, `LAB_SOLUTION` with `timeout` |
+| `14` | [Validations](m7-validations.md) | Problems, Checklist, Validate, the nightly test |
+| `15` | [Deliver It](m8-deliver-everywhere.md) | identity vs display name, profiles, self-service and workshops |
 
 The **Reference** pages explain what you write — keep them open beside the editor:
 
