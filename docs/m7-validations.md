@@ -4,7 +4,7 @@ A training is proven by machines, at four levels — from every keystroke to eve
 
 | Level | When | What it proves | Where you see it |
 |---|---|---|---|
-| **Problems** (lint) | on every edit, in the browser | every block parses and can pass: no dropped question, MCQ `correct` in range, known `{{VARS}}`, a `timeout` in 10..900, a solution per hands-on step, no starter placeholder left | the editor's **Problems** tab; errors block Publish |
+| **Problems** (lint) | on every edit, in the browser | every block parses and can pass: no dropped question, MCQ `correct` in range, only known template variables, a `timeout` in 10..900, a solution per hands-on step, no starter placeholder left | the editor's **Problems** tab; errors block Publish |
 | **Checklist** | while you author | what a machine cannot check: the check fails *before* the solution, the logo is approved, … | the **Checklist** tab; open `human-`/`submit-` items block Create PR |
 | **Validate** | when you press it | the whole training, step by step, in a container | the **Runs** tab; a pass on a commit stamps it *Orbital Validate* ✓ on GitHub |
 | **Nightly training-test** | every night, after merge | the same, on the default branch, against a real tenant | the training's nightly status |
@@ -18,7 +18,7 @@ The editor lints the live buffers, so a broken block is flagged before you save.
 | `section-solution` | error | a hands-on step (it has a shell check or a setup) has no `LAB_SOLUTION` and no `LAB_NO_SOLUTION` reason |
 | `question-dropped` | error | the importer would silently skip this question (missing `buttonText`, unknown operator, …) |
 | `mcq-correct` | error | `correct` names no option — the learner can never pass |
-| `dql-var` | error | an unknown `{{VAR}}` in a DQL check — it would match nothing, silently |
+| `dql-var` | error | an unknown template variable (double braces) in a DQL check — it would match nothing, silently |
 | `solution-timeout` | error | `timeout:` is not a whole number from 10 to 900 |
 | `placeholder` | error | starter text left in, or a check whose command is a no-op (`true`) |
 | `dql-namespace` | warning | a Kubernetes DQL check without a `k8s.namespace.name` filter |
@@ -26,11 +26,11 @@ The editor lints the live buffers, so a broken block is flagged before you save.
 
 ## The Checklist — what only a person can tick
 
-Items live in the training's own pages as HTML comments the learner never sees, one per line:
+Items live in the training's own pages as HTML comments the learner never sees.
 
 --8<-- "snippets/blocks/checklist.md"
 
-`[ ]` open · `[x]` done · `[-]` n/a with a reason. `human-` and `submit-` items **block Create PR** while open; `author-` items never block; `gen-` items are ticked by the training generator. Per-step items go on the step's page, repo-wide ones on `docs/index.md`. (The examples are included from `docs/snippets/` so the editor does not read them as this training's own items.)
+`[ ]` open · `[x]` done · `[-]` n/a with a reason. `human-` and `submit-` items **block Create PR** while open; `author-` items never block; `gen-` items are ticked by the training generator. Per-step items go on the step's page, repo-wide ones on `docs/index.md`.
 
 ## Validate — two buttons, one validator
 

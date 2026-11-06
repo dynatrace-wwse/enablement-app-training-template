@@ -57,7 +57,7 @@ fetch logs, from:now()-15m
 
 - `{{DT_SESSION_ID}}` is replaced per learner; the cluster name **ends with** it, so `==` never matches.
 - In a Kubernetes training, filter `k8s.namespace.name` too — the `dql-namespace` lint warns when you do not: a cluster-only query passes on `kube-system` data the learner never produced.
-- An unknown `{{VAR}}` in a check is a lint **error** (`dql-var`): inside quotes it is valid DQL that silently finds nothing.
+- An unknown template variable in a check (anything but the names in [Template variables](04-interactive-blocks.md#template-variables-one-query-every-learner-isolated)) is a lint **error** (`dql-var`): inside quotes it is valid DQL that silently finds nothing.
 - Each run of a DQL check in the editor spends the author's DQL mint budget (30 an hour per person). Test with one press, not a loop.
 
 ## `shell-verification` — a check in the container
