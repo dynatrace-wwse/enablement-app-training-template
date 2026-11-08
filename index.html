@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="How to build interactive, self-testing Dynatrace trainings for the Dynatrace Enablement app — from post-create automation and tokens to checks, solutions and workshops.">
+        <meta name="description" content="The master workshop on creating Dynatrace trainings — kinds of workshops (single and multi-tenant, shared infrastructure), post-create, dtctl and Monaco, sizing, DQL and shell checks, validations and delivery to any tenant.">
       
       
       
@@ -20,7 +20,7 @@
     
     
       
-        <title>Dynatrace Enablement Lab: App Training Template</title>
+        <title>Dynatrace Enablement Lab: How to Create Trainings</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#build-interactive-trainings-for-the-dynatrace-enablement-app" class="md-skip">
+        <a href="#how-to-create-trainings-the-master-workshop" class="md-skip">
           Skip to content
         </a>
       
@@ -97,7 +97,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Dynatrace Enablement Lab: App Training Template" class="md-header__button md-logo" aria-label="Dynatrace Enablement Lab: App Training Template" data-md-component="logo">
+    <a href="." title="Dynatrace Enablement Lab: How to Create Trainings" class="md-header__button md-logo" aria-label="Dynatrace Enablement Lab: How to Create Trainings" data-md-component="logo">
       
   <img src="https://cdn.bfldr.com/B686QPH3/at/w5hnjzb32k5wcrcxnwcx4ckg/Dynatrace_signet_RGB_HTML.svg?auto=webp&format=pngg" alt="logo">
 
@@ -110,7 +110,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Dynatrace Enablement Lab: App Training Template
+            Dynatrace Enablement Lab: How to Create Trainings
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -236,12 +236,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Dynatrace Enablement Lab: App Training Template" class="md-nav__button md-logo" aria-label="Dynatrace Enablement Lab: App Training Template" data-md-component="logo">
+    <a href="." title="Dynatrace Enablement Lab: How to Create Trainings" class="md-nav__button md-logo" aria-label="Dynatrace Enablement Lab: How to Create Trainings" data-md-component="logo">
       
   <img src="https://cdn.bfldr.com/B686QPH3/at/w5hnjzb32k5wcrcxnwcx4ckg/Dynatrace_signet_RGB_HTML.svg?auto=webp&format=pngg" alt="logo">
 
     </a>
-    Dynatrace Enablement Lab: App Training Template
+    Dynatrace Enablement Lab: How to Create Trainings
   </label>
   
     <div class="md-nav__source">
@@ -307,9 +307,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#build-interactive-trainings-for-the-dynatrace-enablement-app" class="md-nav__link">
+  <a href="#how-to-create-trainings-the-master-workshop" class="md-nav__link">
     <span class="md-ellipsis">
-      Build interactive trainings for the Dynatrace Enablement app
+      How to Create Trainings — the master workshop
     </span>
   </a>
   
@@ -535,6 +535,166 @@
   
   
     <li class="md-nav__item">
+      <a href="m1-kinds-of-trainings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    08. Kinds of Trainings and Workshops
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="m2-environment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    09. The Environment: post-create and Ingress
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="m3-dtctl-monaco/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. dtctl and Monaco
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="m4-shared-workshops/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Shared Infrastructure Workshops
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="m5-sizing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Sizing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="m6-dql-and-shell-blocks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. DQL and Shell Blocks, Live
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="m7-validations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Validations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="m8-deliver-everywhere/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Deliver It
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="01-how-it-works/" class="md-nav__link">
         
   
@@ -733,9 +893,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#build-interactive-trainings-for-the-dynatrace-enablement-app" class="md-nav__link">
+  <a href="#how-to-create-trainings-the-master-workshop" class="md-nav__link">
     <span class="md-ellipsis">
-      Build interactive trainings for the Dynatrace Enablement app
+      How to Create Trainings — the master workshop
     </span>
   </a>
   
@@ -806,7 +966,7 @@
 
   <h1>Welcome</h1>
 
-<h2 id="build-interactive-trainings-for-the-dynatrace-enablement-app">Build interactive trainings for the Dynatrace Enablement app<a class="headerlink" href="#build-interactive-trainings-for-the-dynatrace-enablement-app" title="Permanent link">#</a></h2>
+<h2 id="how-to-create-trainings-the-master-workshop">How to Create Trainings — the master workshop<a class="headerlink" href="#how-to-create-trainings-the-master-workshop" title="Permanent link">#</a></h2>
 <div class="admonition example">
 <p class="admonition-title">Support Policy - experiment, share feedback, and help shape the future</p>
 <p>This repository is part of an enablement project created by the Center of Excellence at Dynatrace. Our mission is to empower you to explore and adopt these resources to accelerate innovation.
@@ -921,6 +1081,58 @@ Support is community-driven and provided exclusively via <a href="https://github
 <td><code>07</code></td>
 <td><a href="test-as-learner/">Test as a Learner</a></td>
 <td>Preview for learners, then the real thing after the merge</td>
+</tr>
+</tbody>
+</table>
+<p>Then the <strong>master workshop</strong> modules — what to decide and build before and around the steps. Each one has live checks you can press:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Page</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>08</code></td>
+<td><a href="m1-kinds-of-trainings/">Kinds of Trainings and Workshops</a></td>
+<td>self-paced vs hands-on, self-service vs workshop-only, single vs multi-tenant, <code>delivery.yaml</code></td>
+</tr>
+<tr>
+<td><code>09</code></td>
+<td><a href="m2-environment/">The Environment</a></td>
+<td><code>post-create.sh</code>, <code>my_functions.sh</code>, <code>registerApp</code> and the ingress</td>
+</tr>
+<tr>
+<td><code>10</code></td>
+<td><a href="m3-dtctl-monaco/">dtctl and Monaco</a></td>
+<td>the tools in every environment, the seat token, per-learner Monaco with cleanup</td>
+</tr>
+<tr>
+<td><code>11</code></td>
+<td><a href="m4-shared-workshops/">Shared Infrastructure Workshops</a></td>
+<td><code>workshop-post-create.sh</code> / <code>workshop-post-start.sh</code>, one machine for the room</td>
+</tr>
+<tr>
+<td><code>12</code></td>
+<td><a href="m5-sizing/">Sizing</a></td>
+<td>capacity units, seats per machine, the shared machine's shape</td>
+</tr>
+<tr>
+<td><code>13</code></td>
+<td><a href="m6-dql-and-shell-blocks/">DQL and Shell Blocks, Live</a></td>
+<td>DQL fences and dashlets, DQL and shell checks, <code>STEP_SETUP</code>, <code>LAB_SOLUTION</code> with <code>timeout</code></td>
+</tr>
+<tr>
+<td><code>14</code></td>
+<td><a href="m7-validations/">Validations</a></td>
+<td>Problems, Checklist, Validate, the nightly test</td>
+</tr>
+<tr>
+<td><code>15</code></td>
+<td><a href="m8-deliver-everywhere/">Deliver It</a></td>
+<td>identity vs display name, profiles, self-service and workshops</td>
 </tr>
 </tbody>
 </table>
