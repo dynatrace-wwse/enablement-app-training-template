@@ -1,5 +1,5 @@
 <!-- markdownlint-disable-next-line -->
-# <img src="https://cdn.bfldr.com/B686QPH3/at/w5hnjzb32k5wcrcxnwcx4ckg/Dynatrace_signet_RGB_HTML.svg?auto=webp&format=pngg" alt="DT logo" width="30"> Enablement App Training Template
+# <img src="https://cdn.bfldr.com/B686QPH3/at/w5hnjzb32k5wcrcxnwcx4ckg/Dynatrace_signet_RGB_HTML.svg?auto=webp&format=pngg" alt="DT logo" width="30"> Enablement — How to Create Trainings
 
 [![Dynatrace](https://img.shields.io/badge/Dynatrace-Intelligence-purple?logo=dynatrace&logoColor=white)](https://dynatrace-wwse.github.io/codespaces-framework/dynatrace-integration/#mcp-server-integration)
 [![Mastering](https://img.shields.io/badge/Mastering-Complexity-8A2BE2?logo=dynatrace)](https://dynatrace-wwse.github.io)
@@ -37,7 +37,7 @@ The guide follows the app's **training editor**: a trainer builds, tests and shi
 
 ## Use this template
 
-1. In the app's **Editor**, open *App Training Template* and choose **Fork to my account** (or, on GitHub, **Use this template → Create a new repository**, `enablement-<topic>`).
+1. In the app's **Editor**, open *How to Create Trainings* and choose **Fork to my account** (or, on GitHub, **Use this template → Create a new repository**, `enablement-<topic>`).
 2. Follow the guide in the editor; replace the example content with yours.
 3. Validate, open a pull request, take it as a learner and as a trainer, then bring it into `dynatrace-wwse`.
 
