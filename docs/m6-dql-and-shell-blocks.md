@@ -8,7 +8,7 @@ A ` ```dql ` fence renders as a runnable, editable query with **Run** and **Open
 
 ```dql
 fetch dt.system.buckets
-| fields name, table, retention_days
+| fields name, dt.system.table, retention_days
 | sort name
 | limit 10
 ```
@@ -24,25 +24,25 @@ fetch dt.system.buckets
 
 ```dql { .bar title="Buckets per table" }
 fetch dt.system.buckets
-| summarize buckets = count(), by:{table}
+| summarize buckets = count(), by:{dt.system.table}
 ```
 
 Write the attribute list with braces and a space after `dql` — ` ```dql chart ` is not recognised, and MkDocs would not render it. The Problems tab warns on an unknown view (`dql-view-unknown`), an unknown option (`dql-attr-unknown`) and a view the query cannot feed (`dql-view-shape`). A dashlet only runs a query whose first command reads (`fetch`, `timeseries`, …).
 
 ## `dql-verification` — a check against Grail
 
-The check runs **in the learner's tenant, as the learner**, and gates *Next* until it passes. This one reads Davis/system events from the last 24 hours, which every active tenant has:
+The check runs **in the learner's tenant, as the learner**, and gates *Next* until it passes. This one counts the Grail buckets that store logs — every tenant has the default ones, and listing buckets needs no data scope, so it answers for any learner:
 
 <!-- LAB_QUESTION
 type: dql-verification
 question: "Verify Grail answers a DQL check in your tenant"
 buttonText: "Run DQL check"
-dql: "fetch dt.system.events, from:now()-24h | summarize events = count()"
+dql: "fetch dt.system.buckets | filter dt.system.table == \"logs\" | summarize buckets = count()"
 expect:
   operator: gte
-  field: events
+  field: buckets
   value: 1
-hint: "The query runs in the tenant you are signed in to. If it returns 0, the tenant has had no system events in 24 hours — sign in to an active tenant."
+hint: "The query runs in the tenant you are signed in to, as you. Every tenant has default log buckets — if it fails, read the error: it names the permission that is missing."
 explanation: "Grail answered the check — dql-verification works in this tenant."
 -->
 
