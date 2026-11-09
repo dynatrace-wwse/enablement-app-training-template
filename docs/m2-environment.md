@@ -17,14 +17,15 @@ The framework's own functions (`functions.sh`, pinned by `FRAMEWORK_VERSION` in 
 
 ```bash title=".devcontainer/post-create.sh (the active lines)"
 source .devcontainer/util/source_framework.sh
-setUpTerminal          # zsh, the prompt, the greeting
+export DT_TOOLS=all    # opt in to dtctl + Monaco (installed by setUpTerminal)
+setUpTerminal          # zsh, the prompt, the greeting, then dtctl + Monaco
 startK3dCluster        # a one-node k3d Kubernetes cluster
 installK9s
 deployTodoApp          # the demo app — ends with registerApp, so it gets an ingress
-finalizePostCreation   # installDevTools (dtctl + Monaco), log check, tracker — do not remove
+finalizePostCreation   # log check, tracker — do not remove
 ```
 
-`finalizePostCreation` is the line every repo keeps: it installs the dev tools ([next module](m3-dtctl-monaco.md)), scans the creation log for errors (shown in the greeting) and records the instantiation.
+`DT_TOOLS=all` opts this training in to dtctl and Monaco ([next module](m3-dtctl-monaco.md)). `finalizePostCreation` is the line every repo keeps: it scans the creation log for errors (shown in the greeting) and records the instantiation.
 
 ## Apps are published through the ingress
 

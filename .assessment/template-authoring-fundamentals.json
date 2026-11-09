@@ -383,7 +383,7 @@
         }
       ],
       "correctAnswer": "b",
-      "explanation": "installDevTools configures a readonly context referencing DT_DTCTL_TOKEN.",
+      "explanation": "installDTTools configures a readonly context referencing DT_DTCTL_TOKEN.",
       "points": 1000,
       "hints": [
         "What actually stops a write?"

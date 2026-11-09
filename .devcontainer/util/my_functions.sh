@@ -150,26 +150,25 @@ generateTodoTraffic() {
 #   are safe on any tenant the app is installed in.
 # ======================================================================
 
-# dtctl and Monaco are on PATH. finalizePostCreation runs installDevTools in
-# every framework repo, so a fresh environment has both without any line in
-# post-create.sh. FRAMEWORK_DEVTOOLS=off is the one way to switch them off.
+# dtctl and Monaco are on PATH: post-create.sh opts in with DT_TOOLS=all, and
+# setUpTerminal runs installDTTools first thing (framework >= 1.23.0).
 checkDevTools() {
   local rc=0
   if command -v dtctl >/dev/null 2>&1; then
     printInfo "dtctl:  $(dtctl version 2>/dev/null | head -1)"
   else
-    printError "dtctl is not on PATH — installDevTools did not run or was switched off (FRAMEWORK_DEVTOOLS)"; rc=1
+    printError "dtctl is not on PATH — installDTTools did not run (DT_TOOLS in post-create.sh) — type 'installDTTools'"; rc=1
   fi
   if command -v monaco >/dev/null 2>&1; then
     printInfo "monaco: $(monaco version 2>/dev/null | head -1)"
   else
-    printError "monaco is not on PATH — installDevTools did not run or was switched off (FRAMEWORK_DEVTOOLS)"; rc=1
+    printError "monaco is not on PATH — installDTTools did not run (DT_TOOLS in post-create.sh) — type 'installDTTools'"; rc=1
   fi
   return $rc
 }
 
 # dtctl answers a read-only DQL query against the tenant this environment
-# belongs to. installDevTools configures the read-only 'enablement' context
+# belongs to. installDTTools configures the read-only 'enablement' context
 # only when the app delivered DT_DTCTL_TOKEN for this seat. The query reads
 # Grail's bucket list: every tenant has buckets, and it needs no data in them.
 # Never run `dtctl config view` here — it prints the resolved token.

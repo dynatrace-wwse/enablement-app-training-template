@@ -79,7 +79,7 @@ Then the **master workshop** modules — what to decide and build before and aro
 |---|---|---|
 | `08` | [Kinds of Trainings and Workshops](m1-kinds-of-trainings.md) | self-paced vs hands-on, self-service vs workshop-only, single vs multi-tenant, `delivery.yaml` |
 | `09` | [The Environment](m2-environment.md) | `post-create.sh`, `my_functions.sh`, `registerApp` and the ingress |
-| `10` | [dtctl and Monaco](m3-dtctl-monaco.md) | the tools in every environment, the seat token, per-learner Monaco with cleanup |
+| `10` | [dtctl and Monaco](m3-dtctl-monaco.md) | opt-in tools (`DT_TOOLS`), the seat token, per-learner Monaco with cleanup |
 | `11` | [Shared Infrastructure Workshops](m4-shared-workshops.md) | `workshop-post-create.sh` / `workshop-post-start.sh`, one machine for the room |
 | `12` | [Sizing](m5-sizing.md) | capacity units, seats per machine, the shared machine's shape |
 | `13` | [DQL and Shell Blocks, Live](m6-dql-and-shell-blocks.md) | DQL fences and dashlets, DQL and shell checks, `STEP_SETUP`, `LAB_SOLUTION` with `timeout` |
