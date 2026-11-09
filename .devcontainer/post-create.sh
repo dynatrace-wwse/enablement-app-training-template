@@ -3,6 +3,11 @@
 export SECONDS=0
 source .devcontainer/util/source_framework.sh
 
+# dtctl + Monaco (the framework's Dynatrace tools) are opt-in from framework
+# 1.23.0: setUpTerminal installs what DT_TOOLS names (dtctl, monaco or all),
+# first thing, so every step finds them. Older frameworks ignore it.
+export DT_TOOLS=all
+
 setUpTerminal
 
 startK3dCluster
