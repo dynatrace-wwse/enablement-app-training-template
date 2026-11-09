@@ -1,17 +1,24 @@
-# 10 — dtctl and Monaco in Every Environment
+# 10 — dtctl and Monaco, Opt-in
 
-Every environment the framework builds comes up with two Dynatrace command-line tools already on `PATH` — you add nothing to `post-create.sh`:
+The framework installs two Dynatrace command-line tools when a training asks for them — like the MCP server, they are **opt-in**:
 
 | Tool | What a training uses it for | Token it reads (by **name**) |
 |---|---|---|
 | [`dtctl`](https://github.com/dynatrace-oss/dtctl) | query and inspect the tenant: DQL, documents, settings | `DT_DTCTL_TOKEN` |
 | [`monaco`](https://github.com/Dynatrace/dynatrace-configuration-as-code) | configuration as code: deploy dashboards, notebooks, settings per learner | `DT_MONACO_TOKEN` |
 
-`finalizePostCreation` runs `installDevTools` first: it installs both at the framework's pinned versions (`DTCTL_VERSION`, `MONACO_VERSION` in the framework's `variables.sh`), each **checksum-verified** against a hash committed in the framework. It is **never fatal** — a failed download is one `devtools (non-fatal)` warning and post-create carries on. `FRAMEWORK_DEVTOOLS=off` (in `.devcontainer/.env` or the environment) skips it.
+A training opts in with one line in `post-create.sh`, **before** `setUpTerminal`. `setUpTerminal` then runs `installDTTools` first thing in post-create, so every later step and every lab step finds the tools. This training does:
+
+```bash title=".devcontainer/post-create.sh"
+export DT_TOOLS=all          # or: dtctl | monaco | dtctl,monaco
+setUpTerminal
+```
+
+`installDTTools` installs them at the framework's pinned versions (`DTCTL_VERSION`, `MONACO_VERSION` in the framework's `variables.sh`), each **checksum-verified** against a hash committed in the framework. It is **never fatal** — a failed download is one `devtools (non-fatal)` warning and post-create carries on. An unknown `DT_TOOLS` entry is a warning. Without `DT_TOOLS` nothing is installed, and the terminal says `Type 'installDTTools' to install dtctl + Monaco` — a learner can do that in any training. `deployMonaco` installs Monaco itself, so it needs no opt-in; a step that runs `dtctl` does.
 
 ## Where the token comes from
 
-Under Orbital the **app** mints one platform token per learner seat and delivers it under **both** names. Your repo's `dt-tokens.yaml` does not declare these two — a spec under either name is dropped. When the seat has a token, `installDevTools` also runs `enableDtctl`: a context named `enablement`, safety level **readonly**, holding a *reference* to `${DT_DTCTL_TOKEN}`, never the value.
+Under Orbital the **app** mints one platform token per learner seat and delivers it under **both** names. Your repo's `dt-tokens.yaml` does not declare these two — a spec under either name is dropped. When the seat has a token, `installDTTools` also runs `enableDtctl`: a context named `enablement`, safety level **readonly**, holding a *reference* to `${DT_DTCTL_TOKEN}`, never the value.
 
 !!! danger "The token can write; dtctl's safety level is what stops it"
     The seat token carries `document:documents:read/write/delete` and `settings:objects:read/write` besides the Grail reads. The `readonly` context is a **client-side** guard. Write steps as reads, and **never run `dtctl config view`** — it prints the resolved token.
@@ -27,8 +34,8 @@ buttonText: "Check dev tools"
 command: "checkDevTools"
 expect:
   operator: exit-zero
-hint: "installDevTools runs at the end of post-create.sh (finalizePostCreation). Open the Provisioning Log and look for 'devtools (non-fatal)'."
-explanation: "Both tools were installed by finalizePostCreation, checksum-verified, at the framework's pinned versions."
+hint: "installDTTools runs at the start of post-create.sh (setUpTerminal, because DT_TOOLS=all). Open the Provisioning Log and look for 'devtools (non-fatal)', or type installDTTools."
+explanation: "Both tools were installed by setUpTerminal (DT_TOOLS=all), checksum-verified, at the framework's pinned versions."
 -->
 
 ## Check: dtctl reads your tenant
